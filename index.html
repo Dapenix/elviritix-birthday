@@ -111,40 +111,32 @@
             <!-- Barra roja de progreso -->
             <div id="scrollProgressBar" class="h-full bg-racingRed w-0 rounded-full transition-all duration-75 ease-out shadow-[0_0_14px_rgba(220,38,38,1)]"></div>
             
-            <!-- Moto Superbike de Marc Márquez (#93) avanzando con el scroll -->
+            <!-- Casco Racing de Marc Márquez (#93) avanzando con el scroll -->
             <div id="scrollMotorcycle" class="absolute top-1/2 -translate-y-1/2 left-0 transition-all duration-75 ease-out transform -translate-x-1/2 flex items-center" style="left: 0%;">
-                <!-- Estela de fuego / chispas racing tras la moto -->
-                <div class="w-6 h-2 bg-gradient-to-r from-transparent via-racingRed/60 to-racingRed rounded-full animate-pulse mr-1 opacity-90"></div>
+                <!-- Estela de fuego / chispas racing tras el casco -->
+                <div class="w-5 h-2 bg-gradient-to-r from-transparent via-racingRed/60 to-racingRed rounded-full animate-pulse mr-1 opacity-90"></div>
                 
-                <!-- Cápsula con Silueta Aerodinámica de MotoGP Superbike + Piloto acoplado -->
-                <div class="relative px-2 py-1 flex items-center justify-center bg-darkBg border-2 border-racingRed rounded-2xl shadow-[0_0_18px_rgba(220,38,38,1)]">
-                    <svg viewBox="0 0 64 40" class="w-9 h-6 drop-shadow-[0_0_6px_rgba(220,38,38,0.8)]" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Rueda Trasera Ancha Racing -->
-                        <circle cx="14" cy="27" r="8" stroke="#ffffff" stroke-width="3.5" fill="#050507"/>
-                        <circle cx="14" cy="27" r="3" fill="#dc2626"/>
+                <!-- Cápsula con Casco Aerodinámico de Carreras + Dorsal #93 -->
+                <div class="relative px-2.5 py-1.5 flex items-center justify-center bg-darkBg/95 border-2 border-racingRed rounded-full shadow-[0_0_18px_rgba(220,38,38,1)]">
+                    <!-- SVG de Casco de Carreras MotoGP Marc Márquez -->
+                    <svg viewBox="0 0 48 36" class="w-8 h-6 drop-shadow-[0_0_6px_rgba(220,38,38,0.8)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Alerón Trasero Aerodinámico -->
+                        <path d="M6 16 L12 12 L10 22 Z" fill="#ffffff"/>
+                        
+                        <!-- Calota Principal del Casco (Rojo Racing) -->
+                        <path d="M10 26 C8 23 7 17 11 11 C15 5 27 4 37 8 C43 11 45 18 43 24 C40 28 32 29 24 29 C18 29 12 28 10 26 Z" fill="#dc2626" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        
+                        <!-- Visera de Carreras Ahumada Oscura -->
+                        <path d="M23 10 C32 10 38 12 40 16 C39 19 32 21 23 20 C19 19 18 16 23 10 Z" fill="#050507" stroke="#ffffff" stroke-width="1.2"/>
+                        <!-- Destello en Visera -->
+                        <path d="M28 12 C32 12 36 13 37 15" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
 
-                        <!-- Rueda Delantera Ancha Racing -->
-                        <circle cx="50" cy="27" r="8" stroke="#ffffff" stroke-width="3.5" fill="#050507"/>
-                        <circle cx="50" cy="27" r="3" fill="#dc2626"/>
-
-                        <!-- Chasis / Basculante / Tubo de Escape -->
-                        <path d="M14 27 L24 19 L40 17 L50 27" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
-                        <path d="M8 20 L20 16 L16 27 Z" fill="#dc2626"/>
-
-                        <!-- Carenado Aerodinámico Cúpula y Tanque -->
-                        <path d="M20 17 L32 11 L44 13 L54 21 L42 21 L36 16 L24 19 Z" fill="#dc2626" stroke="#ffffff" stroke-width="1.2"/>
-
-                        <!-- Cúpula Transparente Delantera -->
-                        <path d="M42 13 L48 7 L54 17 L48 19 Z" fill="#ffffff" opacity="0.9"/>
-
-                        <!-- Piloto Agachado (Casco y Mono Racing) -->
-                        <circle cx="34" cy="8" r="4.5" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
-                        <path d="M34 7.5 H38.5 V10.5 H34 Z" fill="#050507"/>
-                        <path d="M22 16 Q28 9 34 11 L38 17 Z" fill="#ffffff"/>
+                        <!-- Entrada de Aire Barbilla -->
+                        <path d="M34 22 L40 23 L37 26 Z" fill="#050507"/>
                     </svg>
 
-                    <!-- Dorsal 93 Marc Márquez -->
-                    <span class="absolute -top-2 -right-2 bg-racingRed text-white text-[9px] font-mono font-black px-1.5 py-0.5 rounded-full border border-black shadow-md">93</span>
+                    <!-- Dorsal 93 de Marc Márquez superpuesto -->
+                    <span class="absolute -top-2 -right-2 bg-racingRed text-white text-[10px] font-mono font-black px-1.5 py-0.5 rounded-full border-2 border-black shadow-md">93</span>
                 </div>
             </div>
 

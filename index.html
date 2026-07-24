@@ -827,14 +827,16 @@
                 }
             }
 
-            // Iniciar Experiencia al pulsar "Empezar"
-            startExperienceBtn.addEventListener('click', () => {
-                unlockAudioElement();
-                playBgMusic();
+            // Iniciar Experiencia al pulsar "Empezar" (si existe en el DOM)
+            if (startExperienceBtn) {
+                startExperienceBtn.addEventListener('click', () => {
+                    unlockAudioElement();
+                    playBgMusic();
 
-                // Desplazamiento suave hacia la sección de historia
-                secStory.scrollIntoView({ behavior: 'smooth' });
-            });
+                    // Desplazamiento suave hacia la sección de historia
+                    secStory.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
 
             // Control de audio
             audioToggleBtn.addEventListener('click', () => {

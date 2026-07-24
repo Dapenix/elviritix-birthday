@@ -640,8 +640,6 @@
             // Intro elements
             const dateText = document.getElementById('dateText');
             const mainTitle = document.getElementById('mainTitle');
-            const startBtnContainer = document.getElementById('startBtnContainer');
-            const startExperienceBtn = document.getElementById('startExperienceBtn');
 
             // Sections
             const secIntro = document.getElementById('sec-intro');
@@ -841,16 +839,7 @@
                 }
             }
 
-            // Iniciar Experiencia al pulsar "Empezar" (si existe en el DOM)
-            if (startExperienceBtn) {
-                startExperienceBtn.addEventListener('click', () => {
-                    unlockAudioElement();
-                    playBgMusic();
 
-                    // Desplazamiento suave hacia la sección de historia
-                    secStory.scrollIntoView({ behavior: 'smooth' });
-                });
-            }
 
             // Control de audio
             audioToggleBtn.addEventListener('click', () => {

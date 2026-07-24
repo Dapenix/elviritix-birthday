@@ -375,6 +375,23 @@
             </div>
         </section>
 
+        <!-- OVERLAY DE TRANSICIÓN DE INTRIGA / SEMÁFORO MOTOGP -->
+        <div id="giftTeaserOverlay" class="fixed inset-0 z-50 bg-[#060608] flex flex-col items-center justify-center p-6 text-center opacity-0 pointer-events-none transition-opacity duration-700">
+            <div id="teaserContent" class="space-y-6 max-w-lg mx-auto">
+                <p id="teaserText1" class="text-2xl sm:text-4xl font-light text-gray-300 opacity-0 transition-opacity duration-1000">“Porque los mejores momentos no se leen…”</p>
+                <p id="teaserText2" class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight opacity-0 transition-opacity duration-1000">“…se viven.”</p>
+                
+                <!-- Semáforo de salida MotoGP -->
+                <div id="gantryLights" class="flex justify-center gap-3 pt-8 opacity-0 transition-opacity duration-700">
+                    <div class="w-5 h-5 rounded-full bg-red-950/80 border border-racingRed/50 gantry-light transition-all duration-300"></div>
+                    <div class="w-5 h-5 rounded-full bg-red-950/80 border border-racingRed/50 gantry-light transition-all duration-300"></div>
+                    <div class="w-5 h-5 rounded-full bg-red-950/80 border border-racingRed/50 gantry-light transition-all duration-300"></div>
+                    <div class="w-5 h-5 rounded-full bg-red-950/80 border border-racingRed/50 gantry-light transition-all duration-300"></div>
+                    <div class="w-5 h-5 rounded-full bg-red-950/80 border border-racingRed/50 gantry-light transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- SECCIÓN 6 — REVELACIÓN MOTOGP -->
         <section id="sec-motogp" class="relative min-h-screen w-full px-6 py-32 bg-[#060608] flex flex-col items-center justify-center text-center hidden overflow-hidden">
             <!-- Destello de fondo racing -->
@@ -832,11 +849,64 @@
                 }, 600);
             }
 
-            // Revelación de la sorpresa (MotoGP)
+            // Revelación cinematográfica de la sorpresa (MotoGP Cheste)
+            const giftTeaserOverlay = document.getElementById('giftTeaserOverlay');
+            const teaserText1 = document.getElementById('teaserText1');
+            const teaserText2 = document.getElementById('teaserText2');
+            const gantryLights = document.getElementById('gantryLights');
+            const vipTicketCard = document.getElementById('vipTicketCard');
+
             revealSurpriseBtn.addEventListener('click', () => {
-                secFalseEnd.classList.add('hidden');
-                secMotogp.classList.remove('hidden');
-                secMotogp.scrollIntoView({ behavior: 'smooth' });
+                // Activar overlay de intriga
+                giftTeaserOverlay.classList.remove('pointer-events-none');
+                giftTeaserOverlay.classList.remove('opacity-0');
+
+                // 1. Mostrar frase 1: "Porque los mejores momentos no se leen..."
+                setTimeout(() => {
+                    teaserText1.classList.remove('opacity-0');
+                }, 400);
+
+                // 2. Mostrar frase 2: "...se viven."
+                setTimeout(() => {
+                    teaserText2.classList.remove('opacity-0');
+                }, 1800);
+
+                // 3. Encendido progresivo del semáforo MotoGP (1 a 1)
+                setTimeout(() => {
+                    gantryLights.classList.remove('opacity-0');
+                    const lights = gantryLights.querySelectorAll('.gantry-light');
+                    lights.forEach((light, i) => {
+                        setTimeout(() => {
+                            light.classList.remove('bg-red-950/80');
+                            light.classList.add('bg-racingRed', 'shadow-[0_0_20px_rgba(220,38,38,1)]', 'scale-110');
+                        }, i * 350);
+                    });
+
+                    // 4. Semáforo en verde (¡SALIDA!) y revelación del pase VIP Cheste
+                    setTimeout(() => {
+                        lights.forEach(light => {
+                            light.classList.remove('bg-racingRed', 'shadow-[0_0_20px_rgba(220,38,38,1)]', 'scale-110');
+                            light.classList.add('bg-emerald-500', 'shadow-[0_0_25px_rgba(16,185,129,1)]', 'scale-125');
+                        });
+
+                        setTimeout(() => {
+                            // Desvanecer overlay e intercambiar secciones
+                            giftTeaserOverlay.classList.add('opacity-0', 'pointer-events-none');
+                            secFalseEnd.classList.add('hidden');
+                            secMotogp.classList.remove('hidden');
+                            secMotogp.scrollIntoView({ behavior: 'smooth' });
+
+                            // Entrada triunfal de la tarjeta VIP
+                            if (vipTicketCard) {
+                                vipTicketCard.classList.add('scale-90', 'opacity-0');
+                                setTimeout(() => {
+                                    vipTicketCard.classList.remove('scale-90', 'opacity-0');
+                                    vipTicketCard.classList.add('scale-100', 'opacity-100', 'transition-all', 'duration-1000');
+                                }, 300);
+                            }
+                        }, 700);
+                    }, 2200);
+                }, 3400);
             });
 
             proceedToFinalBtn.addEventListener('click', () => {

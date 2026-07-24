@@ -706,10 +706,13 @@
             }
 
             function showSoundtrackStage() {
+                window.scrollTo(0, 0);
                 if (secSoundtrack) {
                     secSoundtrack.classList.remove('hidden');
+                    secSoundtrack.classList.remove('opacity-0');
                 } else {
                     secIntro.classList.remove('hidden');
+                    secIntro.classList.remove('opacity-0');
                     initIntroAnimation();
                 }
             }
@@ -726,60 +729,69 @@
                 const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-                document.getElementById('lockDays').innerText = String(days).padStart(2, '0');
-                document.getElementById('lockHours').innerText = String(hours).padStart(2, '0');
-                document.getElementById('lockMins').innerText = String(mins).padStart(2, '0');
-                document.getElementById('lockSecs').innerText = String(secs).padStart(2, '0');
+                const elDays = document.getElementById('lockDays');
+                const elHours = document.getElementById('lockHours');
+                const elMins = document.getElementById('lockMins');
+                const elSecs = document.getElementById('lockSecs');
+
+                if (elDays) elDays.innerText = String(days).padStart(2, '0');
+                if (elHours) elHours.innerText = String(hours).padStart(2, '0');
+                if (elMins) elMins.innerText = String(mins).padStart(2, '0');
+                if (elSecs) elSecs.innerText = String(secs).padStart(2, '0');
             }
 
-            // Gestión del acceso protegido con contraseña para Dape (PIN ofuscado)
+            // Gestión del acceso protegido con contraseña para Dape (PIN 1936)
             const dapePasswordForm = document.getElementById('dapePasswordForm');
             const dapePinInput = document.getElementById('dapePinInput');
             const submitDapePinBtn = document.getElementById('submitDapePinBtn');
             const dapePinError = document.getElementById('dapePinError');
             const _0x93pin = 'MTkzNg==';
 
-            bypassLockBtn.addEventListener('click', () => {
-                dapePasswordForm.classList.remove('hidden');
-                dapePinInput.focus();
-            });
+            if (bypassLockBtn) {
+                bypassLockBtn.addEventListener('click', () => {
+                    if (dapePasswordForm) {
+                        dapePasswordForm.classList.remove('hidden');
+                        if (dapePinInput) dapePinInput.focus();
+                    }
+                });
+            }
 
             function validateDapePin() {
-                const pin = dapePinInput.value.trim();
-                if (btoa(pin) === _0x93pin) {
+                const pin = dapePinInput ? dapePinInput.value.trim() : '';
+                if (pin === '1936' || btoa(pin) === _0x93pin) {
                     isUnlockedOverride = true;
-                    dapePinError.classList.add('hidden');
+                    if (dapePinError) dapePinError.classList.add('hidden');
                     lockScreen.classList.add('opacity-0', 'transition-opacity', 'duration-700');
                     setTimeout(() => {
                         lockScreen.classList.add('hidden');
                         showSoundtrackStage();
                     }, 700);
                 } else {
-                    dapePinError.classList.remove('hidden');
-                    dapePinInput.value = '';
-                    dapePinInput.focus();
+                    if (dapePinError) dapePinError.classList.remove('hidden');
+                    if (dapePinInput) {
+                        dapePinInput.value = '';
+                        dapePinInput.focus();
+                    }
                 }
             }
 
-            submitDapePinBtn.addEventListener('click', validateDapePin);
-            dapePinInput.addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') {
-                    validateDapePin();
-                }
-            });
+            if (submitDapePinBtn) submitDapePinBtn.addEventListener('click', validateDapePin);
+            if (dapePinInput) {
+                dapePinInput.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') {
+                        validateDapePin();
+                    }
+                });
+            }
 
             // Animación de entrada inicial
             function initIntroAnimation() {
-                setTimeout(() => {
-                    dateText.classList.remove('opacity-0', 'translate-y-4');
-                }, 300);
-                setTimeout(() => {
-                    mainTitle.classList.remove('opacity-0', 'translate-y-4');
-                }, 900);
-                setTimeout(() => {
+                if (dateText) dateText.classList.remove('opacity-0', 'translate-y-4');
+                if (mainTitle) mainTitle.classList.remove('opacity-0', 'translate-y-4');
+                if (scrollIndicator) {
                     scrollIndicator.classList.remove('opacity-0');
                     scrollIndicator.classList.add('opacity-100');
-                }, 1600);
+                }
             }
 
             // Transición desde la pantalla de Banda Sonora al pulsar "Poner música"
@@ -792,6 +804,8 @@
                     setTimeout(() => {
                         secSoundtrack.classList.add('hidden');
                         secIntro.classList.remove('hidden');
+                        secIntro.classList.remove('opacity-0');
+                        window.scrollTo(0, 0);
                         initIntroAnimation();
                     }, 700);
                 });

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ELVIRITIX — 31.07.2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0a0a0c',
+                        darkCard: '#121216',
+                        racingRed: '#dc2626',
+                        racingDark: '#991b1b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #050507; color: #f3f4f6; font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        .glass-panel { background: rgba(18, 18, 22, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .racing-glow { box-shadow: 0 0 40px -10px rgba(220, 38, 38, 0.3); }
+        .text-glow { text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+        .racing-text-glow { text-shadow: 0 0 25px rgba(220, 38, 38, 0.6); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #050507; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        .floating { animation: float 4s ease-in-out infinite; }
+    </style>
+</head>
+<body class="selection:bg-racingRed selection:text-white">
+
+    <audio id="bgAudio" loop preload="auto">
+        <source src="https://cdn.freesound.org/previews/612/612093_5121236-lq.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="audioControlContainer" class="fixed top-4 right-4 z-50 hidden">
+        <button id="audioToggleBtn" class="glass-panel px-3 py-2 rounded-full flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-all shadow-lg">
+            <i data-lucide="volume-x" id="audioIcon" class="w-4 h-4"></i>
+            <span id="audioText" class="hidden sm:inline">Ambiente</span>
+        </button>
+    </div>
+
+    <button id="helmetEasterEgg" class="fixed bottom-4 left-4 z-40 opacity-30 hover:opacity-100 transition-opacity p-2 text-racingRed">
+        <i data-lucide="shield" class="w-6 h-6"></i>
+    </button>
+
+    <div id="lockScreen" class="fixed inset-0 z-50 bg-darkBg flex flex-col items-center justify-center p-6 text-center hidden">
+        <div class="max-w-md w-full glass-panel p-8 rounded-3xl relative overflow-hidden">
+            <h1 class="text-2xl font-bold mb-4 tracking-tight">Esto todavía no se puede abrir.</h1>
+            <div class="grid grid-cols-4 gap-2 mb-8 font-mono">
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockDays" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Días</span></div>
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockHours" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Horas</span></div>
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockMins" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Min</span></div>
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockSecs" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Seg</span></div>
+            </div>
+            <button id="bypassLockBtn" class="text-xs text-gray-600 hover:text-gray-400 underline">¿Eres Dape o quieres probar el acceso anticipado?</button>
+        </div>
+    </div>
+
+    <main id="mainExperience" class="relative w-full min-h-screen">
+        <section id="sec-intro" class="relative h-screen w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg">
+            <h1 id="mainTitle" class="text-3xl sm:text-5xl font-light tracking-tight text-glow transition-all">“Hoy es un día importante.”</h1>
+            <button id="startExperienceBtn" class="mt-8 px-8 py-4 bg-white text-darkBg rounded-full font-medium text-sm uppercase">Empezar</button>
+        </section>
+
+        <section id="sec-story" class="relative min-h-[300vh] w-full px-6 py-20 bg-darkBg">
+            <div class="sticky top-1/2 -translate-y-1/2 text-center space-y-12">
+                <div class="story-step opacity-0 transition-all duration-700">“Hace unos meses apareció alguien…”</div>
+                <div class="story-step opacity-0 transition-all duration-700">“Un poco cuadro.”</div>
+                <div class="story-step opacity-0 transition-all duration-700">“ELVIRITIX”</div>
+            </div>
+        </section>
+
+        <section id="sec-discoveries" class="relative min-h-screen w-full px-6 py-32 bg-[#08080a] flex flex-col items-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+                <!-- Aquí añadiremos las fotos mediante diffs -->
+                <div class="glass-panel p-8 rounded-3xl"><h3>Que eres un cuadro.</h3></div>
+            </div>
+        </section>
+
+        <section id="sec-video" class="relative min-h-screen w-full flex items-center justify-center">
+            <button id="openVideoBtn" class="px-8 py-5 bg-racingRed text-white rounded-full">Tengo algo que contarte</button>
+        </section>
+
+        <section id="sec-motogp" class="hidden relative min-h-screen w-full flex flex-col items-center justify-center text-center">
+            <h2 class="text-5xl font-black uppercase text-white">Cheste 2026</h2>
+        </section>
+
+        <section id="sec-final" class="hidden min-h-screen flex flex-col items-center justify-center text-center">
+            <h2 class="text-3xl font-light">Feliz cumpleaños, Elviritix.</h2>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            // Lógica simplificada de navegación y cuenta atrás
+            const birthdayDate = new Date('2026-07-31T00:00:00').getTime();
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const diff = birthdayDate - now;
+                if (diff < 0) return;
+                document.getElementById('lockDays').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                // ... resto de lógica de tiempo
+            }
+            setInterval(updateCountdown, 1000);
+            document.getElementById('startExperienceBtn').addEventListener('click', () => {
+                document.getElementById('sec-story').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

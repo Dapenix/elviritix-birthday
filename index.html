@@ -103,6 +103,11 @@
         </button>
     </div>
 
+    <!-- Barra de progreso de scroll superior -->
+    <div class="fixed top-0 left-0 w-full h-1 z-50 bg-transparent">
+        <div id="scrollProgressBar" class="h-full bg-racingRed w-0 transition-all duration-150 ease-out shadow-[0_0_10px_rgba(220,38,38,0.8)]"></div>
+    </div>
+
     <!-- Easter Egg: Casco Flotante Discreto -->
     <button id="helmetEasterEgg" class="fixed bottom-4 left-4 z-40 opacity-30 hover:opacity-100 transition-opacity p-2 text-racingRed" title="Casco secreto">
         <i data-lucide="shield" class="w-6 h-6"></i>
@@ -161,10 +166,21 @@
                 </div>
             </div>
 
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-mono text-gray-600 flex flex-col items-center gap-2 animate-bounce">
-                <span>Desliza o pulsa</span>
-                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            <!-- Indicador de scroll visual -->
+            <div id="scrollIndicator" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3 opacity-0 transition-opacity duration-1000 delay-1500">
+                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Desliza para continuar</span>
+                <div class="w-[1px] h-12 bg-gray-800 relative overflow-hidden">
+                    <div class="w-full h-1/2 bg-racingRed absolute top-0 animate-[moveDown_1.5s_infinite_ease-in-out]"></div>
+                </div>
             </div>
+            
+            <style>
+                @keyframes moveDown {
+                    0% { transform: translateY(-100%); opacity: 0; }
+                    50% { opacity: 1; }
+                    100% { transform: translateY(200%); opacity: 0; }
+                }
+            </style>
         </section>
 
         <!-- SECCIÓN 2 — LA HISTORIA (Narrativa Vertical Progresiva) -->
@@ -511,11 +527,16 @@
             const lockScreen = document.getElementById('lockScreen');
             const mainExperience = document.getElementById('mainExperience');
             const bypassLockBtn = document.getElementById('bypassLockBtn');
+            // Audio elements
             const audioControlContainer = document.getElementById('audioControlContainer');
             const audioToggleBtn = document.getElementById('audioToggleBtn');
             const audioIcon = document.getElementById('audioIcon');
             const audioText = document.getElementById('audioText');
             const bgAudio = document.getElementById('bgAudio');
+
+            // Scroll indicator elements
+            const scrollProgressBar = document.getElementById('scrollProgressBar');
+            const scrollIndicator = document.getElementById('scrollIndicator');
 
             // Intro elements
             const dateText = document.getElementById('dateText');
@@ -620,6 +641,10 @@
                 setTimeout(() => {
                     startBtnContainer.classList.remove('opacity-0', 'translate-y-4');
                 }, 1500);
+                setTimeout(() => {
+                    scrollIndicator.classList.remove('opacity-0');
+                    scrollIndicator.classList.add('opacity-100');
+                }, 2500);
             }
 
             // Iniciar Experiencia al pulsar "Empezar"
@@ -663,6 +688,19 @@
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 const windowHeight = window.innerHeight;
+                
+                // Actualizar barra de progreso superior
+                const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                const scrollPercent = (scrollY / documentHeight) * 100;
+                scrollProgressBar.style.width = scrollPercent + '%';
+
+                // Ocultar el indicador de scroll inicial al bajar
+                if (scrollY > 50) {
+                    scrollIndicator.classList.replace('opacity-100', 'opacity-0');
+                } else if (!lockScreen.classList.contains('hidden') === false) {
+                    // Solo mostrar si no estamos en la pantalla de bloqueo
+                    scrollIndicator.classList.replace('opacity-0', 'opacity-100');
+                }
 
                 // Animación escalonada de los textos de la historia
                 storySteps.forEach((step) => {

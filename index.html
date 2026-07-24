@@ -29,6 +29,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
         body {
             background-color: #050507;
@@ -786,6 +788,14 @@
                     const scrollPercent = Math.min(Math.max((scrollY / documentHeight) * 100, 0), 100);
                     scrollProgressBar.style.width = scrollPercent + '%';
                     scrollMotorcycle.style.left = scrollPercent + '%';
+
+                    // Disparar confeti cuando la moto de Marc Márquez #93 cruza la meta (98%+)
+                    if (scrollPercent >= 98 && !confettiTriggered) {
+                        confettiTriggered = true;
+                        triggerConfetti();
+                    } else if (scrollPercent < 90) {
+                        confettiTriggered = false;
+                    }
                 }
 
                 // Ocultar el indicador de scroll inicial al bajar
@@ -972,6 +982,9 @@
                             secMotogp.classList.remove('hidden');
                             secMotogp.scrollIntoView({ behavior: 'smooth' });
 
+                            // Lanzar confeti de celebración al desvelar las entradas
+                            triggerConfetti();
+
                             if (vipTicketCard) {
                                 vipTicketCard.classList.add('scale-90', 'opacity-0');
                                 setTimeout(() => {
@@ -1003,11 +1016,74 @@
                     const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    document.getElementById('gpDays').innerText = String(days).padStart(2, '0');
-                    document.getElementById('gpHours').innerText = String(hours).padStart(2, '0');
-                    document.getElementById('gpMins').innerText = String(mins).padStart(2, '0');
-                    document.getElementById('gpSecs').innerText = String(secs).padStart(2, '0');
+                    const elDays = document.getElementById('finalDays');
+                    const elHours = document.getElementById('finalHours');
+                    const elMins = document.getElementById('finalMins');
+                    const elSecs = document.getElementById('finalSecs');
+
+                    if (elDays) elDays.innerText = String(days).padStart(2, '0');
+                    if (elHours) elHours.innerText = String(hours).padStart(2, '0');
+                    if (elMins) elMins.innerText = String(mins).padStart(2, '0');
+                    if (elSecs) elSecs.innerText = String(secs).padStart(2, '0');
                 }, 1000);
+            }
+
+            // Sistema de Confeti de Celebración desde Arriba
+            let confettiTriggered = false;
+
+            function triggerConfetti() {
+                if (typeof confetti === 'function') {
+                    // Confeti festivo desde arriba con paleta racing (Rojo, Blanco, Dorado, Verde)
+                    confetti({
+                        particleCount: 140,
+                        spread: 100,
+                        origin: { y: 0 },
+                        colors: ['#dc2626', '#ffffff', '#ffd700', '#10b981']
+                    });
+                    setTimeout(() => {
+                        confetti({
+                            particleCount: 90,
+                            angle: 60,
+                            spread: 80,
+                            origin: { x: 0, y: 0.1 },
+                            colors: ['#dc2626', '#ffffff', '#ffd700']
+                        });
+                        confetti({
+                            particleCount: 90,
+                            angle: 120,
+                            spread: 80,
+                            origin: { x: 1, y: 0.1 },
+                            colors: ['#dc2626', '#ffffff', '#ffd700']
+                        });
+                    }, 250);
+                } else {
+                    // Fallback con particulas DOM cayendo desde el borde superior
+                    createDOMConfetti();
+                }
+            }
+
+            function createDOMConfetti() {
+                const colors = ['#dc2626', '#ffffff', '#ffd700', '#10b981'];
+                for (let i = 0; i < 70; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'fixed z-[100] pointer-events-none rounded-sm shadow-sm';
+                    const size = Math.random() * 8 + 6;
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    p.style.left = Math.random() * 100 + 'vw';
+                    p.style.top = '-20px';
+                    p.style.transition = `transform ${Math.random() * 2.5 + 1.5}s cubic-bezier(0.25, 1, 0.5, 1), top ${Math.random() * 2.5 + 1.5}s cubic-bezier(0.25, 1, 0.5, 1), opacity ${Math.random() * 2.5 + 1.5}s ease-out`;
+                    document.body.appendChild(p);
+
+                    setTimeout(() => {
+                        p.style.top = '110vh';
+                        p.style.transform = `rotate(${Math.random() * 1080}deg) translateX(${Math.random() * 60 - 30}px)`;
+                        p.style.opacity = '0';
+                    }, 50);
+
+                    setTimeout(() => p.remove(), 4000);
+                }
             }
 
             // Funcionalidad de Modales Genéricos & Easter Eggs

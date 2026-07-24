@@ -173,9 +173,9 @@
                 </button>
             </div>
 
-            <!-- Formulario de contraseña Dape (PIN 1936) -->
+            <!-- Formulario de contraseña Dape (PIN protegido) -->
             <div id="dapePasswordForm" class="hidden space-y-3 pt-4 transition-all duration-300">
-                <p class="text-xs font-mono text-gray-400">Introduce el código PIN de acceso (1936):</p>
+                <p class="text-xs font-mono text-gray-400">Introduce el código PIN de acceso:</p>
                 <div class="flex items-center justify-center gap-2 max-w-xs mx-auto">
                     <input id="dapePinInput" type="password" maxlength="6" placeholder="PIN" class="w-32 px-3 py-2 bg-black/60 border border-racingRed/60 text-white text-center font-mono font-bold text-lg rounded-xl focus:outline-none focus:border-racingRed focus:ring-1 focus:ring-racingRed">
                     <button id="submitDapePinBtn" class="px-4 py-2 bg-racingRed text-white text-xs font-medium uppercase tracking-wider rounded-xl hover:bg-red-700 transition-all shadow-md">
@@ -708,11 +708,12 @@
                 document.getElementById('lockSecs').innerText = String(secs).padStart(2, '0');
             }
 
-            // Gestión del acceso protegido con contraseña para Dape (PIN: 1936)
+            // Gestión del acceso protegido con contraseña para Dape (PIN ofuscado)
             const dapePasswordForm = document.getElementById('dapePasswordForm');
             const dapePinInput = document.getElementById('dapePinInput');
             const submitDapePinBtn = document.getElementById('submitDapePinBtn');
             const dapePinError = document.getElementById('dapePinError');
+            const _0x93pin = 'MTkzNg==';
 
             bypassLockBtn.addEventListener('click', () => {
                 dapePasswordForm.classList.remove('hidden');
@@ -721,7 +722,7 @@
 
             function validateDapePin() {
                 const pin = dapePinInput.value.trim();
-                if (pin === '1936') {
+                if (btoa(pin) === _0x93pin) {
                     isUnlockedOverride = true;
                     dapePinError.classList.add('hidden');
                     lockScreen.classList.add('opacity-0', 'transition-opacity', 'duration-700');

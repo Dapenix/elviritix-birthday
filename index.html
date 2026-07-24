@@ -761,15 +761,40 @@
                 }, 2500);
             }
 
+            // Desbloqueo universal de audio para Safari / iOS / Chrome
+            let audioContextUnlocked = false;
+
+            function unlockAudioElement() {
+                if (!audioContextUnlocked) {
+                    bgAudio.load();
+                    audioContextUnlocked = true;
+                }
+            }
+
+            document.addEventListener('touchstart', unlockAudioElement, { once: true });
+            document.addEventListener('click', unlockAudioElement, { once: true });
+
+            function playBgMusic() {
+                bgAudio.volume = 0.3;
+                const playPromise = bgAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        audioPlaying = true;
+                        updateAudioButtonState();
+                        audioControlContainer.classList.remove('hidden');
+                    }).catch(err => {
+                        console.log('Audio playback prevented or paused:', err);
+                        audioPlaying = false;
+                        updateAudioButtonState();
+                        audioControlContainer.classList.remove('hidden');
+                    });
+                }
+            }
+
             // Iniciar Experiencia al pulsar "Empezar"
             startExperienceBtn.addEventListener('click', () => {
-                // Activar audio ambiental
-                bgAudio.volume = 0.3;
-                bgAudio.play().then(() => {
-                    audioPlaying = true;
-                    updateAudioButtonState();
-                    audioControlContainer.classList.remove('hidden');
-                }).catch(e => console.log('Audio autoplay prevented:', e));
+                unlockAudioElement();
+                playBgMusic();
 
                 // Desplazamiento suave hacia la sección de historia
                 secStory.scrollIntoView({ behavior: 'smooth' });
@@ -780,11 +805,10 @@
                 if (audioPlaying) {
                     bgAudio.pause();
                     audioPlaying = false;
+                    updateAudioButtonState();
                 } else {
-                    bgAudio.play();
-                    audioPlaying = true;
+                    playBgMusic();
                 }
-                updateAudioButtonState();
             });
 
             function updateAudioButtonState() {

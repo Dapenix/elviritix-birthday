@@ -96,11 +96,11 @@
         <source src="assets/audio.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Barra de Control de Audio Discreta -->
-    <div id="audioControlContainer" class="fixed top-4 right-4 z-50 hidden">
-        <button id="audioToggleBtn" class="glass-panel px-3 py-2 rounded-full flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-all shadow-lg" title="Aerosmith - I Don't Want to Miss a Thing">
-            <i data-lucide="volume-x" id="audioIcon" class="w-4 h-4"></i>
-            <span id="audioText" class="hidden sm:inline">Música ON</span>
+    <!-- Barra de Control de Audio Discreta (Abajo a la Derecha) -->
+    <div id="audioControlContainer" class="fixed bottom-6 right-6 z-50 hidden mb-[env(safe-area-inset-bottom,0px)]">
+        <button id="audioToggleBtn" class="glass-panel px-4 py-2.5 rounded-full flex items-center gap-2 text-xs text-gray-300 hover:text-white transition-all shadow-2xl border border-white/10 backdrop-blur-md" title="Aerosmith - I Don't Want to Miss a Thing">
+            <i data-lucide="volume-x" id="audioIcon" class="w-4 h-4 text-racingRed"></i>
+            <span id="audioText" class="hidden sm:inline font-mono">Música ON</span>
         </button>
     </div>
 

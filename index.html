@@ -150,7 +150,7 @@
     <main id="mainExperience" class="relative w-full min-h-screen">
 
         <!-- SECCIÓN 1 — INTRODUCCIÓN -->
-        <section id="sec-intro" class="relative h-screen w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg overflow-hidden">
+        <section id="sec-intro" class="relative min-h-[100dvh] w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg overflow-hidden">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,20,30,0.4)_0%,rgba(5,5,7,1)_100%)] pointer-events-none"></div>
             
             <div id="introContent" class="relative z-10 space-y-6 max-w-xl mx-auto transition-opacity duration-1000">
@@ -166,11 +166,11 @@
                 </div>
             </div>
 
-            <!-- Indicador de scroll visual -->
-            <div id="scrollIndicator" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3 opacity-0 transition-opacity duration-1000 delay-1500">
-                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Desliza para continuar</span>
-                <div class="w-[1px] h-12 bg-gray-800 relative overflow-hidden">
-                    <div class="w-full h-1/2 bg-racingRed absolute top-0 animate-[moveDown_1.5s_infinite_ease-in-out]"></div>
+            <!-- Indicador de scroll visual para móvil/desktop -->
+            <div id="scrollIndicator" class="absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 transition-opacity duration-700 pointer-events-none z-30 mb-[env(safe-area-inset-bottom,0px)]">
+                <span class="text-[10px] font-mono text-gray-400 uppercase tracking-[0.2em]">Desliza para continuar</span>
+                <div class="w-[2px] h-10 bg-gray-800/80 rounded-full relative overflow-hidden">
+                    <div class="w-full h-1/2 bg-racingRed absolute top-0 rounded-full animate-[moveDown_1.6s_infinite_ease-in-out]"></div>
                 </div>
             </div>
             
@@ -184,24 +184,24 @@
         </section>
 
         <!-- SECCIÓN 2 — LA HISTORIA (Narrativa Vertical Progresiva) -->
-        <section id="sec-story" class="relative min-h-[300vh] w-full px-6 py-20 flex flex-col justify-between bg-darkBg">
-            <div class="sticky top-1/2 -translate-y-1/2 max-w-2xl mx-auto w-full text-center space-y-12">
-                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="1">
+        <section id="sec-story" class="relative min-h-[220vh] sm:min-h-[250vh] w-full px-6 py-20 flex flex-col justify-between bg-darkBg">
+            <div class="sticky top-1/2 -translate-y-1/2 max-w-2xl mx-auto w-full text-center space-y-8 sm:space-y-10">
+                <div class="story-step opacity-0 transition-all duration-700 transform translate-y-8" data-index="1">
                     <p class="text-2xl sm:text-4xl font-light text-gray-300">“Hace unos meses apareció alguien…”</p>
                 </div>
-                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="2">
+                <div class="story-step opacity-0 transition-all duration-700 transform translate-y-8" data-index="2">
                     <p class="text-2xl sm:text-4xl font-light text-gray-300">“Un poco cuadro.”</p>
                 </div>
-                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="3">
+                <div class="story-step opacity-0 transition-all duration-700 transform translate-y-8" data-index="3">
                     <p class="text-2xl sm:text-4xl font-light text-gray-300">“Bastante difícil de gestionar.”</p>
                 </div>
-                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="4">
+                <div class="story-step opacity-0 transition-all duration-700 transform translate-y-8" data-index="4">
                     <p class="text-2xl sm:text-4xl font-light text-gray-300">“Con unos horarios de sueño bastante cuestionables.”</p>
                 </div>
-                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="5">
+                <div class="story-step opacity-0 transition-all duration-700 transform translate-y-8" data-index="5">
                     <p class="text-2xl sm:text-4xl font-light text-gray-300">“Y con una habilidad especial para hacerme sonreír.”</p>
                 </div>
-                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8 pt-8" data-index="6">
+                <div class="story-step opacity-0 transition-all duration-700 transform translate-y-8 pt-6" data-index="6">
                     <h2 class="text-5xl sm:text-7xl font-extrabold tracking-tighter text-white uppercase text-glow">
                         ELVIRITIX
                     </h2>
@@ -704,32 +704,52 @@
                 lucide.createIcons();
             }
 
-            // Scroll animations para la sección de historia
+            // Scroll animations para la sección de historia y barra de progreso
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 const windowHeight = window.innerHeight;
                 
                 // Actualizar barra de progreso superior
-                const documentHeight = document.documentElement.scrollHeight - windowHeight;
-                const scrollPercent = (scrollY / documentHeight) * 100;
-                scrollProgressBar.style.width = scrollPercent + '%';
-
-                // Ocultar el indicador de scroll inicial al bajar
-                if (scrollY > 50) {
-                    scrollIndicator.classList.replace('opacity-100', 'opacity-0');
-                } else if (!lockScreen.classList.contains('hidden') === false) {
-                    // Solo mostrar si no estamos en la pantalla de bloqueo
-                    scrollIndicator.classList.replace('opacity-0', 'opacity-100');
+                if (scrollProgressBar) {
+                    const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                    const scrollPercent = (scrollY / documentHeight) * 100;
+                    scrollProgressBar.style.width = scrollPercent + '%';
                 }
 
-                // Animación escalonada de los textos de la historia
-                storySteps.forEach((step) => {
-                    const rect = step.getBoundingClientRect();
-                    if (rect.top < windowHeight * 0.75 && rect.bottom > windowHeight * 0.25) {
-                        step.classList.remove('opacity-10', 'translate-y-8');
-                        step.classList.add('opacity-100', 'translate-y-0');
+                // Ocultar el indicador de scroll inicial al bajar
+                if (scrollIndicator) {
+                    if (scrollY > 40) {
+                        scrollIndicator.classList.remove('opacity-100');
+                        scrollIndicator.classList.add('opacity-0');
+                    } else if (lockScreen && lockScreen.classList.contains('hidden')) {
+                        scrollIndicator.classList.remove('opacity-0');
+                        scrollIndicator.classList.add('opacity-100');
                     }
-                });
+                }
+
+                // Revelación progresiva sincronizada con el scroll en la Sección 2
+                if (secStory) {
+                    const rect = secStory.getBoundingClientRect();
+                    const totalScrollable = secStory.offsetHeight - windowHeight;
+                    if (totalScrollable > 0) {
+                        // Progreso de 0 a 1 dentro de la sección 2
+                        const progress = Math.min(Math.max(-rect.top / totalScrollable, 0), 1);
+                        
+                        // Umbrales de activación para los 6 pasos
+                        const thresholds = [0.05, 0.20, 0.35, 0.50, 0.65, 0.80];
+                        
+                        storySteps.forEach((step, idx) => {
+                            const threshold = thresholds[idx] || (0.12 * idx);
+                            if (progress >= threshold) {
+                                step.classList.remove('opacity-0', 'translate-y-8');
+                                step.classList.add('opacity-100', 'translate-y-0');
+                            } else {
+                                step.classList.remove('opacity-100', 'translate-y-0');
+                                step.classList.add('opacity-0', 'translate-y-8');
+                            }
+                        });
+                    }
+                }
             });
 
             // Gestión del Modal de Vídeo

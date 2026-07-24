@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ELVIRITIX — 31.07.2026</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,27 +25,77 @@
             }
         }
     </script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { background-color: #050507; color: #f3f4f6; font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        .glass-panel { background: rgba(18, 18, 22, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .racing-glow { box-shadow: 0 0 40px -10px rgba(220, 38, 38, 0.3); }
-        .text-glow { text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-        .racing-text-glow { text-shadow: 0 0 25px rgba(220, 38, 38, 0.6); }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #050507; }
-        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
-        .floating { animation: float 4s ease-in-out infinite; }
+        body {
+            background-color: #050507;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(18, 18, 22, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .racing-glow {
+            box-shadow: 0 0 40px -10px rgba(220, 38, 38, 0.3);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        .racing-text-glow {
+            text-shadow: 0 0 25px rgba(220, 38, 38, 0.6);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050507;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 2px;
+        }
+        @keyframes pulseSlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulseSlow 8s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body class="selection:bg-racingRed selection:text-white">
 
+    <!-- Audio Ambient (Synthetic / Generator or Stream) -->
     <audio id="bgAudio" loop preload="auto">
+        <!-- Audio de ambiente cinematográfico sutil -->
         <source src="https://cdn.freesound.org/previews/612/612093_5121236-lq.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Barra de Control de Audio Discreta -->
     <div id="audioControlContainer" class="fixed top-4 right-4 z-50 hidden">
         <button id="audioToggleBtn" class="glass-panel px-3 py-2 rounded-full flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-all shadow-lg">
             <i data-lucide="volume-x" id="audioIcon" class="w-4 h-4"></i>
@@ -52,74 +103,694 @@
         </button>
     </div>
 
-    <button id="helmetEasterEgg" class="fixed bottom-4 left-4 z-40 opacity-30 hover:opacity-100 transition-opacity p-2 text-racingRed">
+    <!-- Easter Egg: Casco Flotante Discreto -->
+    <button id="helmetEasterEgg" class="fixed bottom-4 left-4 z-40 opacity-30 hover:opacity-100 transition-opacity p-2 text-racingRed" title="Casco secreto">
         <i data-lucide="shield" class="w-6 h-6"></i>
     </button>
 
+    <!-- ESTADO DE BLOQUEO TEMPORAL (Antes del 31 de Julio de 2026) -->
     <div id="lockScreen" class="fixed inset-0 z-50 bg-darkBg flex flex-col items-center justify-center p-6 text-center hidden">
         <div class="max-w-md w-full glass-panel p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-racingRed/10 rounded-full blur-3xl pointer-events-none"></div>
+            <p class="font-mono text-xs uppercase tracking-widest text-racingRed mb-3">Acceso Restringido</p>
             <h1 class="text-2xl font-bold mb-4 tracking-tight">Esto todavía no se puede abrir.</h1>
+            <p class="text-sm text-gray-400 mb-8">La experiencia para Elviritix se desbloqueará automáticamente el 31 de julio de 2026.</p>
+            
             <div class="grid grid-cols-4 gap-2 mb-8 font-mono">
-                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockDays" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Días</span></div>
-                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockHours" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Horas</span></div>
-                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockMins" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Min</span></div>
-                <div class="bg-darkCard p-3 rounded-xl border border-white/5"><span id="lockSecs" class="block text-xl font-bold text-white">00</span><span class="text-[10px] text-gray-500">Seg</span></div>
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5">
+                    <span id="lockDays" class="block text-xl font-bold text-white">00</span>
+                    <span class="text-[10px] text-gray-500 uppercase">Días</span>
+                </div>
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5">
+                    <span id="lockHours" class="block text-xl font-bold text-white">00</span>
+                    <span class="text-[10px] text-gray-500 uppercase">Horas</span>
+                </div>
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5">
+                    <span id="lockMins" class="block text-xl font-bold text-white">00</span>
+                    <span class="text-[10px] text-gray-500 uppercase">Min</span>
+                </div>
+                <div class="bg-darkCard p-3 rounded-xl border border-white/5">
+                    <span id="lockSecs" class="block text-xl font-bold text-white">00</span>
+                    <span class="text-[10px] text-gray-500 uppercase">Seg</span>
+                </div>
             </div>
-            <button id="bypassLockBtn" class="text-xs text-gray-600 hover:text-gray-400 underline">¿Eres Dape o quieres probar el acceso anticipado?</button>
+
+            <button id="bypassLockBtn" class="text-xs text-gray-600 hover:text-gray-400 underline transition-colors">
+                ¿Eres Dape o quieres probar el acceso anticipado?
+            </button>
         </div>
     </div>
 
+    <!-- CONTENEDOR PRINCIPAL DE LA EXPERIENCIA -->
     <main id="mainExperience" class="relative w-full min-h-screen">
-        <section id="sec-intro" class="relative h-screen w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg">
-            <h1 id="mainTitle" class="text-3xl sm:text-5xl font-light tracking-tight text-glow transition-all">“Hoy es un día importante.”</h1>
-            <button id="startExperienceBtn" class="mt-8 px-8 py-4 bg-white text-darkBg rounded-full font-medium text-sm uppercase">Empezar</button>
-        </section>
 
-        <section id="sec-story" class="relative min-h-[300vh] w-full px-6 py-20 bg-darkBg">
-            <div class="sticky top-1/2 -translate-y-1/2 text-center space-y-12">
-                <div class="story-step opacity-0 transition-all duration-700">“Hace unos meses apareció alguien…”</div>
-                <div class="story-step opacity-0 transition-all duration-700">“Un poco cuadro.”</div>
-                <div class="story-step opacity-0 transition-all duration-700">“ELVIRITIX”</div>
+        <!-- SECCIÓN 1 — INTRODUCCIÓN -->
+        <section id="sec-intro" class="relative h-screen w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,20,30,0.4)_0%,rgba(5,5,7,1)_100%)] pointer-events-none"></div>
+            
+            <div id="introContent" class="relative z-10 space-y-6 max-w-xl mx-auto transition-opacity duration-1000">
+                <p class="font-mono text-xs tracking-[0.3em] text-gray-500 uppercase opacity-0 transform translate-y-4 transition-all duration-1000 delay-300" id="dateText">31.07.2026</p>
+                <h1 class="text-3xl sm:text-5xl font-light tracking-tight text-glow opacity-0 transform translate-y-4 transition-all duration-1000 delay-700" id="mainTitle">
+                    “Hoy es un día importante.”
+                </h1>
+                <div class="pt-8 opacity-0 transform translate-y-4 transition-all duration-1000 delay-1000" id="startBtnContainer">
+                    <button id="startExperienceBtn" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-darkBg rounded-full font-medium text-sm tracking-wider uppercase hover:bg-gray-200 transition-all transform hover:scale-105 shadow-2xl">
+                        <span>Empezar</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-mono text-gray-600 flex flex-col items-center gap-2 animate-bounce">
+                <span>Desliza o pulsa</span>
+                <i data-lucide="chevron-down" class="w-4 h-4"></i>
             </div>
         </section>
 
-        <section id="sec-discoveries" class="relative min-h-screen w-full px-6 py-32 bg-[#08080a] flex flex-col items-center">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-                <!-- Aquí añadiremos las fotos mediante diffs -->
-                <div class="glass-panel p-8 rounded-3xl"><h3>Que eres un cuadro.</h3></div>
+        <!-- SECCIÓN 2 — LA HISTORIA (Narrativa Vertical Progresiva) -->
+        <section id="sec-story" class="relative min-h-[300vh] w-full px-6 py-20 flex flex-col justify-between bg-darkBg">
+            <div class="sticky top-1/2 -translate-y-1/2 max-w-2xl mx-auto w-full text-center space-y-12">
+                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="1">
+                    <p class="text-2xl sm:text-4xl font-light text-gray-300">“Hace unos meses apareció alguien…”</p>
+                </div>
+                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="2">
+                    <p class="text-2xl sm:text-4xl font-light text-gray-300">“Un poco cuadro.”</p>
+                </div>
+                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="3">
+                    <p class="text-2xl sm:text-4xl font-light text-gray-300">“Bastante difícil de gestionar.”</p>
+                </div>
+                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="4">
+                    <p class="text-2xl sm:text-4xl font-light text-gray-300">“Con unos horarios de sueño bastante cuestionables.”</p>
+                </div>
+                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8" data-index="5">
+                    <p class="text-2xl sm:text-4xl font-light text-gray-300">“Y con una habilidad especial para hacerme sonreír.”</p>
+                </div>
+                <div class="story-step opacity-10 transition-all duration-700 transform translate-y-8 pt-8" data-index="6">
+                    <h2 class="text-5xl sm:text-7xl font-extrabold tracking-tighter text-white uppercase text-glow">
+                        ELVIRITIX
+                    </h2>
+                    <p class="text-xs font-mono text-racingRed mt-4 tracking-widest uppercase">Xiqueta meuaaaa</p>
+                </div>
             </div>
         </section>
 
-        <section id="sec-video" class="relative min-h-screen w-full flex items-center justify-center">
-            <button id="openVideoBtn" class="px-8 py-5 bg-racingRed text-white rounded-full">Tengo algo que contarte</button>
+        <!-- SECCIÓN 3 — LO QUE HE DESCUBIERTO DE TI (Tarjetas Interactivas) -->
+        <section id="sec-discoveries" class="relative min-h-screen w-full px-6 py-32 bg-[#08080a] flex flex-col items-center justify-center">
+            <div class="max-w-4xl w-full mx-auto space-y-16">
+                <div class="text-center space-y-3">
+                    <p class="font-mono text-xs uppercase tracking-[0.2em] text-racingRed">Análisis exhaustivo</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Lo que he descubierto de ti</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Tarjeta 1 -->
+                    <div class="glass-panel p-8 rounded-3xl transition-all duration-300 hover:border-white/20 group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-mono text-xs text-racingRed">01 / PERFIL</span>
+                            <i data-lucide="user-check" class="w-5 h-5 text-gray-500 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-medium text-white mb-2">“Que eres un cuadro.”</h3>
+                        <p class="text-sm text-gray-400">Confirmado por la propia interesada.</p>
+                    </div>
+
+                    <!-- Tarjeta 2 -->
+                    <div class="glass-panel p-8 rounded-3xl transition-all duration-300 hover:border-white/20 group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-mono text-xs text-racingRed">02 / HORARIOS</span>
+                            <i data-lucide="clock" class="w-5 h-5 text-gray-500 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-medium text-white mb-2">“Que tus horarios no tienen ningún sentido.”</h3>
+                        <p class="text-sm text-gray-400">Enviar mensajes a las 5:09 AM debería ser delito tipificado.</p>
+                    </div>
+
+                    <!-- Tarjeta 3 -->
+                    <div class="glass-panel p-8 rounded-3xl transition-all duration-300 hover:border-white/20 group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-mono text-xs text-racingRed">03 / INTERIOR</span>
+                            <i data-lucide="heart" class="w-5 h-5 text-gray-500 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-medium text-white mb-2">“Que tienes un corazón enorme.”</h3>
+                        <p class="text-sm text-gray-400">Aunque a veces intentes esconderlo tras capas de ironía.</p>
+                    </div>
+
+                    <!-- Tarjeta 4 -->
+                    <div class="glass-panel p-8 rounded-3xl transition-all duration-300 hover:border-white/20 group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-mono text-xs text-racingRed">04 / OBJETIVO</span>
+                            <i data-lucide="compass" class="w-5 h-5 text-gray-500 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-medium text-white mb-2">“Que algún día conseguiré verte.”</h3>
+                        <p class="text-sm text-gray-400">Probablemente antes de lo que imaginas.</p>
+                    </div>
+                </div>
+
+                <!-- Referencia secreta a Trope -->
+                <div class="text-center pt-4">
+                    <button id="tropeEasterEggBtn" class="text-xs font-mono text-gray-500 hover:text-gray-300 transition-colors inline-flex items-center gap-2">
+                        <i data-lucide="paw-print" class="w-3.5 h-3.5 text-racingRed"></i>
+                        <span>Estado de aprobación de Trope</span>
+                    </button>
+                </div>
+            </div>
         </section>
 
-        <section id="sec-motogp" class="hidden relative min-h-screen w-full flex flex-col items-center justify-center text-center">
-            <h2 class="text-5xl font-black uppercase text-white">Cheste 2026</h2>
+        <!-- SECCIÓN 4 — EL VÍDEO -->
+        <section id="sec-video" class="relative min-h-screen w-full px-6 py-32 bg-darkBg flex flex-col items-center justify-center text-center">
+            <div class="max-w-xl mx-auto space-y-8">
+                <div class="space-y-4">
+                    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-500">Transición personal</p>
+                    <h2 class="text-3xl sm:text-5xl font-light tracking-tight">“Pero hay cosas que prefiero decirte yo.”</h2>
+                </div>
+
+                <div class="pt-4">
+                    <button id="openVideoBtn" class="group inline-flex items-center gap-3 px-8 py-5 bg-racingRed text-white rounded-full font-medium text-sm tracking-wider uppercase hover:bg-red-700 transition-all transform hover:scale-105 shadow-xl racing-glow">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>Tengo algo que contarte</span>
+                    </button>
+                </div>
+            </div>
         </section>
 
-        <section id="sec-final" class="hidden min-h-screen flex flex-col items-center justify-center text-center">
-            <h2 class="text-3xl font-light">Feliz cumpleaños, Elviritix.</h2>
+        <!-- SECCIÓN 5 — FALSO FINAL -->
+        <section id="sec-false-end" class="relative min-h-screen w-full px-6 py-32 bg-darkBg flex flex-col items-center justify-center text-center hidden">
+            <div id="falseEndStep1" class="space-y-6 max-w-lg mx-auto transition-opacity duration-1000">
+                <p class="text-3xl sm:text-4xl font-light text-gray-400">“Bueno…”</p>
+                <div class="h-4"></div>
+                <p class="text-3xl sm:text-4xl font-light text-gray-400">“Eso era todo.”</p>
+            </div>
+
+            <div id="falseEndStep2" class="space-y-8 max-w-lg mx-auto hidden opacity-0 transition-opacity duration-1000">
+                <p class="text-3xl sm:text-4xl font-light text-white tracking-tight">“¿De verdad pensabas que eso era todo?”</p>
+                <div>
+                    <button id="revealSurpriseBtn" class="px-8 py-4 bg-white text-darkBg rounded-full font-medium text-sm uppercase tracking-wider hover:bg-gray-200 transition-all transform hover:scale-105 shadow-2xl">
+                        Pues no.
+                    </button>
+                </div>
+            </div>
         </section>
+
+        <!-- SECCIÓN 6 — REVELACIÓN MOTOGP -->
+        <section id="sec-motogp" class="relative min-h-screen w-full px-6 py-32 bg-[#060608] flex flex-col items-center justify-center text-center hidden overflow-hidden">
+            <!-- Destello de fondo racing -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(220,38,38,0.15)_0%,rgba(6,6,8,1)_70%)] pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-3xl w-full mx-auto space-y-12">
+                <div class="space-y-3">
+                    <span class="font-mono text-xs uppercase tracking-[0.4em] text-racingRed font-bold">Próxima parada</span>
+                    <h2 class="text-5xl sm:text-7xl font-black tracking-tighter uppercase text-white racing-text-glow">Cheste</h2>
+                    <p class="text-2xl sm:text-4xl font-light tracking-widest text-gray-300">MotoGP 2026</p>
+                </div>
+
+                <!-- Tarjeta Digital VIP / Paddock -->
+                <div id="vipTicketCard" class="glass-panel p-6 sm:p-10 rounded-3xl border-racingRed/30 text-left relative overflow-hidden shadow-2xl transition-transform duration-500 floating">
+                    <div class="absolute top-0 right-0 bg-racingRed text-white text-[10px] font-mono uppercase tracking-widest px-4 py-1.5 rounded-bl-2xl">
+                        VIP / Paddock Pass
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8 border-b border-white/10 pb-6">
+                        <div>
+                            <span class="text-xs font-mono text-gray-500 uppercase tracking-widest block mb-1">Evento</span>
+                            <h3 class="text-2xl font-bold tracking-tight text-white">ELVIRITIX GRAND PRIX 2026</h3>
+                            <p class="text-sm text-gray-400">Circuit Ricardo Tormo — Valencia</p>
+                        </div>
+                        <div class="font-mono text-right">
+                            <span class="text-xs text-racingRed block">Fechas</span>
+                            <span class="text-lg font-bold text-white">27 — 29 NOV 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 text-sm">
+                        <div class="bg-darkBg/60 p-4 rounded-2xl border border-white/5">
+                            <span class="text-[10px] font-mono text-gray-500 uppercase block mb-1">Localización</span>
+                            <span class="font-semibold text-white">Tribuna Morada</span>
+                            <span class="block text-xs text-gray-400">Palco de Boxes</span>
+                        </div>
+                        <div class="bg-darkBg/60 p-4 rounded-2xl border border-white/5">
+                            <span class="text-[10px] font-mono text-gray-500 uppercase block mb-1">Titular</span>
+                            <span class="font-semibold text-white">Elvira Lozano Cabrera</span>
+                            <span class="block text-[10px] text-racingRed">Uso personal e intransferible</span>
+                        </div>
+                        <div class="bg-darkBg/60 p-4 rounded-2xl border border-white/5">
+                            <span class="text-[10px] font-mono text-gray-500 uppercase block mb-1">Acompañante</span>
+                            <span class="font-semibold text-white">Un tal Da-pena.</span>
+                            <span class="block text-[10px] text-gray-400">Asistencia obligatoria</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/10">
+                        <div class="flex items-center gap-3">
+                            <!-- QR interactivo simulado -->
+                            <button id="qrCodeBtn" class="w-14 h-14 bg-white p-2 rounded-xl flex items-center justify-center hover:scale-105 transition-transform cursor-pointer" title="Escanear entrada">
+                                <i data-lucide="qr-code" class="w-full h-full text-darkBg"></i>
+                            </button>
+                            <div class="text-xs text-gray-400">
+                                <p class="font-mono text-white">ID: ELV-2026-VAL</p>
+                                <p>Pulsa el código QR para validar.</p>
+                            </div>
+                        </div>
+                        <div class="text-right font-mono text-xs text-racingRed">
+                            [ MOTORSPORT PASS ]
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button id="proceedToFinalBtn" class="group inline-flex items-center gap-3 px-8 py-4 bg-white text-darkBg rounded-full font-medium text-sm tracking-wider uppercase hover:bg-gray-200 transition-all transform hover:scale-105">
+                        <span>Continuar</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 7 & 8 — MENSAJE FINAL Y CUENTA ATRÁS -->
+        <section id="sec-final" class="relative min-h-screen w-full px-6 py-32 bg-darkBg flex flex-col items-center justify-center text-center hidden">
+            <div class="max-w-2xl mx-auto space-y-16">
+                <div class="space-y-6">
+                    <h2 class="text-3xl sm:text-5xl font-light tracking-tight text-glow">Feliz cumpleaños, Elviritix.</h2>
+                    <p class="text-lg text-gray-300 font-light leading-relaxed">
+                        Espero que este nuevo año te traiga muchísimas cosas buenas.<br>
+                        Y, egoístamente, espero poder estar presente en unas cuantas.
+                    </p>
+                    <p class="text-2xl font-medium text-white pt-4">Nos vemos en Cheste.</p>
+                    <p class="font-mono text-sm text-racingRed tracking-widest uppercase pt-2">— Dape</p>
+                </div>
+
+                <!-- Cuenta atrás para MotoGP Valencia -->
+                <div class="glass-panel p-8 rounded-3xl space-y-6 border-racingRed/20">
+                    <div class="space-y-1">
+                        <span class="font-mono text-xs uppercase tracking-widest text-racingRed">Próxima Parada</span>
+                        <h3 class="text-xl font-bold tracking-tight">MotoGP Valencia — Cheste 2026</h3>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-3 font-mono">
+                        <div class="bg-darkBg p-4 rounded-2xl border border-white/5">
+                            <span id="gpDays" class="block text-2xl sm:text-3xl font-bold text-white">00</span>
+                            <span class="text-[10px] text-gray-500 uppercase">Días</span>
+                        </div>
+                        <div class="bg-darkBg p-4 rounded-2xl border border-white/5">
+                            <span id="gpHours" class="block text-2xl sm:text-3xl font-bold text-white">00</span>
+                            <span class="text-[10px] text-gray-500 uppercase">Horas</span>
+                        </div>
+                        <div class="bg-darkBg p-4 rounded-2xl border border-white/5">
+                            <span id="gpMins" class="block text-2xl sm:text-3xl font-bold text-white">00</span>
+                            <span class="text-[10px] text-gray-500 uppercase">Min</span>
+                        </div>
+                        <div class="bg-darkBg p-4 rounded-2xl border border-white/5">
+                            <span id="gpSecs" class="block text-2xl sm:text-3xl font-bold text-white">00</span>
+                            <span class="text-[10px] text-gray-500 uppercase">Seg</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex justify-center gap-6 text-xs text-gray-400 font-mono">
+                        <button id="legalModalBtn" class="hover:text-white underline transition-colors">Información legal del regalo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <!-- MODAL DE VÍDEO CINEMATOGRÁFICO -->
+    <div id="videoModal" class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative w-full max-w-4xl aspect-[9/16] sm:aspect-video bg-darkCard rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col">
+            <div class="absolute top-4 right-4 z-20">
+                <button id="closeVideoModalBtn" class="p-3 bg-black/60 hover:bg-black text-white rounded-full transition-colors backdrop-blur-md">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="relative w-full h-full flex items-center justify-center bg-black">
+                <!-- Vídeo adaptado y optimizado -->
+                <video id="personalVideo" class="w-full h-full object-contain" playsinline preload="metadata">
+                    <!-- Vídeo de muestra de alta calidad con tono cinematográfico -->
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                    Tu navegador no soporta vídeo HTML5.
+                </video>
+
+                <!-- Overlay de reproducción inicial si el navegador bloquea autoplay -->
+                <div id="videoPlayOverlay" class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center cursor-pointer">
+                    <div class="w-20 h-20 bg-racingRed text-white rounded-full flex items-center justify-center shadow-2xl mb-4 hover:scale-110 transition-transform">
+                        <i data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>
+                    </div>
+                    <p class="text-sm font-mono text-gray-300">Pulsa para reproducir felicitación</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL GENERAL (Para Easter Eggs, Términos Legales, QR) -->
+    <div id="genericModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="max-w-md w-full glass-panel p-8 rounded-3xl relative space-y-6 text-center transform scale-95 transition-transform duration-300" id="genericModalContent">
+            <button id="closeGenericModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="genericModalBody" class="space-y-4">
+                <!-- Contenido dinámico inyectado por JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE LA EXPERIENCIA -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar iconos Lucide
             lucide.createIcons();
-            // Lógica simplificada de navegación y cuenta atrás
+
+            // Referencias DOM
+            const lockScreen = document.getElementById('lockScreen');
+            const mainExperience = document.getElementById('mainExperience');
+            const bypassLockBtn = document.getElementById('bypassLockBtn');
+            const audioControlContainer = document.getElementById('audioControlContainer');
+            const audioToggleBtn = document.getElementById('audioToggleBtn');
+            const audioIcon = document.getElementById('audioIcon');
+            const audioText = document.getElementById('audioText');
+            const bgAudio = document.getElementById('bgAudio');
+
+            // Intro elements
+            const dateText = document.getElementById('dateText');
+            const mainTitle = document.getElementById('mainTitle');
+            const startBtnContainer = document.getElementById('startBtnContainer');
+            const startExperienceBtn = document.getElementById('startExperienceBtn');
+
+            // Sections
+            const secIntro = document.getElementById('sec-intro');
+            const secStory = document.getElementById('sec-story');
+            const secDiscoveries = document.getElementById('sec-discoveries');
+            const secVideo = document.getElementById('sec-video');
+            const secFalseEnd = document.getElementById('sec-false-end');
+            const secMotogp = document.getElementById('sec-motogp');
+            const secFinal = document.getElementById('sec-final');
+
+            // Story steps
+            const storySteps = document.querySelectorAll('.story-step');
+
+            // Video elements
+            const openVideoBtn = document.getElementById('openVideoBtn');
+            const videoModal = document.getElementById('videoModal');
+            const closeVideoModalBtn = document.getElementById('closeVideoModalBtn');
+            const personalVideo = document.getElementById('personalVideo');
+            const videoPlayOverlay = document.getElementById('videoPlayOverlay');
+
+            // False end elements
+            const falseEndStep1 = document.getElementById('falseEndStep1');
+            const falseEndStep2 = document.getElementById('falseEndStep2');
+            const revealSurpriseBtn = document.getElementById('revealSurpriseBtn');
+            const proceedToFinalBtn = document.getElementById('proceedToFinalBtn');
+
+            // Modals
+            const genericModal = document.getElementById('genericModal');
+            const genericModalContent = document.getElementById('genericModalContent');
+            const closeGenericModalBtn = document.getElementById('closeGenericModalBtn');
+            const genericModalBody = document.getElementById('genericModalBody');
+
+            // Easter eggs
+            const helmetEasterEgg = document.getElementById('helmetEasterEgg');
+            const tropeEasterEggBtn = document.getElementById('tropeEasterEggBtn');
+            const legalModalBtn = document.getElementById('legalModalBtn');
+            const qrCodeBtn = document.getElementById('qrCodeBtn');
+
+            // Fecha objetivo del cumpleaños: 31 de Julio de 2026 00:00:00
             const birthdayDate = new Date('2026-07-31T00:00:00').getTime();
-            function updateCountdown() {
+            // Fecha de MotoGP Cheste: 27 de Noviembre de 2026 09:00:00
+            const motogpDate = new Date('2026-11-27T09:00:00').getTime();
+
+            let isUnlockedOverride = false;
+            let audioPlaying = false;
+
+            // Comprobación de fecha temporal (Bloqueo antes del 31 de Julio de 2026)
+            function checkTimeLock() {
                 const now = new Date().getTime();
-                const diff = birthdayDate - now;
-                if (diff < 0) return;
-                document.getElementById('lockDays').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-                // ... resto de lógica de tiempo
+                // Si estamos antes del 31 de julio de 2026 y no se ha hecho bypass
+                if (now < birthdayDate && !isUnlockedOverride) {
+                    lockScreen.classList.remove('hidden');
+                    updateLockCountdown(now);
+                    setInterval(() => updateLockCountdown(new Date().getTime()), 1000);
+                } else {
+                    lockScreen.classList.add('hidden');
+                    initIntroAnimation();
+                }
             }
-            setInterval(updateCountdown, 1000);
-            document.getElementById('startExperienceBtn').addEventListener('click', () => {
-                document.getElementById('sec-story').scrollIntoView({ behavior: 'smooth' });
+
+            function updateLockCountdown(now) {
+                const distance = birthdayDate - now;
+                if (distance < 0) {
+                    lockScreen.classList.add('hidden');
+                    initIntroAnimation();
+                    return;
+                }
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('lockDays').innerText = String(days).padStart(2, '0');
+                document.getElementById('lockHours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('lockMins').innerText = String(mins).padStart(2, '0');
+                document.getElementById('lockSecs').innerText = String(secs).padStart(2, '0');
+            }
+
+            bypassLockBtn.addEventListener('click', () => {
+                isUnlockedOverride = true;
+                lockScreen.classList.add('opacity-0', 'transition-opacity', 'duration-700');
+                setTimeout(() => {
+                    lockScreen.classList.add('hidden');
+                    initIntroAnimation();
+                }, 700);
             });
+
+            // Animación de entrada inicial
+            function initIntroAnimation() {
+                setTimeout(() => {
+                    dateText.classList.remove('opacity-0', 'translate-y-4');
+                }, 300);
+                setTimeout(() => {
+                    mainTitle.classList.remove('opacity-0', 'translate-y-4');
+                }, 900);
+                setTimeout(() => {
+                    startBtnContainer.classList.remove('opacity-0', 'translate-y-4');
+                }, 1500);
+            }
+
+            // Iniciar Experiencia al pulsar "Empezar"
+            startExperienceBtn.addEventListener('click', () => {
+                // Activar audio ambiental
+                bgAudio.volume = 0.3;
+                bgAudio.play().then(() => {
+                    audioPlaying = true;
+                    updateAudioButtonState();
+                    audioControlContainer.classList.remove('hidden');
+                }).catch(e => console.log('Audio autoplay prevented:', e));
+
+                // Desplazamiento suave hacia la sección de historia
+                secStory.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Control de audio
+            audioToggleBtn.addEventListener('click', () => {
+                if (audioPlaying) {
+                    bgAudio.pause();
+                    audioPlaying = false;
+                } else {
+                    bgAudio.play();
+                    audioPlaying = true;
+                }
+                updateAudioButtonState();
+            });
+
+            function updateAudioButtonState() {
+                if (audioPlaying) {
+                    audioIcon.setAttribute('data-lucide', 'volume-2');
+                    audioText.innerText = 'Sonido ON';
+                } else {
+                    audioIcon.setAttribute('data-lucide', 'volume-x');
+                    audioText.innerText = 'Silencio';
+                }
+                lucide.createIcons();
+            }
+
+            // Scroll animations para la sección de historia
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+
+                // Animación escalonada de los textos de la historia
+                storySteps.forEach((step) => {
+                    const rect = step.getBoundingClientRect();
+                    if (rect.top < windowHeight * 0.75 && rect.bottom > windowHeight * 0.25) {
+                        step.classList.remove('opacity-10', 'translate-y-8');
+                        step.classList.add('opacity-100', 'translate-y-0');
+                    }
+                });
+            });
+
+            // Gestión del Modal de Vídeo
+            openVideoBtn.addEventListener('click', () => {
+                // Bajar volumen de la música ambiente mientras se reproduce el vídeo
+                if (audioPlaying) {
+                    bgAudio.volume = 0.05;
+                }
+                videoModal.classList.remove('opacity-0', 'pointer-events-none');
+                personalVideo.currentTime = 0;
+            });
+
+            videoPlayOverlay.addEventListener('click', () => {
+                personalVideo.play();
+                videoPlayOverlay.classList.add('hidden');
+            });
+
+            personalVideo.addEventListener('ended', () => {
+                closeVideoModal();
+            });
+
+            closeVideoModalBtn.addEventListener('click', () => {
+                closeVideoModal();
+            });
+
+            function closeVideoModal() {
+                personalVideo.pause();
+                videoModal.classList.add('opacity-0', 'pointer-events-none');
+                videoPlayOverlay.classList.remove('hidden');
+
+                // Restaurar volumen de música ambiente
+                if (audioPlaying) {
+                    bgAudio.volume = 0.3;
+                }
+
+                // Desencadenar el Falso Final después del vídeo
+                setTimeout(() => {
+                    secVideo.classList.add('hidden');
+                    secDiscoveries.classList.add('hidden');
+                    secStory.classList.add('hidden');
+                    secIntro.classList.add('hidden');
+
+                    secFalseEnd.classList.remove('hidden');
+                    secFalseEnd.scrollIntoView({ behavior: 'smooth' });
+
+                    // Secuencia del falso final
+                    setTimeout(() => {
+                        falseEndStep1.classList.add('opacity-0');
+                        setTimeout(() => {
+                            falseEndStep1.classList.add('hidden');
+                            falseEndStep2.classList.remove('hidden');
+                            setTimeout(() => {
+                                falseEndStep2.classList.remove('opacity-0');
+                            }, 100);
+                        }, 1000);
+                    }, 3500);
+                }, 600);
+            }
+
+            // Revelación de la sorpresa (MotoGP)
+            revealSurpriseBtn.addEventListener('click', () => {
+                secFalseEnd.classList.add('hidden');
+                secMotogp.classList.remove('hidden');
+                secMotogp.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            proceedToFinalBtn.addEventListener('click', () => {
+                secMotogp.classList.add('hidden');
+                secFinal.classList.remove('hidden');
+                secFinal.scrollIntoView({ behavior: 'smooth' });
+                startMotogpCountdown();
+            });
+
+            // Cuenta atrás para MotoGP Valencia
+            function startMotogpCountdown() {
+                setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = motogpDate - now;
+                    if (distance < 0) return;
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById('gpDays').innerText = String(days).padStart(2, '0');
+                    document.getElementById('gpHours').innerText = String(hours).padStart(2, '0');
+                    document.getElementById('gpMins').innerText = String(mins).padStart(2, '0');
+                    document.getElementById('gpSecs').innerText = String(secs).padStart(2, '0');
+                }, 1000);
+            }
+
+            // Funcionalidad de Modales Genéricos & Easter Eggs
+            function openGenericModal(htmlContent) {
+                genericModalBody.innerHTML = htmlContent;
+                genericModal.classList.remove('opacity-0', 'pointer-events-none');
+                genericModalContent.classList.remove('scale-95');
+                genericModalContent.classList.add('scale-100');
+                lucide.createIcons();
+            }
+
+            function closeGenericModal() {
+                genericModalContent.classList.remove('scale-100');
+                genericModalContent.classList.add('scale-95');
+                genericModal.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            closeGenericModalBtn.addEventListener('click', closeGenericModal);
+            genericModal.addEventListener('click', (e) => {
+                if (e.target === genericModal) closeGenericModal();
+            });
+
+            // Easter Egg 1: Casco de motociclismo
+            helmetEasterEgg.addEventListener('click', () => {
+                openGenericModal(`
+                    <div class="space-y-3">
+                        <span class="font-mono text-xs text-racingRed uppercase tracking-widest">Easter Egg Encontrado</span>
+                        <h3 class="text-xl font-bold text-white">Casco de Paddock</h3>
+                        <p class="text-sm text-gray-300">Has encontrado el casco secreto. La velocidad máxima solo se alcanza con buena compañía y cero sentido común.</p>
+                        <p class="font-mono text-xs text-gray-500 pt-2">“Merecerá Da-pena.”</p>
+                    </div>
+                `);
+            });
+
+            // Easter Egg 2: Trope
+            tropeEasterEggBtn.addEventListener('click', () => {
+                openGenericModal(`
+                    <div class="space-y-3">
+                        <span class="font-mono text-xs text-racingRed uppercase tracking-widest">Informe Oficial</span>
+                        <h3 class="text-xl font-bold text-white">Estado de Trope</h3>
+                        <p class="text-sm text-gray-300">Trope ha revisado este microsite y ha emitido su veredicto definitivo:</p>
+                        <p class="text-sm font-semibold text-white bg-darkBg p-3 rounded-xl border border-white/5">“Guau. (Aceptable, siempre que haya premios de por medio).”</p>
+                    </div>
+                `);
+            });
+
+            // Easter Egg 4: Términos y Condiciones
+            legalModalBtn.addEventListener('click', () => {
+                openGenericModal(`
+                    <div class="space-y-3 text-left">
+                        <span class="font-mono text-xs text-racingRed uppercase tracking-widest">Legal / VIP</span>
+                        <h3 class="text-xl font-bold text-white text-center">Términos y Condiciones</h3>
+                        <div class="text-xs text-gray-300 space-y-2 pt-2">
+                            <p>1. La receptora de este regalo (<span class="text-white font-semibold">Elviritix</span>) se compromete formalmente a pasárselo de puta madre en Cheste.</p>
+                            <p>2. Queda terminantemente prohibido dormir menos de 4 horas durante el fin de semana del Gran Premio (salvo fuerza mayor).</p>
+                            <p>3. Cualquier intento de perderse en el paddock será gestionado por el acompañante oficial ("Un tal Da-pena").</p>
+                        </div>
+                    </div>
+                `);
+            });
+
+            // QR Code Easter Egg
+            qrCodeBtn.addEventListener('click', () => {
+                openGenericModal(`
+                    <div class="space-y-3">
+                        <span class="font-mono text-xs text-racingRed uppercase tracking-widest">Validación de Ticket</span>
+                        <h3 class="text-xl font-bold text-white">Código Verificado</h3>
+                        <p class="text-sm text-gray-300">Acceso VIP concedido para el Circuit Ricardo Tormo.</p>
+                        <div class="p-4 bg-darkBg rounded-2xl border border-racingRed/30 my-3">
+                            <p class="text-lg font-bold text-racingRed tracking-widest font-mono">MERECERÁ DA-PENA.</p>
+                        </div>
+                    </div>
+                `);
+            });
+
+            // Inicializar comprobación de tiempo al cargar
+            checkTimeLock();
         });
     </script>
+
 </body>
 </html>

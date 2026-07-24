@@ -107,19 +107,19 @@
 
     <!-- Barra de progreso de scroll superior con Casco de Marc Márquez (#93) y Meta 🏁 -->
     <div class="fixed top-0 left-0 w-full z-50 pointer-events-none">
-        <div class="h-1.5 bg-gray-950/90 w-full relative border-b border-white/10">
+        <div class="h-1.5 bg-gray-950/90 w-full relative border-b border-white/10 shadow-md">
             <!-- Barra roja de progreso pegada al borde superior -->
             <div id="scrollProgressBar" class="h-full bg-racingRed w-0 transition-all duration-75 ease-out shadow-[0_0_14px_rgba(220,38,38,1)]"></div>
             
-            <!-- Casco Racing de Marc Márquez (#93) advancing con el scroll -->
-            <div id="scrollMotorcycle" class="absolute top-1/2 -translate-y-1/2 left-0 transition-all duration-75 ease-out transform -translate-x-1/2 flex items-center" style="left: 0%;">
-                <!-- Estela de fuego / chispas racing tras el casco -->
-                <div class="w-4 h-1.5 bg-gradient-to-r from-transparent via-racingRed/60 to-racingRed rounded-full animate-pulse mr-0.5 opacity-90"></div>
-                
-                <!-- Cápsula con Casco Aerodinámico de Carreras + Dorsal #93 -->
-                <div class="relative px-2 py-1 flex items-center justify-center bg-darkBg/95 border border-racingRed rounded-full shadow-[0_0_14px_rgba(220,38,38,1)]">
+            <!-- Casco Racing de Marc Márquez (#93) como globo/burbuja sobresaliendo hacia abajo -->
+            <div id="scrollMotorcycle" class="absolute top-1 left-0 transition-all duration-75 ease-out transform -translate-x-1/2 flex flex-col items-center" style="left: 0%;">
+                <!-- Indicador / Puntero que conecta con la barra roja -->
+                <div class="w-2 h-2 bg-racingRed rotate-45 -mb-1 shadow-[0_0_8px_rgba(220,38,38,1)]"></div>
+
+                <!-- Burbuja / Globo con Casco Aerodinámico + Dorsal #93 -->
+                <div class="relative px-2.5 py-1.5 flex items-center justify-center bg-darkBg/95 border-2 border-racingRed rounded-2xl shadow-[0_4px_20px_rgba(220,38,38,0.9)] backdrop-blur-md">
                     <!-- SVG de Casco de Carreras MotoGP Marc Márquez -->
-                    <svg viewBox="0 0 48 36" class="w-7 h-5 drop-shadow-[0_0_6px_rgba(220,38,38,0.8)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 48 36" class="w-8 h-6 drop-shadow-[0_0_6px_rgba(220,38,38,0.8)]" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <!-- Alerón Trasero Aerodinámico -->
                         <path d="M6 16 L12 12 L10 22 Z" fill="#ffffff"/>
                         
@@ -136,13 +136,17 @@
                     </svg>
 
                     <!-- Dorsal 93 de Marc Márquez superpuesto -->
-                    <span class="absolute -top-1.5 -right-1.5 bg-racingRed text-white text-[9px] font-mono font-black px-1 py-0.2 rounded-full border border-black shadow-md">93</span>
+                    <span class="absolute -top-2 -right-2 bg-racingRed text-white text-[10px] font-mono font-black px-1.5 py-0.5 rounded-full border-2 border-black shadow-md">93</span>
                 </div>
             </div>
 
-            <!-- Bandera a Cuadros / Meta 🏁 -->
-            <div class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center w-5 h-5 bg-black/95 border border-white/30 rounded-full shadow-lg text-[10px]" title="Meta 🏁">
-                🏁
+            <!-- Bandera a Cuadros / Meta 🏁 sobresaliendo como globo hacia abajo -->
+            <div class="absolute right-2 top-1 flex flex-col items-center">
+                <!-- Puntero superior que conecta con el borde de la barra -->
+                <div class="w-1.5 h-1.5 bg-white/40 rotate-45 -mb-0.5"></div>
+                <div class="flex items-center justify-center w-7 h-7 bg-black/95 border-2 border-white/30 rounded-2xl shadow-xl text-xs backdrop-blur-md" title="Meta 🏁">
+                    🏁
+                </div>
             </div>
         </div>
     </div>

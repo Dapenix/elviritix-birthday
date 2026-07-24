@@ -91,17 +91,16 @@
 </head>
 <body class="selection:bg-racingRed selection:text-white">
 
-    <!-- Audio Ambient (Synthetic / Generator or Stream) -->
+    <!-- Audio de Fondo (Aerosmith - I Don't Want to Miss a Thing) -->
     <audio id="bgAudio" loop preload="auto">
-        <!-- Audio de ambiente cinematográfico sutil -->
-        <source src="https://cdn.freesound.org/previews/612/612093_5121236-lq.mp3" type="audio/mpeg">
+        <source src="assets/audio.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Barra de Control de Audio Discreta -->
     <div id="audioControlContainer" class="fixed top-4 right-4 z-50 hidden">
-        <button id="audioToggleBtn" class="glass-panel px-3 py-2 rounded-full flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-all shadow-lg">
+        <button id="audioToggleBtn" class="glass-panel px-3 py-2 rounded-full flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-all shadow-lg" title="Aerosmith - I Don't Want to Miss a Thing">
             <i data-lucide="volume-x" id="audioIcon" class="w-4 h-4"></i>
-            <span id="audioText" class="hidden sm:inline">Ambiente</span>
+            <span id="audioText" class="hidden sm:inline">Música ON</span>
         </button>
     </div>
 

@@ -103,9 +103,36 @@
         </button>
     </div>
 
-    <!-- Barra de progreso de scroll superior -->
-    <div class="fixed top-0 left-0 w-full h-1 z-50 bg-transparent">
-        <div id="scrollProgressBar" class="h-full bg-racingRed w-0 transition-all duration-150 ease-out shadow-[0_0_10px_rgba(220,38,38,0.8)]"></div>
+    <!-- Barra de progreso de scroll superior con Moto de Marc Márquez (#93) y Meta 🏁 -->
+    <div class="fixed top-0 left-0 w-full z-50 pointer-events-none">
+        <div class="h-1.5 bg-gray-950/90 w-full relative border-b border-white/5">
+            <!-- Barra roja de progreso -->
+            <div id="scrollProgressBar" class="h-full bg-racingRed w-0 transition-all duration-75 ease-out shadow-[0_0_12px_rgba(220,38,38,1)]"></div>
+            
+            <!-- Moto de Marc Márquez (#93) avanzando con el scroll -->
+            <div id="scrollMotorcycle" class="absolute top-1/2 -translate-y-1/2 left-0 transition-all duration-75 ease-out transform -translate-x-1/2 flex items-center" style="left: 0%;">
+                <!-- Estela / Chispas racing tras la moto -->
+                <div class="w-4 h-1 bg-gradient-to-r from-transparent to-racingRed rounded-full animate-pulse mr-0.5 opacity-80"></div>
+                
+                <!-- Icono de Moto Racing con el dorsal 93 de Marc Márquez -->
+                <div class="relative w-7 h-7 flex items-center justify-center bg-darkBg border border-racingRed rounded-full shadow-[0_0_12px_rgba(220,38,38,1)]">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white">
+                        <circle cx="5.5" cy="17.5" r="2.5"/>
+                        <circle cx="18.5" cy="17.5" r="2.5"/>
+                        <path d="M15 6h2.5l2.5 5h-4.5"/>
+                        <path d="M9 17.5l2-6.5h4.5l2 6.5"/>
+                        <path d="M5.5 17.5L8 11h3"/>
+                    </svg>
+                    <!-- Dorsal 93 Marc Márquez -->
+                    <span class="absolute -top-1.5 -right-1.5 bg-racingRed text-white text-[8px] font-mono font-black px-1 rounded-full border border-black shadow">93</span>
+                </div>
+            </div>
+
+            <!-- Bandera a Cuadros / Meta 🏁 -->
+            <div class="absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-5 h-5 bg-black/90 border border-white/20 rounded-full shadow text-[10px]" title="Meta 🏁">
+                🏁
+            </div>
+        </div>
     </div>
 
     <!-- Easter Egg: Casco Flotante Discreto -->
@@ -581,6 +608,7 @@
 
             // Scroll indicator elements
             const scrollProgressBar = document.getElementById('scrollProgressBar');
+            const scrollMotorcycle = document.getElementById('scrollMotorcycle');
             const scrollIndicator = document.getElementById('scrollIndicator');
 
             // Intro elements
@@ -734,11 +762,12 @@
                 const scrollY = window.scrollY;
                 const windowHeight = window.innerHeight;
                 
-                // Actualizar barra de progreso superior
-                if (scrollProgressBar) {
+                // Actualizar barra de progreso superior y posición de la moto #93 de Marc Márquez
+                if (scrollProgressBar && scrollMotorcycle) {
                     const documentHeight = document.documentElement.scrollHeight - windowHeight;
-                    const scrollPercent = (scrollY / documentHeight) * 100;
+                    const scrollPercent = Math.min(Math.max((scrollY / documentHeight) * 100, 0), 100);
                     scrollProgressBar.style.width = scrollPercent + '%';
+                    scrollMotorcycle.style.left = scrollPercent + '%';
                 }
 
                 // Ocultar el indicador de scroll inicial al bajar

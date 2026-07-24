@@ -167,9 +167,23 @@
                 </div>
             </div>
 
-            <button id="bypassLockBtn" class="text-xs text-gray-600 hover:text-gray-400 underline transition-colors">
-                ¿Eres Dape o quieres probar el acceso anticipado?
-            </button>
+            <div>
+                <button id="bypassLockBtn" class="text-xs text-gray-500 hover:text-white underline transition-colors">
+                    ¿Eres Dape o quieres probar el acceso anticipado?
+                </button>
+            </div>
+
+            <!-- Formulario de contraseña Dape (PIN 1936) -->
+            <div id="dapePasswordForm" class="hidden space-y-3 pt-4 transition-all duration-300">
+                <p class="text-xs font-mono text-gray-400">Introduce el código PIN de acceso (1936):</p>
+                <div class="flex items-center justify-center gap-2 max-w-xs mx-auto">
+                    <input id="dapePinInput" type="password" maxlength="6" placeholder="PIN" class="w-32 px-3 py-2 bg-black/60 border border-racingRed/60 text-white text-center font-mono font-bold text-lg rounded-xl focus:outline-none focus:border-racingRed focus:ring-1 focus:ring-racingRed">
+                    <button id="submitDapePinBtn" class="px-4 py-2 bg-racingRed text-white text-xs font-medium uppercase tracking-wider rounded-xl hover:bg-red-700 transition-all shadow-md">
+                        Entrar
+                    </button>
+                </div>
+                <p id="dapePinError" class="text-xs font-mono text-racingRed hidden">PIN incorrecto. Inténtalo de nuevo.</p>
+            </div>
         </div>
     </div>
 
@@ -694,13 +708,39 @@
                 document.getElementById('lockSecs').innerText = String(secs).padStart(2, '0');
             }
 
+            // Gestión del acceso protegido con contraseña para Dape (PIN: 1936)
+            const dapePasswordForm = document.getElementById('dapePasswordForm');
+            const dapePinInput = document.getElementById('dapePinInput');
+            const submitDapePinBtn = document.getElementById('submitDapePinBtn');
+            const dapePinError = document.getElementById('dapePinError');
+
             bypassLockBtn.addEventListener('click', () => {
-                isUnlockedOverride = true;
-                lockScreen.classList.add('opacity-0', 'transition-opacity', 'duration-700');
-                setTimeout(() => {
-                    lockScreen.classList.add('hidden');
-                    initIntroAnimation();
-                }, 700);
+                dapePasswordForm.classList.remove('hidden');
+                dapePinInput.focus();
+            });
+
+            function validateDapePin() {
+                const pin = dapePinInput.value.trim();
+                if (pin === '1936') {
+                    isUnlockedOverride = true;
+                    dapePinError.classList.add('hidden');
+                    lockScreen.classList.add('opacity-0', 'transition-opacity', 'duration-700');
+                    setTimeout(() => {
+                        lockScreen.classList.add('hidden');
+                        initIntroAnimation();
+                    }, 700);
+                } else {
+                    dapePinError.classList.remove('hidden');
+                    dapePinInput.value = '';
+                    dapePinInput.focus();
+                }
+            }
+
+            submitDapePinBtn.addEventListener('click', validateDapePin);
+            dapePinInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    validateDapePin();
+                }
             });
 
             // Animación de entrada inicial

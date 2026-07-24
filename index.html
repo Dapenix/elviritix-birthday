@@ -991,29 +991,35 @@
                 startMotogpCountdown();
             });
 
-            // Cuenta atrás para MotoGP Valencia
-            function startMotogpCountdown() {
-                setInterval(() => {
-                    const now = new Date().getTime();
-                    const distance = motogpDate - now;
-                    if (distance < 0) return;
+            // Cuenta atrás para MotoGP Valencia (Cheste 2026)
+            function updateMotogpCountdown() {
+                const now = new Date().getTime();
+                const distance = motogpDate - now;
+                if (distance < 0) return;
 
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const secs = Math.floor((distance % (1000 * 60)) / 1000);
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    const elDays = document.getElementById('finalDays');
-                    const elHours = document.getElementById('finalHours');
-                    const elMins = document.getElementById('finalMins');
-                    const elSecs = document.getElementById('finalSecs');
+                const elDays = document.getElementById('gpDays') || document.getElementById('finalDays');
+                const elHours = document.getElementById('gpHours') || document.getElementById('finalHours');
+                const elMins = document.getElementById('gpMins') || document.getElementById('finalMins');
+                const elSecs = document.getElementById('gpSecs') || document.getElementById('finalSecs');
 
-                    if (elDays) elDays.innerText = String(days).padStart(2, '0');
-                    if (elHours) elHours.innerText = String(hours).padStart(2, '0');
-                    if (elMins) elMins.innerText = String(mins).padStart(2, '0');
-                    if (elSecs) elSecs.innerText = String(secs).padStart(2, '0');
-                }, 1000);
+                if (elDays) elDays.innerText = String(days).padStart(2, '0');
+                if (elHours) elHours.innerText = String(hours).padStart(2, '0');
+                if (elMins) elMins.innerText = String(mins).padStart(2, '0');
+                if (elSecs) elSecs.innerText = String(secs).padStart(2, '0');
             }
+
+            function startMotogpCountdown() {
+                updateMotogpCountdown();
+                setInterval(updateMotogpCountdown, 1000);
+            }
+
+            // Iniciar la cuenta atrás de MotoGP de inmediato
+            startMotogpCountdown();
 
             // Sistema de Confeti de Celebración desde Arriba
             let confettiTriggered = false;

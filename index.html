@@ -190,8 +190,26 @@
     <!-- CONTENEDOR PRINCIPAL DE LA EXPERIENCIA -->
     <main id="mainExperience" class="relative w-full min-h-screen">
 
+        <!-- SECCIÓN 0 — BANDA SONORA (Antes de la introducción) -->
+        <section id="sec-soundtrack" class="relative min-h-[100dvh] w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg overflow-hidden z-20 hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.12)_0%,rgba(5,5,7,1)_80%)] pointer-events-none"></div>
+            
+            <div id="soundtrackContent" class="relative z-10 space-y-6 max-w-xl mx-auto transition-all duration-1000">
+                <p class="font-mono text-xs tracking-[0.3em] text-racingRed uppercase">Banda Sonora</p>
+                <h2 class="text-3xl sm:text-5xl font-light tracking-tight text-white leading-tight">
+                    Antes de nada, pongámosle música a todo esto, ¿te parece?
+                </h2>
+                <div class="pt-6">
+                    <button id="startMusicBtn" class="group relative inline-flex items-center gap-3 px-8 py-5 bg-racingRed text-white rounded-full font-medium text-sm tracking-wider uppercase hover:bg-red-700 transition-all transform hover:scale-105 shadow-2xl racing-glow">
+                        <i data-lucide="music" class="w-5 h-5 fill-current"></i>
+                        <span>Poner música</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- SECCIÓN 1 — INTRODUCCIÓN -->
-        <section id="sec-intro" class="relative min-h-[100dvh] w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg overflow-hidden">
+        <section id="sec-intro" class="relative min-h-[100dvh] w-full flex flex-col items-center justify-center p-6 text-center bg-darkBg overflow-hidden hidden">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,20,30,0.4)_0%,rgba(5,5,7,1)_100%)] pointer-events-none"></div>
             
             <div id="introContent" class="relative z-10 space-y-6 max-w-xl mx-auto transition-opacity duration-1000">
@@ -199,12 +217,6 @@
                 <h1 class="text-3xl sm:text-5xl font-light tracking-tight text-glow opacity-0 transform translate-y-4 transition-all duration-1000 delay-700" id="mainTitle">
                     Cucú, hoy es un día importante.
                 </h1>
-                <div class="pt-8 opacity-0 transform translate-y-4 transition-all duration-1000 delay-1000" id="startBtnContainer">
-                    <button id="startExperienceBtn" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-darkBg rounded-full font-medium text-sm tracking-wider uppercase hover:bg-gray-200 transition-all transform hover:scale-105 shadow-2xl">
-                        <span>Empezar</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
-                    </button>
-                </div>
             </div>
 
             <!-- Indicador de scroll visual para móvil/desktop -->
@@ -676,16 +688,28 @@
             let isUnlockedOverride = false;
             let audioPlaying = false;
 
+            // Referencias DOM adicionales
+            const secSoundtrack = document.getElementById('sec-soundtrack');
+            const startMusicBtn = document.getElementById('startMusicBtn');
+
             // Comprobación de fecha temporal (Bloqueo antes del 31 de Julio de 2026)
             function checkTimeLock() {
                 const now = new Date().getTime();
-                // Si estamos antes del 31 de julio de 2026 y no se ha hecho bypass
                 if (now < birthdayDate && !isUnlockedOverride) {
                     lockScreen.classList.remove('hidden');
                     updateLockCountdown(now);
                     setInterval(() => updateLockCountdown(new Date().getTime()), 1000);
                 } else {
                     lockScreen.classList.add('hidden');
+                    showSoundtrackStage();
+                }
+            }
+
+            function showSoundtrackStage() {
+                if (secSoundtrack) {
+                    secSoundtrack.classList.remove('hidden');
+                } else {
+                    secIntro.classList.remove('hidden');
                     initIntroAnimation();
                 }
             }
@@ -694,7 +718,7 @@
                 const distance = birthdayDate - now;
                 if (distance < 0) {
                     lockScreen.classList.add('hidden');
-                    initIntroAnimation();
+                    showSoundtrackStage();
                     return;
                 }
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -728,7 +752,7 @@
                     lockScreen.classList.add('opacity-0', 'transition-opacity', 'duration-700');
                     setTimeout(() => {
                         lockScreen.classList.add('hidden');
-                        initIntroAnimation();
+                        showSoundtrackStage();
                     }, 700);
                 } else {
                     dapePinError.classList.remove('hidden');
@@ -753,12 +777,24 @@
                     mainTitle.classList.remove('opacity-0', 'translate-y-4');
                 }, 900);
                 setTimeout(() => {
-                    startBtnContainer.classList.remove('opacity-0', 'translate-y-4');
-                }, 1500);
-                setTimeout(() => {
                     scrollIndicator.classList.remove('opacity-0');
                     scrollIndicator.classList.add('opacity-100');
-                }, 2500);
+                }, 1600);
+            }
+
+            // Transición desde la pantalla de Banda Sonora al pulsar "Poner música"
+            if (startMusicBtn) {
+                startMusicBtn.addEventListener('click', () => {
+                    unlockAudioElement();
+                    playBgMusic();
+
+                    secSoundtrack.classList.add('opacity-0', 'transition-opacity', 'duration-700');
+                    setTimeout(() => {
+                        secSoundtrack.classList.add('hidden');
+                        secIntro.classList.remove('hidden');
+                        initIntroAnimation();
+                    }, 700);
+                });
             }
 
             // Desbloqueo universal de audio para Safari / iOS / Chrome

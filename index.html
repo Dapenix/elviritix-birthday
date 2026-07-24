@@ -109,22 +109,40 @@
             <!-- Barra roja de progreso -->
             <div id="scrollProgressBar" class="h-full bg-racingRed w-0 rounded-full transition-all duration-75 ease-out shadow-[0_0_14px_rgba(220,38,38,1)]"></div>
             
-            <!-- Moto de Marc Márquez (#93) avanzando con el scroll -->
+            <!-- Moto Superbike de Marc Márquez (#93) avanzando con el scroll -->
             <div id="scrollMotorcycle" class="absolute top-1/2 -translate-y-1/2 left-0 transition-all duration-75 ease-out transform -translate-x-1/2 flex items-center" style="left: 0%;">
-                <!-- Estela / Chispas racing tras la moto -->
-                <div class="w-5 h-1.5 bg-gradient-to-r from-transparent to-racingRed rounded-full animate-pulse mr-0.5 opacity-90"></div>
+                <!-- Estela de fuego / chispas racing tras la moto -->
+                <div class="w-6 h-2 bg-gradient-to-r from-transparent via-racingRed/60 to-racingRed rounded-full animate-pulse mr-1 opacity-90"></div>
                 
-                <!-- Icono de Moto Racing con el dorsal 93 de Marc Márquez -->
-                <div class="relative w-8 h-8 flex items-center justify-center bg-darkBg border-2 border-racingRed rounded-full shadow-[0_0_16px_rgba(220,38,38,1)]">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4.5 h-4.5 text-white">
-                        <circle cx="5.5" cy="17.5" r="2.5"/>
-                        <circle cx="18.5" cy="17.5" r="2.5"/>
-                        <path d="M15 6h2.5l2.5 5h-4.5"/>
-                        <path d="M9 17.5l2-6.5h4.5l2 6.5"/>
-                        <path d="M5.5 17.5L8 11h3"/>
+                <!-- Cápsula con Silueta Aerodinámica de MotoGP Superbike + Piloto acoplado -->
+                <div class="relative px-2 py-1 flex items-center justify-center bg-darkBg border-2 border-racingRed rounded-2xl shadow-[0_0_18px_rgba(220,38,38,1)]">
+                    <svg viewBox="0 0 64 40" class="w-9 h-6 drop-shadow-[0_0_6px_rgba(220,38,38,0.8)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Rueda Trasera Ancha Racing -->
+                        <circle cx="14" cy="27" r="8" stroke="#ffffff" stroke-width="3.5" fill="#050507"/>
+                        <circle cx="14" cy="27" r="3" fill="#dc2626"/>
+
+                        <!-- Rueda Delantera Ancha Racing -->
+                        <circle cx="50" cy="27" r="8" stroke="#ffffff" stroke-width="3.5" fill="#050507"/>
+                        <circle cx="50" cy="27" r="3" fill="#dc2626"/>
+
+                        <!-- Chasis / Basculante / Tubo de Escape -->
+                        <path d="M14 27 L24 19 L40 17 L50 27" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M8 20 L20 16 L16 27 Z" fill="#dc2626"/>
+
+                        <!-- Carenado Aerodinámico Cúpula y Tanque -->
+                        <path d="M20 17 L32 11 L44 13 L54 21 L42 21 L36 16 L24 19 Z" fill="#dc2626" stroke="#ffffff" stroke-width="1.2"/>
+
+                        <!-- Cúpula Transparente Delantera -->
+                        <path d="M42 13 L48 7 L54 17 L48 19 Z" fill="#ffffff" opacity="0.9"/>
+
+                        <!-- Piloto Agachado (Casco y Mono Racing) -->
+                        <circle cx="34" cy="8" r="4.5" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+                        <path d="M34 7.5 H38.5 V10.5 H34 Z" fill="#050507"/>
+                        <path d="M22 16 Q28 9 34 11 L38 17 Z" fill="#ffffff"/>
                     </svg>
+
                     <!-- Dorsal 93 Marc Márquez -->
-                    <span class="absolute -top-1 -right-1 bg-racingRed text-white text-[9px] font-mono font-extrabold px-1.5 py-0.5 rounded-full border border-black shadow-md">93</span>
+                    <span class="absolute -top-2 -right-2 bg-racingRed text-white text-[9px] font-mono font-black px-1.5 py-0.5 rounded-full border border-black shadow-md">93</span>
                 </div>
             </div>
 

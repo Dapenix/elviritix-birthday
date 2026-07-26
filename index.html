@@ -1360,13 +1360,21 @@
                     }
                 },
 
-                getTropeSpeechBubble(msg) {
+                getTropeSpeechBubble(msg, avatarType = 'default') {
+                    let imgFile = 'trope_portrait.jpg';
+                    if (avatarType === 'judging') imgFile = 'trope_judging.jpg';
+                    else if (avatarType === 'palito') imgFile = 'trope_palito.jpg';
+                    else if (avatarType === 'ropa') imgFile = 'trope_ropa.jpg';
+                    else if (avatarType === 'judge') imgFile = 'trope_judge.jpg';
+                    else if (avatarType === 'bed') imgFile = 'trope_bed.jpg';
+                    else if (avatarType === 'smart') imgFile = 'trope_smart.jpg';
+
                     return `
-                        <div class="flex items-center gap-3 bg-black/80 p-3.5 rounded-2xl border border-amber-500/40 text-left my-2 shadow-xl animate-fadeIn">
-                            <img src="assets/trope_portrait.jpg" alt="Trope" class="w-11 h-11 rounded-2xl object-cover border-2 border-amber-500/70 shrink-0 shadow-md">
+                        <div class="flex items-center gap-3.5 bg-black/85 p-3.5 sm:p-4 rounded-2xl border border-amber-500/40 text-left my-3 shadow-xl animate-fadeIn">
+                            <img src="assets/${imgFile}" alt="Trope" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover border-2 border-amber-500/70 shrink-0 shadow-md transform hover:scale-105 transition-transform">
                             <div class="space-y-0.5">
                                 <span class="block font-mono text-[10px] text-amber-400 font-bold uppercase tracking-wider">Trope</span>
-                                <p class="font-mono text-xs text-white font-medium leading-snug">"${msg}"</p>
+                                <p class="font-mono text-xs sm:text-sm text-white font-medium leading-snug">"${msg}"</p>
                             </div>
                         </div>
                     `;
@@ -1417,7 +1425,7 @@
                                 <div class="inline-block px-4 py-2 bg-emerald-950/80 border border-emerald-500 text-emerald-400 rounded-xl font-mono font-bold text-base">
                                     TROPE APPROVAL: ${this.state.score || 87}% — PROMETEDOR
                                 </div>
-                                ${this.getTropeSpeechBubble('Queda trabajo por hacer. Principalmente comprar palitos. 🪵')}
+                                ${this.getTropeSpeechBubble('Queda trabajo por hacer. Principalmente comprar palitos. 🪵', 'palito')}
                             </div>
 
                             <div class="pt-2">
@@ -1601,7 +1609,7 @@
                                 <div class="bg-black/60 p-3.5 rounded-2xl border border-white/10">
                                     <p class="font-mono text-xs text-amber-400 font-bold">Palitos detectados: 0</p>
                                 </div>
-                                ${this.getTropeSpeechBubble('Empezamos mal.')}
+                                ${this.getTropeSpeechBubble('Empezamos mal.', 'judging')}
                             </div>
 
                             <div class="space-y-3 pt-2">
@@ -1634,16 +1642,20 @@
                     const card = document.getElementById('tropeSecurityCard');
                     let tropeMsg = '';
                     let scoreAdd = 15;
+                    let avatarType = 'palito';
 
                     if (ans === 'uno') {
                         tropeMsg = 'Aceptable.';
                         scoreAdd = 15;
+                        avatarType = 'palito';
                     } else if (ans === 'dos') {
                         tropeMsg = 'Este humano empieza a entender cómo funciona esto.';
                         scoreAdd = 25;
+                        avatarType = 'palito';
                     } else {
                         tropeMsg = 'Has elegido el camino difícil.';
                         scoreAdd = 10;
+                        avatarType = 'judging';
                     }
 
                     this.setTrustScore(this.state.score + scoreAdd);
@@ -1651,7 +1663,7 @@
                     card.innerHTML = `
                         <div class="space-y-6 text-center py-4 animate-fadeIn">
                             <span class="font-mono text-xs text-gray-400">VARIABLE 01 PROCESADA</span>
-                            ${this.getTropeSpeechBubble(tropeMsg)}
+                            ${this.getTropeSpeechBubble(tropeMsg, avatarType)}
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextVar2" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
@@ -1717,16 +1729,20 @@
                     const card = document.getElementById('tropeSecurityCard');
                     let tropeMsg = '';
                     let scoreAdd = 15;
+                    let avatarType = 'ropa';
 
                     if (ans === 'quitamos') {
                         tropeMsg = 'Traición.';
                         scoreAdd = 10;
+                        avatarType = 'judging';
                     } else if (ans === 'otrolado') {
                         tropeMsg = 'Buena decisión.';
                         scoreAdd = 20;
+                        avatarType = 'ropa';
                     } else {
                         tropeMsg = 'Tú tampoco viste nada.';
                         scoreAdd = 25;
+                        avatarType = 'ropa';
                     }
 
                     this.setTrustScore(this.state.score + scoreAdd);
@@ -1737,7 +1753,7 @@
                                 TROPELÍA DETECTADA 🩲
                             </div>
                             <span class="block font-mono text-xs text-gray-400">VARIABLE 02 PROCESADA</span>
-                            ${this.getTropeSpeechBubble(tropeMsg)}
+                            ${this.getTropeSpeechBubble(tropeMsg, avatarType)}
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextNom" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
@@ -1822,7 +1838,7 @@
                                     </div>
                                 </div>
 
-                                ${this.getTropeSpeechBubble('No consta que haya pruebas.')}
+                                ${this.getTropeSpeechBubble('No consta que haya pruebas.', 'judge')}
 
                                 <div class="pt-2 max-w-sm mx-auto">
                                     <button id="btnRetryNom" class="w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-xs font-bold uppercase tracking-wider rounded-2xl border border-white/10 transition-colors">
@@ -1852,7 +1868,7 @@
                                     </div>
                                 </div>
 
-                                ${this.getTropeSpeechBubble('Unidad homologada.')}
+                                ${this.getTropeSpeechBubble('Unidad homologada.', 'smart')}
 
                                 <div class="pt-2 max-w-sm mx-auto">
                                     <button id="btnRetryNom" class="w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-xs font-bold uppercase tracking-wider rounded-2xl border border-white/10 transition-colors">
@@ -1880,7 +1896,7 @@
                                     <p class="text-gray-300 text-[11px]">Nombre empleado cuando Trope ha hecho méritos para dejar de llamarse Trope temporalmente.</p>
                                 </div>
 
-                                ${this.getTropeSpeechBubble('Exageraciones de la humana.')}
+                                ${this.getTropeSpeechBubble('Exageraciones de la humana.', 'judging')}
 
                                 <div class="inline-block px-3 py-1 bg-emerald-950 border border-emerald-500 text-emerald-400 font-mono text-[10px] rounded-full font-bold">
                                     CONOCIMIENTO DEL SUJETO +10
@@ -1930,7 +1946,7 @@
                                 </div>
                             </div>
 
-                            ${this.getTropeSpeechBubble('Me parece un sistema terminológico innecesariamente hostil.')}
+                            ${this.getTropeSpeechBubble('Me parece un sistema terminológico innecesariamente hostil.', 'judge')}
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextBed" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
@@ -2190,7 +2206,7 @@
                     card.innerHTML = `
                         <div class="space-y-6 text-center py-4 animate-fadeIn">
                             <span class="font-mono text-xs text-gray-400">VERSIÓN OFICIAL DE TROPE:</span>
-                            ${this.getTropeSpeechBubble('La humana se puso en medio.')}
+                            ${this.getTropeSpeechBubble('La humana se puso en medio.', 'bed')}
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextBedDiag" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
@@ -2227,7 +2243,7 @@
                                 <div class="flex justify-between text-white font-bold pt-1 border-t border-white/10"><span>POSIBILIDAD DE EXPULSIÓN</span><span class="text-emerald-400 font-bold">0%</span></div>
                             </div>
 
-                            ${this.getTropeSpeechBubble('Mi cama. Le dejo dormir conmigo.')}
+                            ${this.getTropeSpeechBubble('Mi cama. Le dejo dormir conmigo.', 'bed')}
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextConclusion" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
@@ -2278,7 +2294,7 @@
                                 <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
                                     Elvira vive con Trope.
                                 </h3>
-                                ${this.getTropeSpeechBubble('Me parece más preciso.')}
+                                ${this.getTropeSpeechBubble('Me parece más preciso.', 'smart')}
                             </div>
 
                             <div class="space-y-2 pt-1 border-t border-white/10">

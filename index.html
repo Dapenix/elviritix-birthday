@@ -1586,18 +1586,20 @@
                     }
                 },
 
-                // Stage 3: Core Objective ("¿LE CAE BIEN DAPE A TROPE?")
+                // Stage 3: Core Objective ("¿ES USTED LA SEÑORITA ELVIRA?")
                 renderStageGoal() {
                     const card = document.getElementById('tropeSecurityCard');
                     if (!card) return;
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center animate-fadeIn">
-                            <p class="font-mono text-xs text-gray-400">Existe una cuestión que todavía no ha podido resolverse.</p>
+                            <p class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">COMPROBACIÓN DE IDENTIDAD</p>
 
-                            <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
-                                ¿LE CAE BIEN DAPE A TROPE?
+                            <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase font-mono">
+                                ¿ES USTED LA SEÑORITA ELVIRA?
                             </h3>
+
+                            <p class="text-xs font-mono text-gray-300">El Inspector Trope requiere verificar su identidad mediante la siguiente prueba oficial.</p>
 
                             <div class="p-4 bg-black/60 rounded-2xl border border-racingRed/30 space-y-3">
                                 <div class="flex justify-between items-center text-xs font-mono">

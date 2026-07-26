@@ -755,7 +755,6 @@
 
             // Easter eggs
             const helmetEasterEgg = document.getElementById('helmetEasterEgg');
-            const tropeEasterEggBtn = document.getElementById('tropeEasterEggBtn');
             const legalModalBtn = document.getElementById('legalModalBtn');
             const qrCodeBtn = document.getElementById('qrCodeBtn');
 
@@ -1361,6 +1360,8 @@
                 },
 
                 init() {
+                    // Siempre limpiar el overflow por si quedó bloqueado de una sesión anterior
+                    document.body.style.overflow = '';
                     this.loadState();
                     this.bindEvents();
                     this.renderStageEntry();
@@ -2439,15 +2440,6 @@
                 },
 
                 bindEvents() {
-                    const tropeBtn = document.getElementById('tropeEasterEggBtn');
-                    if (tropeBtn) {
-                        tropeBtn.addEventListener('click', () => {
-                            this.renderSummaryStage();
-                            const secTrope = document.getElementById('sec-trope-security');
-                            if (secTrope) secTrope.scrollIntoView({ behavior: 'smooth' });
-                        });
-                    }
-
                     const closeWidgetBtn = document.getElementById('closeTropeWidgetBtn');
                     if (closeWidgetBtn) {
                         closeWidgetBtn.addEventListener('click', () => this.hideTropeWidget());

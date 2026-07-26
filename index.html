@@ -1363,6 +1363,7 @@
                 init() {
                     this.loadState();
                     this.bindEvents();
+                    this.renderStageEntry();
                     this.observeScrollTriggers();
                 },
 
@@ -1487,14 +1488,6 @@
 
                     if (hud) hud.classList.remove('opacity-0', '-translate-y-4');
                     this.setTrustScore(12);
-
-                    // El scroll se detiene justo en la sección de aprobación de Trope
-                    setTimeout(() => {
-                        const secTrope = document.getElementById('sec-trope-security');
-                        if (secTrope) {
-                            secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    }, 50);
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center py-4 animate-fadeIn">

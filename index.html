@@ -1443,27 +1443,28 @@
                     this.setTrustScore(12);
 
                     card.innerHTML = `
-                        <div class="space-y-6 text-center py-4">
-                            <p id="entryLine1" class="text-2xl sm:text-3xl font-light text-gray-300 transition-all duration-700">Espera.</p>
-                            <p id="entryLine2" class="text-2xl sm:text-3xl font-light text-white opacity-0 transition-all duration-700">Falta alguien.</p>
-                            <div id="entryLine3" class="opacity-0 transition-all duration-700 space-y-2 pt-2">
+                        <div class="space-y-6 text-center py-4 animate-fadeIn">
+                            <p class="text-2xl sm:text-3xl font-light text-gray-300">Espera.</p>
+                            <p class="text-2xl sm:text-3xl font-light text-white">Falta alguien.</p>
+                            <div class="space-y-2 pt-2">
                                 <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">TROPE</h2>
                                 <span class="inline-block px-3 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest animate-pulse">
                                     ELEMENTO CRÍTICO DETECTADO
                                 </span>
                             </div>
+
+                            <div class="pt-4 max-w-sm mx-auto">
+                                <button id="btnStageEntry" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Descubrir Tropecientas ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    const l2 = document.getElementById('entryLine2');
-                    const l3 = document.getElementById('entryLine3');
-
-                    setTimeout(() => { if (l2) l2.classList.remove('opacity-0'); }, 1200);
-                    setTimeout(() => { if (l3) l3.classList.remove('opacity-0'); }, 2800);
-
-                    setTimeout(() => {
-                        this.renderStageIntroTropecientas();
-                    }, 4800);
+                    const btn = document.getElementById('btnStageEntry');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderStageIntroTropecientas());
+                    }
                 },
 
                 // Stage 2: Tropecientas Branding & Profile Card
@@ -1510,12 +1511,19 @@
                                     <span class="text-[10px] text-racingRed font-bold animate-pulse">CURRENT STATUS: Probably judging you.</span>
                                 </div>
                             </div>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnIntroGoal" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Iniciar Evaluación ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    setTimeout(() => {
-                        this.renderStageGoal();
-                    }, 5200);
+                    const btn = document.getElementById('btnIntroGoal');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderStageGoal());
+                    }
                 },
 
                 // Stage 3: Core Objective ("¿LE CAE BIEN DAPE A TROPE?")
@@ -1547,12 +1555,19 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnStartVariables" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Evaluar Variable 01 ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    setTimeout(() => {
-                        this.renderVariable1();
-                    }, 3500);
+                    const btn = document.getElementById('btnStartVariables');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderVariable1());
+                    }
                 },
 
                 // Stage 4: Variable 01 — Palitos
@@ -1619,15 +1634,22 @@
                     this.setTrustScore(this.state.score + scoreAdd);
 
                     card.innerHTML = `
-                        <div class="space-y-4 text-center py-4 animate-fadeIn">
+                        <div class="space-y-6 text-center py-4 animate-fadeIn">
                             <span class="font-mono text-xs text-gray-400">VARIABLE 01 PROCESADA</span>
-                            <h3 class="text-xl font-bold text-white font-mono leading-relaxed">${tropeMsg}</h3>
+                            <h3 class="text-xl font-bold text-white font-mono leading-relaxed bg-black/60 p-4 rounded-2xl border border-white/10">${tropeMsg}</h3>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnNextVar2" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Pasar a Variable 02 ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    setTimeout(() => {
-                        this.renderVariable2();
-                    }, 2400);
+                    const btn = document.getElementById('btnNextVar2');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderVariable2());
+                    }
                 },
 
                 // Stage 5: Variable 02 — Objetos Prohibidos (Ropa Interior de Elvira)
@@ -1695,15 +1717,22 @@
                     this.setTrustScore(this.state.score + scoreAdd);
 
                     card.innerHTML = `
-                        <div class="space-y-4 text-center py-4 animate-fadeIn">
+                        <div class="space-y-6 text-center py-4 animate-fadeIn">
                             <span class="font-mono text-xs text-gray-400">VARIABLE 02 PROCESADA</span>
-                            <h3 class="text-xl font-bold text-white font-mono leading-relaxed">${tropeMsg}</h3>
+                            <h3 class="text-xl font-bold text-white font-mono leading-relaxed bg-black/60 p-4 rounded-2xl border border-white/10">${tropeMsg}</h3>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnNextVar3" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Pasar a Variable 03 ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    setTimeout(() => {
-                        this.renderVariable3();
-                    }, 2400);
+                    const btn = document.getElementById('btnNextVar3');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderVariable3());
+                    }
                 },
 
                 // Stage 6: Variable 03 — Lealtad & Prioridades
@@ -1740,12 +1769,19 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnNextVar4" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Evaluar Mood Control ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    setTimeout(() => {
-                        this.renderVariable4();
-                    }, 3800);
+                    const btn = document.getElementById('btnNextVar4');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderVariable4());
+                    }
                 },
 
                 // Stage 7: Variable 04 — Mood Control (Sincero y Emocional)
@@ -1774,7 +1810,7 @@
                                 <p class="text-xs text-gray-300 font-mono pt-1">Pero hay una presencia que aparece una y otra vez.</p>
                             </div>
 
-                            <div id="moodTextSeq" class="space-y-1.5 font-mono text-xs text-white pt-1 opacity-0 transition-opacity duration-700">
+                            <div class="space-y-1.5 font-mono text-xs text-white pt-1">
                                 <p class="text-base font-black text-racingRed uppercase">TROPE</p>
                                 <p class="text-gray-300">• En los días buenos.</p>
                                 <p class="text-gray-300">• En los días malos.</p>
@@ -1783,7 +1819,7 @@
                                 <p class="text-emerald-400 font-bold">• Cuando simplemente necesita que alguien esté ahí.</p>
                             </div>
 
-                            <div id="tropeDiagBox" class="hidden bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-left space-y-1">
+                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-left space-y-1">
                                 <p class="text-[9px] text-racingRed uppercase font-bold tracking-widest mb-1">TROPE SYSTEM ANALYSIS</p>
                                 <div class="flex justify-between text-gray-400"><span>COMPANION</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
                                 <div class="flex justify-between text-gray-400"><span>SECURITY</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
@@ -1792,22 +1828,19 @@
                                 <div class="flex justify-between text-gray-400"><span>UNDERWEAR ACQUISITION</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
                                 <div class="flex justify-between text-white font-bold pt-1 border-t border-white/10"><span>MOOD SUPPORT</span><span class="text-racingRed font-bold animate-pulse">CRITICAL</span></div>
                             </div>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnEmotionalTrans" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Ver diagnóstico personal ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    setTimeout(() => {
-                        const seq = document.getElementById('moodTextSeq');
-                        if (seq) seq.classList.remove('opacity-0');
-                    }, 1200);
-
-                    setTimeout(() => {
-                        const diag = document.getElementById('tropeDiagBox');
-                        if (diag) diag.classList.remove('hidden');
-                    }, 3500);
-
-                    setTimeout(() => {
-                        this.renderEmotionalTransition();
-                    }, 7500);
+                    const btn = document.getElementById('btnEmotionalTrans');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderEmotionalTransition());
+                    }
                 },
 
                 // Stage 8: Emotional Transition (The Heart of TROPECIENTAS)
@@ -1825,27 +1858,27 @@
                     card.className = "relative z-10 w-full max-w-lg mx-auto p-6 sm:p-8 space-y-8 text-center transition-all duration-1000";
 
                     card.innerHTML = `
-                        <div class="space-y-8">
+                        <div class="space-y-8 animate-fadeIn">
                             <div class="relative w-44 h-44 sm:w-52 sm:h-52 mx-auto rounded-3xl overflow-hidden border border-white/20 shadow-2xl transition-transform duration-1000 transform hover:scale-105">
                                 <img src="assets/trope_portrait.jpg" alt="Trope" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                                 <span class="absolute bottom-3 left-0 right-0 font-mono text-xs text-gray-300 font-medium">Trope</span>
                             </div>
 
-                            <div id="emotionalLines" class="space-y-4 min-h-[180px] flex flex-col items-center justify-center">
-                                <p id="eLine1" class="text-lg sm:text-xl font-light text-gray-300 opacity-0 transition-all duration-1000">
+                            <div class="space-y-4 text-center">
+                                <p class="text-lg sm:text-xl font-light text-gray-300">
                                     Al principio era fácil entenderlo como: "el perro de Elvira".
                                 </p>
-                                <p id="eLine2" class="text-lg sm:text-xl font-light text-white opacity-0 transition-all duration-1000">
+                                <p class="text-lg sm:text-xl font-light text-white">
                                     Pero no tardé mucho en darme cuenta de que eso se queda bastante corto.
                                 </p>
-                                <p id="eLine3" class="text-2xl sm:text-3xl font-medium text-white opacity-0 transition-all duration-1000 leading-tight pt-1">
+                                <p class="text-2xl sm:text-3xl font-medium text-white leading-tight pt-1">
                                     Trope es una parte enorme de tu vida. Y también de cómo estás.
                                 </p>
-                                <p id="eLine4" class="text-base sm:text-lg text-gray-300 opacity-0 transition-all duration-1000">
+                                <p class="text-base sm:text-lg text-gray-300">
                                     De tus días buenos. Y probablemente de más de uno de los malos.
                                 </p>
-                                <div id="eLine5" class="space-y-2 opacity-0 transition-all duration-1000 pt-3">
+                                <div class="space-y-2 pt-3">
                                     <p class="text-2xl sm:text-3xl font-bold text-white">Así que sí... me importa caerle bien a Trope. Bastante, de hecho.</p>
                                     <div class="p-3 bg-black/60 rounded-xl border border-white/10 font-mono text-[11px] text-gray-400 space-y-1 max-w-xs mx-auto text-left mt-2">
                                         <p>• Objetivo secundario: que deje mi ropa interior en paz.</p>
@@ -1853,24 +1886,19 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="pt-4 max-w-sm mx-auto">
+                                <button id="btnFinalResult" class="w-full py-4 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Ver Resultado TROPE APPROVAL ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
-                    const l1 = document.getElementById('eLine1');
-                    const l2 = document.getElementById('eLine2');
-                    const l3 = document.getElementById('eLine3');
-                    const l4 = document.getElementById('eLine4');
-                    const l5 = document.getElementById('eLine5');
-
-                    setTimeout(() => { if (l1) l1.classList.remove('opacity-0'); }, 800);
-                    setTimeout(() => { if (l2) l2.classList.remove('opacity-0'); }, 3200);
-                    setTimeout(() => { if (l3) l3.classList.remove('opacity-0'); }, 6000);
-                    setTimeout(() => { if (l4) l4.classList.remove('opacity-0'); }, 8600);
-                    setTimeout(() => { if (l5) l5.classList.remove('opacity-0'); }, 11200);
-
-                    setTimeout(() => {
-                        this.renderFinalResultStage();
-                    }, 16000);
+                    const btn = document.getElementById('btnFinalResult');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderFinalResultStage());
+                    }
                 },
 
                 // Stage 9: Final Result TROPE APPROVAL (87%)
@@ -1885,7 +1913,7 @@
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center animate-fadeIn">
-                            <p class="font-mono text-xs text-racingRed font-bold uppercase tracking-widest animate-pulse">CALCULANDO RESULTADO...</p>
+                            <p class="font-mono text-xs text-racingRed font-bold uppercase tracking-widest animate-pulse">RESULTADO FINAL PROCESADO</p>
 
                             <div class="bg-black/60 p-4 rounded-2xl border border-white/10 font-mono text-xs space-y-1.5 text-left">
                                 <div class="flex justify-between"><span>PALITOS</span><span class="text-emerald-400 font-bold">ACCEPTABLE 🪵</span></div>
@@ -1904,15 +1932,22 @@
                                     Queda trabajo por hacer. Principalmente comprar palitos. 🪵
                                 </p>
                             </div>
+
+                            <div class="pt-4 max-w-sm mx-auto">
+                                <button id="btnContinueStory" class="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Continuar con la Historia ➔
+                                </button>
+                            </div>
                         </div>
                     `;
 
                     this.state.completed = true;
                     this.saveState();
 
-                    setTimeout(() => {
-                        this.transitionToVideoSection();
-                    }, 5000);
+                    const btn = document.getElementById('btnContinueStory');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.transitionToVideoSection());
+                    }
                 },
 
                 transitionToVideoSection() {

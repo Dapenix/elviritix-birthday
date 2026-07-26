@@ -427,34 +427,34 @@
             </div>
         </section>
 
-        <!-- MODAL EMERGENTE — EXAMEN SOBRE TROPE -->
-        <div id="tropeExamModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
-            <div id="tropeExamModalCard" class="relative w-full max-w-md bg-black/90 rounded-3xl border-2 border-racingRed/60 p-6 sm:p-8 space-y-6 text-center shadow-[0_0_50px_rgba(220,38,38,0.3)] transform scale-95 transition-transform duration-500">
+        <!-- MODAL EMERGENTE — INICIO TROPECIENTAS -->
+        <div id="tropeStartModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+            <div id="tropeStartModalCard" class="relative w-full max-w-md bg-black/95 rounded-3xl border-2 border-amber-500/60 p-6 sm:p-8 space-y-6 text-center shadow-[0_0_50px_rgba(245,158,11,0.25)] transform scale-95 transition-transform duration-500">
                 <!-- Insignia Alerta -->
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest animate-pulse">
-                    <span>⚠️ PROTOCOLO DE EVALUACIÓN</span>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/20 border border-amber-500/50 rounded-full font-mono text-[10px] text-amber-400 uppercase font-bold tracking-widest animate-pulse">
+                    <span>🐕‍🦺 CONTROL DE ACCESO CANINO</span>
                 </div>
 
                 <!-- Imagen Juez Trope -->
-                <div class="relative w-28 h-28 mx-auto rounded-2xl overflow-hidden border-2 border-amber-500/70 shadow-2xl">
+                <div class="relative w-28 h-28 mx-auto rounded-2xl overflow-hidden border-2 border-amber-400 shadow-2xl">
                     <img src="assets/trope_judge.jpg" alt="Juez Trope" class="w-full h-full object-cover">
                 </div>
 
                 <div class="space-y-3">
                     <h3 class="text-xl sm:text-2xl font-black text-white font-mono tracking-tight uppercase">
-                        SISTEMA DE EXAMEN DETECTADO
+                        SISTEMA TROPECIENTAS™
                     </h3>
-                    <div class="bg-black/60 p-4 rounded-2xl border border-white/10 font-mono text-xs text-gray-300 text-left space-y-2 leading-relaxed">
-                        <p class="text-amber-400 font-bold text-[11px] uppercase">AVISO DEL SISTEMA TROPECIENTAS™:</p>
-                        <p>El evaluador ha registrado tu puntuación de aprobación (87%).</p>
-                        <p class="text-white font-bold">A continuación se activará un Sistema de Examen sobre Trope para evaluar si realmente has prestado atención.</p>
-                        <p class="text-gray-400 text-[10px] pt-1 border-t border-white/10">• Las tropelías pasadas serán tomadas en cuenta.</p>
+                    <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-xs text-gray-300 text-left space-y-2 leading-relaxed">
+                        <p class="text-amber-400 font-bold text-[11px] uppercase">EVALUACIÓN OBLIGATORIA:</p>
+                        <p>Trope ha intervenido esta sección para evaluar si Dape le cae bien o no.</p>
+                        <p class="text-white font-bold">Debes responder a sus preguntas para desbloquear el acceso y continuar con la web de Elvira.</p>
+                        <p class="text-gray-400 text-[10px] pt-1 border-t border-white/10">• Autoridad de Trope: Absoluta 🐾</p>
                     </div>
                 </div>
 
                 <div class="pt-2">
-                    <button id="btnStartExamNow" class="w-full py-4 px-6 bg-racingRed hover:bg-red-700 text-white font-mono font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
-                        Entendido, Comenzar Examen ➔
+                    <button id="btnStartTropecientasNow" class="w-full py-4 px-6 bg-racingRed hover:bg-red-700 text-white font-mono font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                        Iniciar Evaluación de Trope ➔
                     </button>
                 </div>
             </div>
@@ -1499,7 +1499,7 @@
 
                     const btn = document.getElementById('btnStageEntry');
                     if (btn) {
-                        btn.addEventListener('click', () => this.renderStageIntroTropecientas());
+                        btn.addEventListener('click', () => this.openStartModal());
                     }
                 },
 
@@ -2328,35 +2328,21 @@
                     this.state.completed = true;
                     this.saveState();
 
-                    // Al llegar a la conclusión se abre automáticamente el modal del examen de Trope
-                    setTimeout(() => {
-                        const secTrope = document.getElementById('sec-trope-security');
-                        if (secTrope) {
-                            secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                        this.openExamModal();
-                    }, 200);
-
-                    const approvalBadge = document.getElementById('btnTropeApprovalBadge');
-                    if (approvalBadge) {
-                        approvalBadge.addEventListener('click', () => this.openExamModal());
-                    }
-
-                    const hudHeader = document.getElementById('tropeHudHeader');
-                    if (hudHeader) {
-                        hudHeader.style.cursor = 'pointer';
-                        hudHeader.onclick = () => this.openExamModal();
-                    }
-
                     const btnContinue = document.getElementById('btnContinueStory');
                     if (btnContinue) {
-                        btnContinue.addEventListener('click', () => this.openExamModal());
+                        btnContinue.addEventListener('click', () => {
+                            document.body.style.overflow = '';
+                            const secVideo = document.getElementById('sec-video');
+                            if (secVideo) {
+                                secVideo.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
                     }
                 },
 
-                openExamModal() {
-                    const modal = document.getElementById('tropeExamModal');
-                    const card = document.getElementById('tropeExamModalCard');
+                openStartModal() {
+                    const modal = document.getElementById('tropeStartModal');
+                    const card = document.getElementById('tropeStartModalCard');
                     if (!modal || !card) return;
 
                     document.body.style.overflow = 'hidden';
@@ -2365,15 +2351,15 @@
                     card.classList.remove('scale-95');
                     card.classList.add('scale-100');
 
-                    const btnStart = document.getElementById('btnStartExamNow');
+                    const btnStart = document.getElementById('btnStartTropecientasNow');
                     if (btnStart) {
-                        btnStart.onclick = () => this.closeExamModalAndContinue();
+                        btnStart.onclick = () => this.closeStartModalAndBegin();
                     }
                 },
 
-                closeExamModalAndContinue() {
-                    const modal = document.getElementById('tropeExamModal');
-                    const card = document.getElementById('tropeExamModalCard');
+                closeStartModalAndBegin() {
+                    const modal = document.getElementById('tropeStartModal');
+                    const card = document.getElementById('tropeStartModalCard');
                     if (modal && card) {
                         modal.classList.add('opacity-0', 'pointer-events-none');
                         modal.classList.remove('opacity-100', 'pointer-events-auto');
@@ -2381,15 +2367,8 @@
                         card.classList.remove('scale-100');
                     }
 
-                    // Desbloquear el scroll para permitir continuar a la siguiente sección
                     document.body.style.overflow = '';
-
-                    setTimeout(() => {
-                        const secVideo = document.getElementById('sec-video');
-                        if (secVideo) {
-                            secVideo.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }, 300);
+                    this.renderStageIntroTropecientas();
                 },
 
                 showTropeComment(msgKey, text, avatarType = 'smart') {

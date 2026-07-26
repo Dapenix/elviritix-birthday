@@ -2400,26 +2400,39 @@
 
                     const widget = document.getElementById('tropeFloatingWidget');
                     const msgEl = document.getElementById('tropeFloatingMsg');
-                    const imgEl = document.getElementById('tropeFloatingImg');
-                    if (!widget || !msgEl) return;
-
-                    let imgFile = 'trope_portrait.jpg';
-                    if (avatarType === 'judging') imgFile = 'trope_judging.jpg';
-                    else if (avatarType === 'palito') imgFile = 'trope_palito.jpg';
-                    else if (avatarType === 'ropa') imgFile = 'trope_ropa.jpg';
-                    else if (avatarType === 'judge') imgFile = 'trope_judge.jpg';
-                    else if (avatarType === 'bed') imgFile = 'trope_bed.jpg';
-                    else if (avatarType === 'smart') imgFile = 'trope_smart.jpg';
-
-                    if (imgEl) imgEl.src = `assets/${imgFile}`;
-                    msgEl.innerText = text;
-                    widget.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
                     this.state.commentsShown[msgKey] = true;
                     this.saveState();
+                    this.renderTropeFloatingWidget(text, avatarType);
+                },
 
-                    setTimeout(() => {
-                        this.hideTropeWidget();
-                    }, 7000);
+                renderTropeFloatingWidget(text, avatarType = 'smart') {
+                    const existingWidget = document.getElementById('tropeFloatingWidget');
+                    if (existingWidget) existingWidget.remove();
+
+                    const widget = document.createElement('div');
+                    widget.id = 'tropeFloatingWidget';
+                    widget.className = 'fixed bottom-6 right-6 z-50 max-w-sm animate-bounceIn';
+                    widget.innerHTML = `
+                        <div class="glass-panel p-4 rounded-3xl border border-amber-500/40 shadow-2xl bg-black/90 backdrop-blur-xl flex items-center gap-3">
+                            <div class="relative w-12 h-12 rounded-2xl overflow-hidden border border-amber-400 shrink-0">
+                                <img src="assets/trope_portrait.jpg" alt="Trope" class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-left space-y-0.5 pr-6">
+                                <span class="font-mono text-[9px] text-amber-400 font-bold uppercase tracking-widest block">COMENTARIO DE TROPE</span>
+                                <p class="text-xs text-white font-medium leading-snug">${text}</p>
+                            </div>
+                            <button id="closeTropeWidgetBtn" class="absolute top-2 right-2 text-gray-400 hover:text-white p-1 text-xs">
+                                ✕
+                            </button>
+                        </div>
+                    `;
+
+                    document.body.appendChild(widget);
+
+                    const closeWidgetBtn = document.getElementById('closeTropeWidgetBtn');
+                    if (closeWidgetBtn) {
+                        closeWidgetBtn.addEventListener('click', () => this.hideTropeWidget());
+                    }
                 },
 
                 hideTropeWidget() {
@@ -2458,16 +2471,12 @@
                         transObserver.observe(secTrans);
                     }
 
-                    let scrollLockedOnEntry = false;
-
                     window.addEventListener('scroll', () => {
-                        // Congelar el scroll exactamente al salir la tarjeta del Inspector Trope con el botón
-                        if (secTrope && !this.state.started && !this.state.completed) {
+                        if (secTrope && !this.state.completed) {
                             const rect = secTrope.getBoundingClientRect();
                             if (rect.top <= window.innerHeight * 0.75) {
                                 document.body.style.overflow = 'hidden';
-                                if (!scrollLockedOnEntry) {
-                                    scrollLockedOnEntry = true;
+                                if (!this.state.started) {
                                     secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                     this.startCheck();
                                 }

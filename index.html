@@ -2503,7 +2503,7 @@
                         if (vipCard && !this.state.commentsShown.motogp) {
                             const rect = vipCard.getBoundingClientRect();
                             if (rect.top < window.innerHeight && rect.bottom > 0) {
-                                this.showTropeComment('motogp', '¿Hay palitos en Cheste? 🪵');
+                                this.showTropeComment('motogp', 'Ese Dape me cae bien. ¡A Cheste de cabeza! 🏍️💨');
                             }
                         }
 
@@ -2512,7 +2512,7 @@
                         if (countdown && !this.state.commentsShown.cheste) {
                             const rect = countdown.getBoundingClientRect();
                             if (rect.top < window.innerHeight && rect.bottom > 0) {
-                                this.showTropeComment('cheste', 'Tiempo suficiente para comprar palitos.');
+                                this.showTropeComment('cheste', 'Contando los días... ese Dape es un crack. 🐾✨');
                             }
                         }
 
@@ -2521,7 +2521,7 @@
                         if (companion && !this.state.commentsShown.companion) {
                             const rect = companion.getBoundingClientRect();
                             if (rect.top < window.innerHeight && rect.bottom > 0) {
-                                this.showTropeComment('companion', 'Sigo evaluándolo.');
+                                this.showTropeComment('companion', 'Confirmado: Ese Dape me cae super bien. 🐕‍🦺❤️');
                             }
                         }
 
@@ -2530,11 +2530,11 @@
                         if (secFinal && !this.state.commentsShown.final) {
                             const rect = secFinal.getBoundingClientRect();
                             if (rect.top < window.innerHeight * 0.7) {
-                                this.showTropeComment('final', 'Bueno. No me cae fatal.');
+                                this.showTropeComment('final', 'Ese Dape me cae genial. ¡Feliz cumpleaños, mami! 🎂🐾');
                             }
                         }
 
-                        // Callback 5: Absolute Bottom (87% -> 88%)
+                        // Callback 5: Absolute Bottom (87% -> 100%)
                         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
                         if (totalHeight > 0 && window.scrollY >= totalHeight - 60 && !this.state.commentsShown.callback) {
                             this.triggerFinalCallback();
@@ -2544,15 +2544,15 @@
 
                 triggerFinalCallback() {
                     this.state.commentsShown.callback = true;
-                    this.state.score = 88;
+                    this.state.score = 100;
                     this.saveState();
 
                     const toast = document.createElement('div');
-                    toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 glass-panel px-5 py-3.5 rounded-2xl border border-racingRed/50 bg-black/90 shadow-2xl font-mono text-xs text-center space-y-1 animate-bounce max-w-xs';
+                    toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 glass-panel px-5 py-3.5 rounded-2xl border border-emerald-500/50 bg-black/90 shadow-2xl font-mono text-xs text-center space-y-1 animate-bounce max-w-xs';
                     toast.innerHTML = `
-                        <span class="block text-[10px] text-racingRed uppercase font-bold tracking-widest">TROPE APPROVAL UPDATED</span>
-                        <span class="block text-white font-bold text-sm">87% → 88%</span>
-                        <span class="block text-[11px] text-gray-300">No te emociones, Dape. Trae palitos. 🪵</span>
+                        <span class="block text-[10px] text-emerald-400 uppercase font-bold tracking-widest">TROPE APPROVAL UPDATED</span>
+                        <span class="block text-white font-bold text-sm">100%</span>
+                        <span class="block text-[11px] text-gray-300">Ese Dape me cae de diez. ¡Aprobación canina total! 🐕‍🦺💯</span>
                     `;
                     document.body.appendChild(toast);
 

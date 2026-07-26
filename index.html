@@ -482,7 +482,7 @@
         </div>
 
         <!-- SECCIÓN 4 — EL VÍDEO -->
-        <section id="sec-video" class="relative min-h-screen w-full px-6 py-32 bg-darkBg flex flex-col items-center justify-center text-center">
+        <section id="sec-video" class="relative min-h-screen w-full px-6 py-32 bg-darkBg flex flex-col items-center justify-center text-center hidden">
             <div class="max-w-xl mx-auto space-y-8">
                 <div class="space-y-4">
                     <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-500">Transición personal</p>
@@ -1383,6 +1383,10 @@
                         if (saved) {
                             const parsed = JSON.parse(saved);
                             this.state = { ...this.state, ...parsed };
+                            if (this.state.completed) {
+                                const secVideo = document.getElementById('sec-video');
+                                if (secVideo) secVideo.classList.remove('hidden');
+                            }
                         }
                     } catch (e) {
                         console.error('Error loading Tropernicus state:', e);
@@ -2359,8 +2363,11 @@
                     const btnContinue = document.getElementById('btnContinueStory');
                     if (btnContinue) {
                         btnContinue.addEventListener('click', () => {
-                            document.body.style.overflow = '';
                             const secVideo = document.getElementById('sec-video');
+                            if (secVideo) {
+                                secVideo.classList.remove('hidden');
+                            }
+                            document.body.style.overflow = '';
                             if (secVideo) {
                                 secVideo.scrollIntoView({ behavior: 'smooth' });
                             }

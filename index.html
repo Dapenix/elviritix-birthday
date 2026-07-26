@@ -386,7 +386,7 @@
             </div>
         </section>
 
-        <!-- TRANSICIÓN A TROPECIENTAS — NARRATIVA INTERMEDIA -->
+        <!-- TRANSICIÓN A TROPERNICUS — NARRATIVA INTERMEDIA -->
         <section id="sec-trope-transition" class="relative py-24 sm:py-32 px-6 bg-[#060608] flex flex-col items-center justify-center text-center overflow-hidden border-t border-b border-white/5">
             <div class="max-w-2xl mx-auto w-full space-y-8 text-center">
                 <div class="trope-trans-step opacity-0 transition-all duration-700 transform translate-y-8">
@@ -399,12 +399,12 @@
                     <h2 class="text-3xl sm:text-5xl font-black text-racingRed tracking-tight uppercase text-glow">¿Elvira?</h2>
                 </div>
                 <div class="trope-trans-step opacity-0 transition-all duration-700 transform translate-y-8 pt-2">
-                    <p class="text-xl sm:text-3xl font-medium text-gray-200">Trope quiere cerciorarse... así que toca pasar por TROPECIENTAS™.</p>
+                    <p class="text-xl sm:text-3xl font-medium text-gray-200">Trope quiere cerciorarse... así que toca pasar por TROPERNICUS™.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN 3.5 — TROPECIENTAS™ -->
+        <!-- SECCIÓN 3.5 — TROPERNICUS™ -->
         <section id="sec-trope-security" class="relative min-h-[100dvh] w-full px-4 sm:px-6 py-16 bg-[#050507] flex flex-col items-center justify-center text-center overflow-hidden transition-colors duration-1000 border-b border-racingRed/10">
             <!-- Destello de fondo y rejilla tecnológica sutil -->
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.08)_0%,rgba(5,5,7,1)_85%)] pointer-events-none"></div>
@@ -419,7 +419,7 @@
                         </div>
                         <div class="text-left">
                             <div class="flex items-center gap-1.5">
-                                <span class="font-mono text-xs font-black text-white tracking-wider">TROPECIENTAS™</span>
+                                <span class="font-mono text-xs font-black text-white tracking-wider">TROPERNICUS™</span>
                                 <span class="px-1.5 py-0.5 bg-racingRed/20 text-racingRed border border-racingRed/40 font-mono text-[9px] rounded font-bold">LABS</span>
                             </div>
                             <span class="block text-[10px] text-gray-400 font-mono">Canine Compatibility Engine v1.0</span>
@@ -439,13 +439,13 @@
                 </div>
             </div>
 
-            <!-- Tarjeta Dinámica de Etapa de TROPECIENTAS -->
+            <!-- Tarjeta Dinámica de Etapa de TROPERNICUS -->
             <div id="tropeSecurityCard" class="relative z-10 w-full max-w-lg mx-auto glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl space-y-6">
                 <!-- Contenido inyectado dinámicamente por JS -->
             </div>
         </section>
 
-        <!-- MODAL EMERGENTE — INICIO TROPECIENTAS -->
+        <!-- MODAL EMERGENTE — INICIO TROPERNICUS -->
         <div id="tropeStartModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
             <div id="tropeStartModalCard" class="relative w-full max-w-md bg-black/95 rounded-3xl border-2 border-amber-500/60 p-6 sm:p-8 space-y-6 text-center shadow-[0_0_50px_rgba(245,158,11,0.25)] transform scale-95 transition-transform duration-500">
                 <!-- Insignia Alerta -->
@@ -460,18 +460,18 @@
 
                 <div class="space-y-3">
                     <h3 class="text-xl sm:text-2xl font-black text-white font-mono tracking-tight uppercase">
-                        SISTEMA TROPECIENTAS™
+                        SISTEMA TROPERNICUS™
                     </h3>
                     <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-xs text-gray-300 text-left space-y-2 leading-relaxed">
                         <p class="text-amber-400 font-bold text-[11px] uppercase">VERIFICACIÓN DE IDENTIDAD OBLIGATORIA:</p>
                         <p>Trope se quiere cerciorar de que realmente eres Elvira antes de dar el visto bueno.</p>
-                        <p class="text-white font-bold">Responde a sus preguntas para completar la evaluación de TROPECIENTAS™ y continuar.</p>
+                        <p class="text-white font-bold">Responde a sus preguntas para completar la evaluación de TROPERNICUS™ y continuar.</p>
                         <p class="text-gray-400 text-[10px] pt-1 border-t border-white/10">• Autoridad Canina: Absoluta 🐾</p>
                     </div>
                 </div>
 
                 <div class="pt-2">
-                    <button id="btnStartTropecientasNow" class="w-full py-4 px-6 bg-racingRed hover:bg-red-700 text-white font-mono font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                    <button id="btnStartTropernicusNow" class="w-full py-4 px-6 bg-racingRed hover:bg-red-700 text-white font-mono font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
                         Iniciar Evaluación de Trope ➔
                     </button>
                 </div>
@@ -1347,7 +1347,7 @@
             });
 
             // ==========================================
-            // TROPECIENTAS™ CONTROLLER & NARRATIVE ENGINE
+            // TROPERNICUS™ CONTROLLER & NARRATIVE ENGINE
             // ==========================================
             const TropeSecurity = {
                 state: {
@@ -1376,21 +1376,21 @@
 
                 loadState() {
                     try {
-                        const saved = localStorage.getItem('elviritix_tropecientas_state');
+                        const saved = localStorage.getItem('elviritix_tropernicus_state');
                         if (saved) {
                             const parsed = JSON.parse(saved);
                             this.state = { ...this.state, ...parsed };
                         }
                     } catch (e) {
-                        console.error('Error loading Tropecientas state:', e);
+                        console.error('Error loading Tropernicus state:', e);
                     }
                 },
 
                 saveState() {
                     try {
-                        localStorage.setItem('elviritix_tropecientas_state', JSON.stringify(this.state));
+                        localStorage.setItem('elviritix_tropernicus_state', JSON.stringify(this.state));
                     } catch (e) {
-                        console.error('Error saving Tropecientas state:', e);
+                        console.error('Error saving Tropernicus state:', e);
                     }
                 },
 
@@ -1452,7 +1452,7 @@
 
                             <div class="space-y-2">
                                 <div class="inline-block px-3 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest">
-                                    TROPECIENTAS™ APPROVED*
+                                    TROPERNICUS™ APPROVED*
                                 </div>
                                 <h3 class="text-2xl font-bold text-white uppercase font-mono">¿LE CAE BIEN DAPE A TROPE?</h3>
                                 <div class="inline-block px-4 py-2 bg-emerald-950/80 border border-emerald-500 text-emerald-400 rounded-xl font-mono font-bold text-base">
@@ -1463,7 +1463,7 @@
 
                             <div class="pt-2">
                                 <button id="restartTropeBtn" class="px-5 py-2.5 bg-white/10 hover:bg-racingRed text-white text-xs font-mono uppercase tracking-wider rounded-xl border border-white/10 transition-colors">
-                                    Repetir Evaluador Tropecientas
+                                    Repetir Evaluador Tropernicus
                                 </button>
                             </div>
                         </div>
@@ -1515,7 +1515,7 @@
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnStageEntry" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
-                                    Descubrir Tropecientas ➔
+                                    Descubrir Tropernicus ➔
                                 </button>
                             </div>
                         </div>
@@ -1527,15 +1527,15 @@
                     }
                 },
 
-                // Stage 2: Tropecientas Branding & Profile Card
-                renderStageIntroTropecientas() {
+                // Stage 2: Tropernicus Branding & Profile Card
+                renderStageIntroTropernicus() {
                     const card = document.getElementById('tropeSecurityCard');
                     if (!card) return;
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center animate-fadeIn">
                             <div class="space-y-2">
-                                <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">TROPECIENTAS™</h2>
+                                <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">TROPERNICUS™</h2>
                                 <p class="text-xs text-gray-300 font-mono">Sistema avanzado para determinar si le caes bien a un dóberman.</p>
                                 <div class="flex justify-center gap-3 text-[9px] font-mono text-gray-500 pt-1">
                                     <span>Fiabilidad científica: cuestionable</span>
@@ -1839,8 +1839,8 @@
                                     <button class="nom-btn w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-sm uppercase tracking-wider rounded-2xl border border-white/10 hover:border-racingRed transition-all transform hover:scale-[1.02]" data-ans="tropelias">
                                         [ TROPELÍAS ]
                                     </button>
-                                    <button class="nom-btn w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-sm uppercase tracking-wider rounded-2xl border border-white/10 hover:border-racingRed transition-all transform hover:scale-[1.02]" data-ans="tropecientas">
-                                        [ TROPECIENTAS ]
+                                    <button class="nom-btn w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-sm uppercase tracking-wider rounded-2xl border border-white/10 hover:border-racingRed transition-all transform hover:scale-[1.02]" data-ans="tropernicus">
+                                        [ TROPERNICUS ]
                                     </button>
                                 </div>
                             </div>
@@ -1892,20 +1892,20 @@
                         const btn = document.getElementById('btnRetryNom');
                         if (btn) btn.addEventListener('click', () => this.renderVariableNomenclatura());
 
-                    } else if (ans === 'tropecientas') {
+                    } else if (ans === 'tropernicus') {
                         card.innerHTML = `
                             <div class="space-y-5 text-center py-2 animate-fadeIn">
                                 <span class="font-mono text-xs text-racingRed font-bold uppercase tracking-wider">INCORRECTO. Eso es otra cosa.</span>
                                 
                                 <div class="bg-black/70 p-4 rounded-2xl border border-amber-500/40 font-mono text-xs text-left space-y-2">
                                     <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
-                                        <h4 class="text-base font-black text-amber-400">TROPECIENTAS</h4>
-                                        <span class="text-[10px] text-gray-400">/tro-pe-cien-tas/</span>
+                                        <h4 class="text-base font-black text-amber-400">TROPERNICUS</h4>
+                                        <span class="text-[10px] text-gray-400">/tro-per-ni-cus/</span>
                                     </div>
                                     <p class="text-gray-300 text-[11px]">Cantidad aproximada de veces que, pese a las tropelías, Trope sigue siendo adorable y un verdadero amor.</p>
                                     
                                     <div class="pt-2 border-t border-white/10 text-[10px] text-center font-mono text-white">
-                                        1 DÍA NORMAL DE ELVIRA ≈ TROPECIENTAS COSAS ADORABLES DE TROPE
+                                        1 DÍA NORMAL DE ELVIRA ≈ TROPERNICUS COSAS ADORABLES DE TROPE
                                     </div>
                                 </div>
 
@@ -1952,19 +1952,19 @@
                         `;
 
                         const btn = document.getElementById('btnNextDict');
-                        if (btn) btn.addEventListener('click', () => this.renderTropecientasDictionary());
+                        if (btn) btn.addEventListener('click', () => this.renderTropernicusDictionary());
                     }
                 },
 
                 // Stage 5.6: Diccionario Oficial Completo
-                renderTropecientasDictionary() {
+                renderTropernicusDictionary() {
                     const card = document.getElementById('tropeSecurityCard');
                     if (!card) return;
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center animate-fadeIn">
                             <div class="space-y-1">
-                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">ACTUALIZANDO DICCIONARIO TROPECIENTAS...</span>
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">ACTUALIZANDO DICCIONARIO TROPERNICUS...</span>
                                 <h3 class="text-2xl font-black text-white">DICCIONARIO OFICIAL 📖</h3>
                             </div>
 
@@ -1982,7 +1982,7 @@
                                     <p class="text-gray-300 text-[11px]">Motivos por los que Trope acaba convirtiéndose en Tropezón.</p>
                                 </div>
                                 <div class="border-t border-white/10 pt-2">
-                                    <span class="text-emerald-400 font-black block text-sm">TROPECIENTAS</span>
+                                    <span class="text-emerald-400 font-black block text-sm">TROPERNICUS</span>
                                     <p class="text-gray-300 text-[11px]">Cantidad aproximada de veces que, pese a las tropelías, Trope sigue siendo adorable y un verdadero amor.</p>
                                 </div>
                             </div>
@@ -2288,7 +2288,7 @@
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextConclusion" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
-                                    Ver Conclusión TROPECIENTAS ➔
+                                    Ver Conclusión TROPERNICUS ➔
                                 </button>
                             </div>
                         </div>
@@ -2296,12 +2296,12 @@
 
                     const btn = document.getElementById('btnNextConclusion');
                     if (btn) {
-                        btn.addEventListener('click', () => this.renderTropecientasConclusion());
+                        btn.addEventListener('click', () => this.renderTropernicusConclusion());
                     }
                 },
 
-                // Stage 10: TROPECIENTAS CONCLUSION ("Identidad Verificada 100%: ¡Es Elvira! Besazo de Cumpleaños")
-                renderTropecientasConclusion() {
+                // Stage 10: TROPERNICUS CONCLUSION ("Identidad Verificada 100%: ¡Es Elvira! Besazo de Cumpleaños")
+                renderTropernicusConclusion() {
                     const card = document.getElementById('tropeSecurityCard');
                     const hud = document.getElementById('tropeHudHeader');
                     if (!card) return;
@@ -2317,7 +2317,7 @@
                             </div>
 
                             <div class="bg-black/75 p-3 rounded-2xl border border-white/10 font-mono text-[10px] space-y-1.5 text-left">
-                                <p class="text-[8px] text-racingRed font-bold uppercase tracking-widest">TROPECIENTAS SYSTEM ANALYSIS</p>
+                                <p class="text-[8px] text-racingRed font-bold uppercase tracking-widest">TROPERNICUS SYSTEM ANALYSIS</p>
                                 <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-gray-300">
                                     <div class="flex justify-between"><span>PALITOS</span><span class="text-amber-400 font-bold">CRITICAL 🪵</span></div>
                                     <div class="flex justify-between"><span>ROPA</span><span class="text-racingRed font-bold">AT RISK 🩲</span></div>
@@ -2374,7 +2374,7 @@
                     card.classList.remove('scale-95');
                     card.classList.add('scale-100');
 
-                    const btnStart = document.getElementById('btnStartTropecientasNow');
+                    const btnStart = document.getElementById('btnStartTropernicusNow');
                     if (btnStart) {
                         btnStart.onclick = () => this.closeStartModalAndBegin();
                     }
@@ -2391,7 +2391,7 @@
                     }
 
                     document.body.style.overflow = '';
-                    this.renderStageIntroTropecientas();
+                    this.renderStageIntroTropernicus();
                 },
 
                 showTropeComment(msgKey, text, avatarType = 'smart') {

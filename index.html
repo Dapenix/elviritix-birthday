@@ -671,15 +671,15 @@
     </div>
 
     <!-- WIDGET FLOTANTE DE RECURRENCIA DE TROPE (Burbuja de diálogo) -->
-    <div id="tropeFloatingWidget" class="fixed bottom-20 right-6 z-50 transition-all duration-500 transform translate-y-6 opacity-0 pointer-events-none">
-        <div class="glass-panel p-3.5 sm:p-4 rounded-2xl border border-racingRed/40 bg-black/90 shadow-2xl flex items-start gap-3 max-w-xs sm:max-w-sm backdrop-blur-xl relative">
-            <img src="assets/trope_portrait.jpg" alt="Trope" class="w-10 h-10 rounded-full object-cover border border-racingRed/60 shrink-0">
-            <div class="space-y-1 text-left">
-                <span class="block font-mono text-[10px] text-racingRed font-bold uppercase tracking-widest">Trope (Supervisor)</span>
-                <p id="tropeFloatingMsg" class="text-xs text-white font-medium leading-relaxed"></p>
+    <div id="tropeFloatingWidget" class="fixed bottom-6 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-50 transition-all duration-500 transform translate-y-6 opacity-0 pointer-events-none">
+        <div class="glass-panel p-4 rounded-2xl border-2 border-amber-500/60 bg-black/95 shadow-[0_10px_40px_rgba(0,0,0,0.9)] flex items-center gap-3.5 backdrop-blur-2xl relative">
+            <img id="tropeFloatingImg" src="assets/trope_portrait.jpg" alt="Trope" class="w-14 h-14 rounded-xl object-cover border-2 border-amber-400 shrink-0 shadow-lg">
+            <div class="space-y-0.5 text-left flex-1 min-w-0">
+                <span class="block font-mono text-[10px] text-amber-400 font-bold uppercase tracking-wider">Trope (Supervisor)</span>
+                <p id="tropeFloatingMsg" class="text-xs sm:text-sm text-white font-medium leading-snug truncate-2-lines"></p>
             </div>
-            <button id="closeTropeWidgetBtn" class="text-gray-500 hover:text-white transition-colors p-1">
-                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            <button id="closeTropeWidgetBtn" class="text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg bg-white/5 hover:bg-white/10 shrink-0">
+                <i data-lucide="x" class="w-4 h-4"></i>
             </button>
         </div>
     </div>
@@ -2410,14 +2410,24 @@
                     }, 300);
                 },
 
-                showTropeComment(msgKey, text) {
+                showTropeComment(msgKey, text, avatarType = 'smart') {
                     if (!this.state.completed) return;
                     if (this.state.commentsShown[msgKey]) return;
 
                     const widget = document.getElementById('tropeFloatingWidget');
                     const msgEl = document.getElementById('tropeFloatingMsg');
+                    const imgEl = document.getElementById('tropeFloatingImg');
                     if (!widget || !msgEl) return;
 
+                    let imgFile = 'trope_portrait.jpg';
+                    if (avatarType === 'judging') imgFile = 'trope_judging.jpg';
+                    else if (avatarType === 'palito') imgFile = 'trope_palito.jpg';
+                    else if (avatarType === 'ropa') imgFile = 'trope_ropa.jpg';
+                    else if (avatarType === 'judge') imgFile = 'trope_judge.jpg';
+                    else if (avatarType === 'bed') imgFile = 'trope_bed.jpg';
+                    else if (avatarType === 'smart') imgFile = 'trope_smart.jpg';
+
+                    if (imgEl) imgEl.src = `assets/${imgFile}`;
                     msgEl.innerText = text;
                     widget.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
                     this.state.commentsShown[msgKey] = true;

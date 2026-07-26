@@ -393,6 +393,44 @@
             </div>
         </section>
 
+        <!-- SECCIÓN 3.5 — TROPE SECURITY CHECK -->
+        <section id="sec-trope-security" class="relative min-h-[100dvh] w-full px-4 sm:px-6 py-16 bg-[#050507] flex flex-col items-center justify-center text-center overflow-hidden transition-colors duration-1000 border-t border-b border-racingRed/10">
+            <!-- Destello de fondo y rejilla tecnológica sutil -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.08)_0%,rgba(5,5,7,1)_85%)] pointer-events-none"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none opacity-40"></div>
+
+            <!-- Cabecera HUD Flotante (Barra de Trope Trust Score) -->
+            <div id="tropeHudHeader" class="w-full max-w-lg mx-auto mb-6 transition-all duration-700 opacity-0 transform -translate-y-4 relative z-20">
+                <div class="glass-panel p-4 rounded-2xl border border-white/10 flex items-center justify-between shadow-2xl backdrop-blur-xl bg-black/70">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-racingRed/20 border border-racingRed/50 flex items-center justify-center text-racingRed">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="block font-mono text-[10px] uppercase text-racingRed tracking-widest font-bold">Trope Security System</span>
+                            <span class="block text-[11px] font-bold text-white font-mono">DOBERMAN PROTOCOL v1.0</span>
+                        </div>
+                    </div>
+
+                    <!-- Insignia de Trust Score -->
+                    <div class="text-right">
+                        <span class="block text-[9px] font-mono text-gray-400 uppercase tracking-wider">Trust Score</span>
+                        <div class="flex items-center gap-2">
+                            <div class="w-24 sm:w-28 h-2 bg-black/80 rounded-full overflow-hidden border border-white/10 p-0.5">
+                                <div id="tropeTrustBar" class="h-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-500 rounded-full transition-all duration-700" style="width: 12%;"></div>
+                            </div>
+                            <span id="tropeTrustScoreVal" class="font-mono text-sm font-bold text-white tracking-tight">12%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta Dinámica de Etapa de Seguridad -->
+            <div id="tropeSecurityCard" class="relative z-10 w-full max-w-lg mx-auto glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl space-y-6">
+                <!-- Contenido inyectado dinámicamente por JS -->
+            </div>
+        </section>
+
         <!-- SECCIÓN 4 — EL VÍDEO -->
         <section id="sec-video" class="relative min-h-screen w-full px-6 py-32 bg-darkBg flex flex-col items-center justify-center text-center">
             <div class="max-w-xl mx-auto space-y-8">
@@ -494,7 +532,7 @@
                             <span class="font-semibold text-white">Elvira Lozano Cabrera</span>
                             <span class="block text-[10px] text-racingRed">Uso personal e intransferible</span>
                         </div>
-                        <div class="bg-darkBg/60 p-4 rounded-2xl border border-white/5">
+                        <div class="bg-darkBg/60 p-4 rounded-2xl border border-white/5" data-trope-trigger="companion">
                             <span class="text-[10px] font-mono text-gray-500 uppercase block mb-1">Acompañante</span>
                             <span class="font-semibold text-white">Un tal Da-pena.</span>
                             <span class="block text-[10px] text-gray-400">Asistencia obligatoria</span>
@@ -600,6 +638,20 @@
                     <p class="text-sm font-mono text-gray-300">Pulsa para reproducir felicitación</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- WIDGET FLOTANTE DE RECURRENCIA DE TROPE (Burbuja de diálogo) -->
+    <div id="tropeFloatingWidget" class="fixed bottom-20 right-6 z-50 transition-all duration-500 transform translate-y-6 opacity-0 pointer-events-none">
+        <div class="glass-panel p-3.5 sm:p-4 rounded-2xl border border-racingRed/40 bg-black/90 shadow-2xl flex items-start gap-3 max-w-xs sm:max-w-sm backdrop-blur-xl relative">
+            <img src="assets/trope_portrait.jpg" alt="Trope" class="w-10 h-10 rounded-full object-cover border border-racingRed/60 shrink-0">
+            <div class="space-y-1 text-left">
+                <span class="block font-mono text-[10px] text-racingRed font-bold uppercase tracking-widest">Trope (Supervisor)</span>
+                <p id="tropeFloatingMsg" class="text-xs text-white font-medium leading-relaxed"></p>
+            </div>
+            <button id="closeTropeWidgetBtn" class="text-gray-500 hover:text-white transition-colors p-1">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            </button>
         </div>
     </div>
 
@@ -1257,8 +1309,718 @@
                 `);
             });
 
-            // Inicializar comprobación de tiempo al cargar
-            checkTimeLock();
+            // ==========================================
+            // TROPE SECURITY CHECK CONTROLLER & LOGIC
+            // ==========================================
+            const TropeSecurity = {
+                state: {
+                    score: 12,
+                    stage: 0,
+                    completed: false,
+                    started: false,
+                    answers: {},
+                    commentsShown: {
+                        motogp: false,
+                        cheste: false,
+                        companion: false,
+                        final: false,
+                        callback: false
+                    }
+                },
+
+                init() {
+                    this.loadState();
+                    this.bindEvents();
+                    this.observeScrollTriggers();
+                },
+
+                loadState() {
+                    try {
+                        const saved = localStorage.getItem('elviritix_trope_security');
+                        if (saved) {
+                            const parsed = JSON.parse(saved);
+                            this.state = { ...this.state, ...parsed };
+                        }
+                    } catch (e) {
+                        console.error('Error loading Trope state:', e);
+                    }
+                },
+
+                saveState() {
+                    try {
+                        localStorage.setItem('elviritix_trope_security', JSON.stringify(this.state));
+                    } catch (e) {
+                        console.error('Error saving Trope state:', e);
+                    }
+                },
+
+                setTrustScore(newScore) {
+                    const elVal = document.getElementById('tropeTrustScoreVal');
+                    const elBar = document.getElementById('tropeTrustBar');
+                    this.state.score = Math.min(newScore, 87);
+                    if (elVal) elVal.innerText = `${this.state.score}%`;
+                    if (elBar) elBar.style.width = `${this.state.score}%`;
+                    this.saveState();
+                },
+
+                startCheck() {
+                    if (this.state.started) return;
+                    this.state.started = true;
+
+                    if (this.state.completed) {
+                        this.renderSummaryStage();
+                    } else {
+                        this.renderStage0();
+                    }
+                },
+
+                renderSummaryStage() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    const hud = document.getElementById('tropeHudHeader');
+                    if (!card) return;
+
+                    if (hud) {
+                        hud.classList.remove('opacity-0', '-translate-y-4');
+                        this.setTrustScore(this.state.score || 87);
+                    }
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="relative w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-emerald-500 shadow-2xl">
+                                <img src="assets/trope_portrait.jpg" alt="Trope" class="w-full h-full object-cover">
+                            </div>
+
+                            <div class="space-y-2">
+                                <span class="font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest">TROPE SECURITY PROTOCOL</span>
+                                <h3 class="text-2xl font-bold text-white uppercase font-mono">ACCESS GRANTED</h3>
+                                <div class="inline-block px-4 py-2 bg-emerald-950/80 border border-emerald-500 text-emerald-400 rounded-xl font-mono font-bold text-sm">
+                                    TRUST SCORE: ${this.state.score || 87}%
+                                </div>
+                                <p class="text-xs text-gray-400 font-mono pt-1">
+                                    El 13% restante requiere inspección presencial.
+                                </p>
+                            </div>
+
+                            <div class="pt-2">
+                                <button id="restartTropeBtn" class="px-5 py-2.5 bg-white/10 hover:bg-racingRed text-white text-xs font-mono uppercase tracking-wider rounded-xl border border-white/10 transition-colors">
+                                    Repetir Interrogatorio
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    const rBtn = document.getElementById('restartTropeBtn');
+                    if (rBtn) {
+                        rBtn.addEventListener('click', () => {
+                            this.state.completed = false;
+                            this.state.score = 12;
+                            this.state.answers = {};
+                            this.saveState();
+                            this.renderStage0();
+                        });
+                    }
+
+                    lucide.createIcons();
+                },
+
+                renderStage0() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    const hud = document.getElementById('tropeHudHeader');
+                    if (!card) return;
+
+                    if (bgAudio && audioPlaying) {
+                        bgAudio.volume = 0.1;
+                    }
+
+                    if (hud) hud.classList.remove('opacity-0', '-translate-y-4');
+                    this.setTrustScore(12);
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center">
+                            <div class="inline-block px-3 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] uppercase text-racingRed tracking-widest animate-pulse">
+                                ACCESO RESTRINGIDO
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                                Para continuar, es necesaria autorización adicional.
+                            </h3>
+                            <p class="text-xs font-mono text-gray-400">Consultando responsable de seguridad...</p>
+                            
+                            <div class="w-full bg-black/60 rounded-full h-3 border border-white/10 p-0.5 relative overflow-hidden">
+                                <div id="tropeInitBar" class="h-full bg-racingRed rounded-full transition-all duration-1000 w-0"></div>
+                            </div>
+                            <p id="tropeConnectingText" class="font-mono text-xs text-racingRed font-bold tracking-widest">CONNECTING...</p>
+                        </div>
+                    `;
+
+                    setTimeout(() => {
+                        const bar = document.getElementById('tropeInitBar');
+                        if (bar) bar.style.width = '100%';
+                    }, 100);
+
+                    setTimeout(() => {
+                        this.renderStage1();
+                    }, 2200);
+                },
+
+                renderStage1() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center transition-all duration-700">
+                            <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-2 border-racingRed shadow-2xl">
+                                <img src="assets/trope_portrait.jpg" alt="Trope" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black text-white tracking-tight uppercase">TROPE</h3>
+                                <p class="font-mono text-xs text-racingRed font-semibold tracking-widest uppercase">DOBERMAN SECURITY SYSTEM</p>
+                                <p class="font-mono text-[10px] text-gray-500">SECURITY PROTOCOL v1.0</p>
+                            </div>
+
+                            <div id="identStepBox" class="bg-black/50 p-4 rounded-2xl border border-white/10 text-left font-mono text-xs space-y-2">
+                                <p class="text-gray-400 uppercase tracking-widest text-[10px]">IDENTIFICANDO SOLICITANTE...</p>
+                                <p class="text-base font-bold text-white text-center py-1">SOLICITANTE: DAPE</p>
+                                <div id="checkList" class="space-y-1.5 pt-2 text-[11px]"></div>
+                            </div>
+                        </div>
+                    `;
+
+                    const checkList = document.getElementById('checkList');
+                    const checks = [
+                        { text: '✓ Identidad localizada', color: 'text-emerald-400', delay: 400 },
+                        { text: '✓ Presencia recurrente detectada', color: 'text-emerald-400', delay: 1000 },
+                        { text: '✓ Meses merodeando alrededor del sujeto', color: 'text-emerald-400', delay: 1700 },
+                        { text: '⚠ Intenciones sospechosamente amables', color: 'text-amber-400 font-bold animate-pulse', delay: 2500 }
+                    ];
+
+                    checks.forEach(c => {
+                        setTimeout(() => {
+                            if (checkList) {
+                                const p = document.createElement('p');
+                                p.className = `${c.color} transition-all duration-300 transform translate-x-2`;
+                                p.innerText = c.text;
+                                checkList.appendChild(p);
+                            }
+                        }, c.delay);
+                    });
+
+                    setTimeout(() => {
+                        this.renderStage2();
+                    }, 3800);
+                },
+
+                renderStage2() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">SUBJECT IDENTIFIED</span>
+                                <h3 class="text-2xl font-bold text-white font-mono tracking-wider">ELVIRITIX</h3>
+                            </div>
+
+                            <div class="bg-black/50 p-4 rounded-2xl border border-racingRed/30 space-y-3">
+                                <p class="font-mono text-xs text-gray-300">Analizando relación entre:</p>
+                                <div class="flex items-center justify-center gap-4 text-sm font-bold font-mono">
+                                    <span class="px-3 py-1 bg-white/10 rounded-lg text-white">DAPE</span>
+                                    <span class="text-racingRed text-xl">↕</span>
+                                    <span class="px-3 py-1 bg-racingRed/20 border border-racingRed/40 rounded-lg text-white">ELVIRITIX</span>
+                                </div>
+
+                                <div class="w-full bg-black rounded-full h-2 overflow-hidden border border-white/10">
+                                    <div id="relBar" class="h-full bg-amber-500 rounded-full transition-all duration-1000 w-0"></div>
+                                </div>
+                            </div>
+
+                            <div id="threatResultBox" class="space-y-2 opacity-0 transition-opacity duration-500">
+                                <div class="px-4 py-2 bg-amber-950/60 border border-amber-500/40 rounded-xl">
+                                    <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider block">NIVEL DE INTERÉS DETECTADO: PREOCUPANTE</span>
+                                    <span class="text-[10px] text-gray-400 font-mono block">Continuar bajo supervisión.</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    setTimeout(() => {
+                        const relBar = document.getElementById('relBar');
+                        if (relBar) relBar.style.width = '100%';
+                    }, 200);
+
+                    setTimeout(() => {
+                        const resBox = document.getElementById('threatResultBox');
+                        if (resBox) resBox.classList.remove('opacity-0');
+                    }, 1400);
+
+                    setTimeout(() => {
+                        this.renderStageThreatEval();
+                    }, 3200);
+                },
+
+                renderStageThreatEval() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center">
+                            <div class="inline-block px-3 py-1 bg-white/10 rounded-full font-mono text-[10px] text-gray-300 uppercase tracking-widest">
+                                INICIANDO EVALUACIÓN DE AMENAZA
+                            </div>
+                            
+                            <h3 class="text-lg font-bold text-white">¿Representa Dape un peligro para Elvira?</h3>
+
+                            <div id="sniffConsole" class="bg-black/60 p-4 rounded-2xl border border-white/10 text-left font-mono text-xs space-y-1.5 text-gray-400 min-h-[140px]"></div>
+
+                            <div id="threatFinalRes" class="hidden space-y-1 transition-all duration-500">
+                                <div class="p-3 bg-emerald-950/60 border border-emerald-500/50 rounded-xl text-emerald-400 font-mono font-bold text-xs uppercase tracking-wider">
+                                    AMENAZA: NO DETECTADA
+                                </div>
+                                <p class="text-[10px] font-mono text-gray-500">De momento.</p>
+                            </div>
+                        </div>
+                    `;
+
+                    const consoleBox = document.getElementById('sniffConsole');
+                    const logs = [
+                        'Analizando comportamiento...',
+                        'Analizando conversaciones...',
+                        'Analizando antecedentes...',
+                        'Consultando a Trope...',
+                        'sniff...',
+                        'sniff...'
+                    ];
+
+                    logs.forEach((log, i) => {
+                        setTimeout(() => {
+                            if (consoleBox) {
+                                const p = document.createElement('p');
+                                p.className = log.startsWith('sniff') ? 'text-racingRed font-bold tracking-widest animate-bounce' : 'text-gray-300';
+                                p.innerText = log;
+                                consoleBox.appendChild(p);
+                            }
+                        }, i * 600);
+                    });
+
+                    setTimeout(() => {
+                        const finalRes = document.getElementById('threatFinalRes');
+                        if (finalRes) finalRes.classList.remove('hidden');
+                        this.setTrustScore(27);
+                    }, logs.length * 600 + 400);
+
+                    setTimeout(() => {
+                        this.renderQuestion1();
+                    }, logs.length * 600 + 2600);
+                },
+
+                renderQuestion1() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">INTERROGATORIO — PREGUNTA 1 DE 3</span>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white">¿Este individuo te cae bien?</h3>
+                            </div>
+
+                            <div class="space-y-3 pt-2 max-w-sm mx-auto">
+                                <button class="trope-q-btn w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-medium text-sm rounded-2xl border border-white/10 hover:border-racingRed transition-all transform hover:scale-[1.02]" data-ans="si">
+                                    Sí
+                                </button>
+                                <button class="trope-q-btn w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-medium text-sm rounded-2xl border border-white/10 hover:border-racingRed transition-all transform hover:scale-[1.02]" data-ans="bueno">
+                                    Bueno...
+                                </button>
+                                <button class="trope-q-btn w-full py-3.5 px-6 bg-transparent hover:bg-white/5 text-gray-400 hover:text-white text-xs font-mono rounded-2xl border border-white/5 transition-all" data-ans="no_declarar">
+                                    No quiero declarar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    card.querySelectorAll('.trope-q-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const ans = e.currentTarget.getAttribute('data-ans');
+                            this.state.answers.q1 = ans;
+                            this.handleAnswer1(ans);
+                        });
+                    });
+                },
+
+                handleAnswer1(ans) {
+                    const card = document.getElementById('tropeSecurityCard');
+                    let msg = '';
+                    let sub = '';
+                    let newScore = 27;
+
+                    if (ans === 'si') {
+                        msg = 'Respuesta registrada.';
+                        sub = 'Trope parece sorprendido.';
+                        newScore = 43;
+                    } else if (ans === 'bueno') {
+                        msg = 'Respuesta ambigua detectada.';
+                        sub = 'Muy propio de la humana.';
+                        newScore = 35;
+                    } else {
+                        msg = 'El silencio también es una respuesta.';
+                        sub = 'TROPE IS WATCHING';
+                        newScore = 29;
+                    }
+
+                    this.setTrustScore(newScore);
+
+                    card.innerHTML = `
+                        <div class="space-y-4 text-center py-4">
+                            <p class="font-mono text-xs text-gray-400">${msg}</p>
+                            <h3 class="text-xl font-bold text-white font-mono">${sub}</h3>
+                        </div>
+                    `;
+
+                    setTimeout(() => {
+                        this.renderQuestion2();
+                    }, 2200);
+                },
+
+                renderQuestion2() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">INTERROGATORIO — PREGUNTA 2 DE 3</span>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white">¿Se le debería permitir acercarse?</h3>
+                            </div>
+
+                            <div class="space-y-3 pt-2 max-w-sm mx-auto">
+                                <button class="trope-q-btn w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-medium text-sm rounded-2xl border border-white/10 hover:border-racingRed transition-all transform hover:scale-[1.02]" data-ans="si">
+                                    Sí
+                                </button>
+                                <button class="trope-q-btn w-full py-3.5 px-6 bg-racingRed/20 hover:bg-racingRed text-white font-semibold text-sm rounded-2xl border border-racingRed/50 transition-all transform hover:scale-[1.02]" data-ans="supervision">
+                                    Con supervisión
+                                </button>
+                                <button class="trope-q-btn w-full py-3.5 px-6 bg-transparent hover:bg-white/5 text-gray-400 hover:text-white text-xs font-mono rounded-2xl border border-white/5 transition-all" data-ans="coña">
+                                    Ni de coña
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    card.querySelectorAll('.trope-q-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const ans = e.currentTarget.getAttribute('data-ans');
+                            this.state.answers.q2 = ans;
+                            this.handleAnswer2(ans);
+                        });
+                    });
+                },
+
+                handleAnswer2(ans) {
+                    const card = document.getElementById('tropeSecurityCard');
+                    let msg = '';
+                    let sub = '';
+                    let addScore = 15;
+
+                    if (ans === 'si') {
+                        msg = 'Autorización sorprendentemente generosa.';
+                        sub = 'Actualizando registros de acceso.';
+                        addScore = 15;
+                    } else if (ans === 'supervision') {
+                        msg = 'Decisión sensata.';
+                        sub = 'SUPERVISOR ASIGNADO: TROPE';
+                        addScore = 25;
+                    } else {
+                        msg = 'Solicitud registrada. Trope entiende perfectamente la decisión.';
+                        sub = 'Continuaremos con el procedimiento igualmente.';
+                        addScore = 10;
+                    }
+
+                    this.setTrustScore(this.state.score + addScore);
+
+                    card.innerHTML = `
+                        <div class="space-y-4 text-center py-4">
+                            <p class="font-mono text-xs text-gray-400">${msg}</p>
+                            <h3 class="text-xl font-bold text-white font-mono">${sub}</h3>
+                        </div>
+                    `;
+
+                    setTimeout(() => {
+                        this.renderQuestion3();
+                    }, 2400);
+                },
+
+                renderQuestion3() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">FINAL AUTHORIZATION REQUIRED</span>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white">¿Puede Dape seguir descubriendo cosas sobre ti?</h3>
+                            </div>
+
+                            <div class="space-y-4 pt-2 max-w-sm mx-auto">
+                                <button id="authOkBtn" class="w-full py-4 px-6 bg-racingRed text-white font-bold text-sm uppercase tracking-wider rounded-2xl shadow-xl hover:bg-red-700 transition-all transform hover:scale-105 racing-glow">
+                                    AUTORIZAR
+                                </button>
+                                <button id="authRejectBtn" class="text-xs font-mono text-gray-500 hover:text-gray-300 underline transition-colors">
+                                    Rechazar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    const okBtn = document.getElementById('authOkBtn');
+                    const rejBtn = document.getElementById('authRejectBtn');
+
+                    if (okBtn) {
+                        okBtn.addEventListener('click', () => {
+                            this.state.answers.q3 = 'autorizar';
+                            this.renderClearanceResult();
+                        });
+                    }
+
+                    if (rejBtn) {
+                        rejBtn.addEventListener('click', () => {
+                            card.innerHTML = `
+                                <div class="space-y-4 text-center py-4">
+                                    <p class="font-mono text-xs text-racingRed font-bold">Procesando rechazo...</p>
+                                    <h3 class="text-lg font-bold text-white font-mono">Error. Solicitud de rechazo ignorada.</h3>
+                                    <p class="text-xs text-gray-400">Trope ya había tomado una decisión. Continuar igualmente.</p>
+                                </div>
+                            `;
+                            setTimeout(() => {
+                                this.state.answers.q3 = 'rechazar';
+                                this.renderClearanceResult();
+                            }, 2800);
+                        });
+                    }
+                },
+
+                renderClearanceResult() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center">
+                            <p class="font-mono text-xs text-racingRed uppercase tracking-widest animate-pulse">PROCESSING SECURITY CLEARANCE...</p>
+                            
+                            <div class="bg-black/60 p-4 rounded-2xl border border-white/10 font-mono text-xs space-y-1.5 text-left">
+                                <div class="flex justify-between"><span>IDENTITY</span><span class="text-emerald-400 font-bold">OK</span></div>
+                                <div class="flex justify-between"><span>THREAT LEVEL</span><span class="text-emerald-400 font-bold">LOW</span></div>
+                                <div class="flex justify-between"><span>HUMAN APPROVAL</span><span class="text-emerald-400 font-bold">ACCEPTABLE</span></div>
+                                <div class="flex justify-between"><span>TROPE APPROVAL</span><span class="text-amber-400 font-bold animate-pulse">PROCESSING</span></div>
+                            </div>
+                        </div>
+                    `;
+
+                    setTimeout(() => {
+                        this.setTrustScore(87);
+                        card.innerHTML = `
+                            <div class="space-y-6 text-center animate-fadeIn">
+                                <div class="inline-block px-4 py-2 bg-emerald-950/80 border border-emerald-500 text-emerald-400 rounded-2xl font-mono font-bold text-lg uppercase tracking-widest shadow-2xl">
+                                    ACCESS GRANTED
+                                </div>
+                                
+                                <div class="space-y-1">
+                                    <p class="font-mono text-xs text-racingRed font-bold uppercase tracking-wider">ACCESO PROVISIONAL</p>
+                                    <p class="text-xs text-gray-300 font-mono leading-relaxed bg-black/40 p-3 rounded-xl border border-white/5">
+                                        El 13% restante requiere inspección presencial.
+                                    </p>
+                                </div>
+                            </div>
+                        `;
+                        this.state.completed = true;
+                        this.saveState();
+                    }, 2200);
+
+                    setTimeout(() => {
+                        this.renderEmotionalTransition();
+                    }, 5500);
+                },
+
+                renderEmotionalTransition() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    const hud = document.getElementById('tropeHudHeader');
+                    if (!card) return;
+
+                    if (hud) hud.classList.add('opacity-0', '-translate-y-4');
+
+                    if (bgAudio && audioPlaying) {
+                        bgAudio.volume = 0.3;
+                    }
+
+                    card.className = "relative z-10 w-full max-w-lg mx-auto p-6 sm:p-8 space-y-8 text-center transition-all duration-1000";
+
+                    card.innerHTML = `
+                        <div class="space-y-8">
+                            <div class="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-3xl overflow-hidden border border-white/20 shadow-2xl transition-transform duration-1000 transform hover:scale-105">
+                                <img src="assets/trope_portrait.jpg" alt="Trope" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                <span class="absolute bottom-3 left-0 right-0 font-mono text-xs text-gray-300 font-medium">Trope</span>
+                            </div>
+
+                            <div id="emotionalLines" class="space-y-4 min-h-[160px] flex flex-col items-center justify-center">
+                                <p id="eLine1" class="text-xl sm:text-2xl font-light text-gray-300 opacity-0 transition-all duration-1000">
+                                    Hay cosas de ti que todavía estoy descubriendo.
+                                </p>
+                                <p id="eLine2" class="text-xl sm:text-2xl font-light text-white opacity-0 transition-all duration-1000">
+                                    Pero hay una que entendí bastante pronto.
+                                </p>
+                                <p id="eLine3" class="text-2xl sm:text-3xl font-medium text-white opacity-0 transition-all duration-1000 leading-tight pt-2">
+                                    Si quiero conocerte de verdad, también tengo que conocerle a él.
+                                </p>
+                                <p id="eLine4" class="text-lg font-mono text-racingRed opacity-0 transition-all duration-1000 pt-1">
+                                    Trope forma parte del pack.
+                                </p>
+                                <p id="eLine5" class="text-2xl font-medium text-white opacity-0 transition-all duration-1000 pt-3">
+                                    Trope, espero caerte bien.
+                                </p>
+                            </div>
+                        </div>
+                    `;
+
+                    const l1 = document.getElementById('eLine1');
+                    const l2 = document.getElementById('eLine2');
+                    const l3 = document.getElementById('eLine3');
+                    const l4 = document.getElementById('eLine4');
+                    const l5 = document.getElementById('eLine5');
+
+                    setTimeout(() => { if (l1) l1.classList.remove('opacity-0'); }, 800);
+                    setTimeout(() => { if (l2) l2.classList.remove('opacity-0'); }, 3000);
+                    setTimeout(() => { if (l3) l3.classList.remove('opacity-0'); }, 5800);
+                    setTimeout(() => { if (l4) l4.classList.remove('opacity-0'); }, 8200);
+                    setTimeout(() => { if (l5) l5.classList.remove('opacity-0'); }, 10500);
+
+                    setTimeout(() => {
+                        this.transitionToVideoSection();
+                    }, 14500);
+                },
+
+                transitionToVideoSection() {
+                    const secVideo = document.getElementById('sec-video');
+                    if (secVideo) {
+                        secVideo.scrollIntoView({ behavior: 'smooth' });
+                    }
+                },
+
+                showTropeComment(msgKey, text) {
+                    if (!this.state.completed) return;
+                    if (this.state.commentsShown[msgKey]) return;
+
+                    const widget = document.getElementById('tropeFloatingWidget');
+                    const msgEl = document.getElementById('tropeFloatingMsg');
+                    if (!widget || !msgEl) return;
+
+                    msgEl.innerText = text;
+                    widget.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+                    this.state.commentsShown[msgKey] = true;
+                    this.saveState();
+
+                    setTimeout(() => {
+                        this.hideTropeWidget();
+                    }, 7000);
+                },
+
+                hideTropeWidget() {
+                    const widget = document.getElementById('tropeFloatingWidget');
+                    if (widget) {
+                        widget.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+                    }
+                },
+
+                bindEvents() {
+                    const tropeBtn = document.getElementById('tropeEasterEggBtn');
+                    if (tropeBtn) {
+                        tropeBtn.addEventListener('click', () => {
+                            this.renderSummaryStage();
+                            const secTrope = document.getElementById('sec-trope-security');
+                            if (secTrope) secTrope.scrollIntoView({ behavior: 'smooth' });
+                        });
+                    }
+
+                    const closeWidgetBtn = document.getElementById('closeTropeWidgetBtn');
+                    if (closeWidgetBtn) {
+                        closeWidgetBtn.addEventListener('click', () => this.hideTropeWidget());
+                    }
+                },
+
+                observeScrollTriggers() {
+                    const secTrope = document.getElementById('sec-trope-security');
+
+                    window.addEventListener('scroll', () => {
+                        if (secTrope && !this.state.started) {
+                            const rect = secTrope.getBoundingClientRect();
+                            if (rect.top < window.innerHeight * 0.75) {
+                                this.startCheck();
+                            }
+                        }
+
+                        if (!this.state.completed) return;
+
+                        const vipCard = document.getElementById('vipTicketCard');
+                        if (vipCard && !this.state.commentsShown.motogp) {
+                            const rect = vipCard.getBoundingClientRect();
+                            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                                this.showTropeComment('motogp', '¿Y yo qué?');
+                            }
+                        }
+
+                        const countdown = document.getElementById('gpDays');
+                        if (countdown && !this.state.commentsShown.cheste) {
+                            const rect = countdown.getBoundingClientRect();
+                            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                                this.showTropeComment('cheste', 'Demasiados días sin consultarme.');
+                            }
+                        }
+
+                        const companion = document.querySelector('[data-trope-trigger="companion"]');
+                        if (companion && !this.state.commentsShown.companion) {
+                            const rect = companion.getBoundingClientRect();
+                            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                                this.showTropeComment('companion', 'Pendiente de aprobación definitiva.');
+                            }
+                        }
+
+                        const secFinal = document.getElementById('sec-final');
+                        if (secFinal && !this.state.commentsShown.final) {
+                            const rect = secFinal.getBoundingClientRect();
+                            if (rect.top < window.innerHeight * 0.7) {
+                                this.showTropeComment('final', 'Lo estoy vigilando.');
+                            }
+                        }
+
+                        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        if (totalHeight > 0 && window.scrollY >= totalHeight - 60 && !this.state.commentsShown.callback) {
+                            this.triggerFinalCallback();
+                        }
+                    });
+                },
+
+                triggerFinalCallback() {
+                    this.state.commentsShown.callback = true;
+                    this.state.score = 88;
+                    this.saveState();
+
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 glass-panel px-5 py-3 rounded-2xl border border-racingRed/50 bg-black/90 shadow-2xl font-mono text-xs text-center space-y-1 animate-bounce';
+                    toast.innerHTML = `
+                        <span class="block text-[10px] text-racingRed uppercase font-bold tracking-widest">TROPE TRUST SCORE UPDATED</span>
+                        <span class="block text-white font-bold text-sm">87% → 88%</span>
+                        <span class="block text-[11px] text-gray-400">No te emociones, Dape.</span>
+                    `;
+                    document.body.appendChild(toast);
+
+                    setTimeout(() => {
+                        toast.classList.add('opacity-0', 'transition-opacity', 'duration-1000');
+                        setTimeout(() => toast.remove(), 1000);
+                    }, 6000);
+                }
+            };
+
+            TropeSecurity.init();
         });
     </script>
 

@@ -1725,213 +1725,361 @@
                             <h3 class="text-xl font-bold text-white font-mono leading-relaxed bg-black/60 p-4 rounded-2xl border border-white/10">${tropeMsg}</h3>
 
                             <div class="pt-2 max-w-sm mx-auto">
-                                <button id="btnNextVar3" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
-                                    Pasar a Variable 03 ➔
+                                <button id="btnNextBed" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Evaluando Privilegios Adquiridos ➔
                                 </button>
                             </div>
                         </div>
                     `;
 
-                    const btn = document.getElementById('btnNextVar3');
+                    const btn = document.getElementById('btnNextBed');
                     if (btn) {
-                        btn.addEventListener('click', () => this.renderVariable3());
+                        btn.addEventListener('click', () => this.renderVariableBed());
                     }
                 },
 
-                // Stage 6: Variable 03 — Lealtad & Prioridades
-                renderVariable3() {
+                // Stage 6: Variable — Privilegios Adquiridos (La Cama)
+                renderVariableBed() {
                     const card = document.getElementById('tropeSecurityCard');
                     if (!card) return;
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center animate-fadeIn">
                             <div class="space-y-1">
-                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">VARIABLE 03</span>
-                                <h3 class="text-2xl font-black text-white">PRIORIDADES 🐕‍🦺</h3>
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">VARIABLE — PRIVILEGIOS ADQUIRIDOS</span>
+                                <h3 class="text-2xl font-black text-white">LA CAMA 🛏️</h3>
                             </div>
 
-                            <p class="text-xs font-mono text-gray-300">Hay cosas que Trope se toma muy en serio.</p>
+                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-xs space-y-1 text-left">
+                                <p class="text-[10px] text-racingRed font-bold uppercase tracking-widest mb-1">ANALIZANDO JERARQUÍA DOMÉSTICA...</p>
+                                <div class="flex justify-between text-gray-300"><span>PROPIETARIA DE LA CAMA</span><span class="text-white font-bold">ELVIRA</span></div>
+                                <div class="flex justify-between text-gray-300"><span>USUARIO PRINCIPAL</span><span class="text-amber-400 font-bold">TROPE</span></div>
+                                <p class="text-[11px] text-racingRed font-bold text-center pt-1 border-t border-white/10 animate-pulse">INCONSISTENCIA DETECTADA</p>
+                            </div>
 
-                            <div class="bg-black/60 p-4 rounded-2xl border border-white/10 space-y-3 font-mono text-xs text-left">
-                                <div>
-                                    <div class="flex justify-between mb-1"><span class="text-white font-bold">ELVIRITIX</span><span class="text-emerald-400 font-bold">100%</span></div>
-                                    <div class="w-full bg-black rounded-full h-2 overflow-hidden border border-white/10">
-                                        <div class="h-full bg-emerald-500 rounded-full w-[100%]"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span class="text-white font-bold">PALITOS 🪵</span><span class="text-amber-400 font-bold">96%</span></div>
-                                    <div class="w-full bg-black rounded-full h-2 overflow-hidden border border-white/10">
-                                        <div class="h-full bg-amber-500 rounded-full w-[96%]"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span class="text-gray-400">RESTO DEL MUNDO</span><span class="text-gray-500 font-bold">31%</span></div>
-                                    <div class="w-full bg-black rounded-full h-2 overflow-hidden border border-white/10">
-                                        <div class="h-full bg-gray-600 rounded-full w-[31%]"></div>
-                                    </div>
+                            <div class="space-y-2 text-xs font-mono text-gray-300">
+                                <p>Existe cierto debate sobre si los perros deberían dormir en la cama.</p>
+                                <p class="text-white font-bold">En casa de Elvira el debate terminó hace tiempo.</p>
+                            </div>
+
+                            <div id="bedQuestionBox" class="space-y-3 pt-1">
+                                <p class="text-sm font-bold text-white uppercase tracking-wider font-mono">¿PUEDE TROPE DORMIR EN LA CAMA?</p>
+                                <div class="flex justify-center gap-3 max-w-sm mx-auto relative min-h-[50px]">
+                                    <button id="bedBtnNo" class="px-8 py-3 bg-white/10 hover:bg-white/20 text-gray-300 font-mono text-xs rounded-2xl border border-white/10 transition-all duration-200">
+                                        NO
+                                    </button>
+                                    <button id="bedBtnYes" class="px-8 py-3 bg-racingRed hover:bg-red-700 text-white font-mono font-bold text-xs rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                        SÍ
+                                    </button>
                                 </div>
                             </div>
+                        </div>
+                    `;
+
+                    const btnNo = document.getElementById('bedBtnNo');
+                    const btnYes = document.getElementById('bedBtnYes');
+                    let evasiveCount = 0;
+
+                    const triggerEvasiveNo = () => {
+                        evasiveCount++;
+                        const qBox = document.getElementById('bedQuestionBox');
+                        if (qBox) {
+                            qBox.innerHTML = `
+                                <div class="space-y-3 animate-fadeIn">
+                                    <p class="text-xs font-mono text-racingRed font-bold uppercase tracking-wider animate-pulse">¿NO? Revisa bien la pregunta.</p>
+                                    <p class="text-sm font-bold text-white uppercase tracking-wider font-mono">¿PUEDE TROPE DORMIR EN LA CAMA?</p>
+                                    <div class="flex justify-center gap-3 max-w-sm mx-auto">
+                                        <button class="bed-final-yes w-1/2 py-3 bg-racingRed hover:bg-red-700 text-white font-mono font-bold text-xs rounded-2xl shadow-xl transition-all">
+                                            SÍ
+                                        </button>
+                                        <button class="bed-final-yes w-1/2 py-3 bg-racingRed/80 hover:bg-racingRed text-white font-mono font-bold text-xs rounded-2xl border border-racingRed/50 transition-all">
+                                            CLARAMENTE SÍ
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+
+                            qBox.querySelectorAll('.bed-final-yes').forEach(b => {
+                                b.addEventListener('click', () => this.handleBedChoice());
+                            });
+                        }
+                    };
+
+                    if (btnNo) {
+                        btnNo.addEventListener('mouseenter', triggerEvasiveNo);
+                        btnNo.addEventListener('touchstart', triggerEvasiveNo);
+                        btnNo.addEventListener('click', triggerEvasiveNo);
+                    }
+
+                    if (btnYes) {
+                        btnYes.addEventListener('click', () => this.handleBedChoice());
+                    }
+                },
+
+                handleBedChoice() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    this.setTrustScore(this.state.score + 20);
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center py-4 animate-fadeIn">
+                            <span class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-widest">RESPUESTA CORRECTA.</span>
+                            <h3 class="text-xl font-bold text-white font-mono leading-relaxed bg-black/60 p-4 rounded-2xl border border-white/10">Como si hubiera otra opción.</h3>
 
                             <div class="pt-2 max-w-sm mx-auto">
-                                <button id="btnNextVar4" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
-                                    Evaluar Mood Control ➔
+                                <button id="btnNextOccupancy" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Calcular Distribución de la Cama ➔
                                 </button>
                             </div>
                         </div>
                     `;
 
-                    const btn = document.getElementById('btnNextVar4');
+                    const btn = document.getElementById('btnNextOccupancy');
                     if (btn) {
-                        btn.addEventListener('click', () => this.renderVariable4());
+                        btn.addEventListener('click', () => this.renderBedOccupancy());
                     }
                 },
 
-                // Stage 7: Variable 04 — Mood Control (Sincero y Emocional)
-                renderVariable4() {
+                // Stage 7: Análisis de Ocupación (Cama 50/50 -> 88% Trope)
+                renderBedOccupancy() {
                     const card = document.getElementById('tropeSecurityCard');
                     if (!card) return;
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center animate-fadeIn">
                             <div class="space-y-1">
-                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">VARIABLE 04</span>
-                                <h3 class="text-2xl font-black text-white">MOOD CONTROL</h3>
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">ANÁLISIS DE OCUPACIÓN</span>
+                                <h3 class="text-2xl font-black text-white">DISTRIBUCIÓN DE LA CAMA 🛏️</h3>
                             </div>
 
-                            <p class="text-xs font-mono text-gray-300">Algunas cosas cuesta más medirlas.</p>
-
-                            <div class="p-4 bg-black/60 rounded-2xl border border-racingRed/30 space-y-2">
-                                <span class="font-mono text-xs text-gray-400 block">Estado de ánimo de Elvira</span>
-                                <div class="flex justify-center items-center gap-1.5 h-6">
-                                    <div class="w-1.5 bg-racingRed h-3 animate-bounce"></div>
-                                    <div class="w-1.5 bg-racingRed h-5 animate-bounce delay-100"></div>
-                                    <div class="w-1.5 bg-racingRed h-2 animate-bounce delay-200"></div>
-                                    <div class="w-1.5 bg-racingRed h-6 animate-bounce delay-300"></div>
-                                    <div class="w-1.5 bg-racingRed h-4 animate-bounce delay-400"></div>
+                            <div class="p-4 bg-black/70 rounded-2xl border border-white/10 space-y-4">
+                                <div class="flex justify-between font-mono text-xs font-bold">
+                                    <span class="text-white">ELVIRA: <span id="elviraBedPercent">50%</span></span>
+                                    <span class="text-amber-400">TROPE: <span id="tropeBedPercent">50%</span></span>
                                 </div>
-                                <p class="text-xs text-gray-300 font-mono pt-1">Pero hay una presencia que aparece una y otra vez.</p>
+
+                                <!-- Gráfico visual de la cama visto desde arriba -->
+                                <div class="w-full h-14 bg-black rounded-xl border-2 border-white/20 p-1 relative flex overflow-hidden shadow-inner">
+                                    <div id="elviraBedBar" class="h-full bg-emerald-600 rounded-l-lg flex items-center justify-center font-mono text-[10px] font-bold text-white transition-all duration-1000 w-[50%]">
+                                        ELVIRA
+                                    </div>
+                                    <div id="tropeBedBar" class="h-full bg-amber-600 rounded-r-lg flex items-center justify-center font-mono text-[10px] font-bold text-black transition-all duration-1000 w-[50%]">
+                                        TROPE
+                                    </div>
+                                </div>
+
+                                <p id="bedCorrectionText" class="font-mono text-xs text-racingRed font-bold tracking-widest uppercase animate-pulse">
+                                    CORRIGIENDO DISTRIBUCIÓN REAL...
+                                </p>
                             </div>
 
-                            <div class="space-y-1.5 font-mono text-xs text-white pt-1">
-                                <p class="text-base font-black text-racingRed uppercase">TROPE</p>
-                                <p class="text-gray-300">• En los días buenos.</p>
-                                <p class="text-gray-300">• En los días malos.</p>
-                                <p class="text-gray-300">• Cuando necesita distraerse.</p>
-                                <p class="text-gray-300">• Cuando necesita compañía.</p>
-                                <p class="text-emerald-400 font-bold">• Cuando simplemente necesita que alguien esté ahí.</p>
+                            <div id="bedRealResult" class="hidden space-y-3 animate-fadeIn">
+                                <div class="bg-black/60 p-4 rounded-2xl border border-amber-500/40 font-mono text-xs text-left space-y-1.5">
+                                    <p class="text-amber-400 font-bold uppercase tracking-wider text-[10px]">DISTRIBUCIÓN REALISTA</p>
+                                    <div class="flex justify-between text-white font-bold"><span>TROPE</span><span>88%</span></div>
+                                    <div class="flex justify-between text-gray-400"><span>ELVIRA</span><span>LO QUE QUEDE</span></div>
+                                </div>
+
+                                <div class="pt-2 max-w-sm mx-auto">
+                                    <button id="btnNextIncidents" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                        Analizar Incidentes Nocturnos ➔
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    setTimeout(() => {
+                        const elBar = document.getElementById('elviraBedBar');
+                        const trBar = document.getElementById('tropeBedBar');
+                        const elPct = document.getElementById('elviraBedPercent');
+                        const trPct = document.getElementById('tropeBedPercent');
+                        const corr = document.getElementById('bedCorrectionText');
+                        const res = document.getElementById('bedRealResult');
+
+                        if (elBar) elBar.style.width = '12%';
+                        if (trBar) trBar.style.width = '88%';
+                        if (elPct) elPct.innerText = '12%';
+                        if (trPct) trPct.innerText = '88%';
+
+                        setTimeout(() => {
+                            if (corr) corr.innerText = 'CALCULADO DETECTADO CON ÉXITO';
+                            if (res) res.classList.remove('hidden');
+
+                            const btn = document.getElementById('btnNextIncidents');
+                            if (btn) {
+                                btn.addEventListener('click', () => this.renderNightlyIncidents());
+                            }
+                        }, 1200);
+                    }, 800);
+                },
+
+                // Stage 8: Incidentes Nocturnos (Patadas)
+                renderNightlyIncidents() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">ANALYSIS IN PROGRESS</span>
+                                <h3 class="text-2xl font-black text-white">INCIDENTES NOCTURNOS 🦶</h3>
                             </div>
 
-                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-left space-y-1">
-                                <p class="text-[9px] text-racingRed uppercase font-bold tracking-widest mb-1">TROPE SYSTEM ANALYSIS</p>
-                                <div class="flex justify-between text-gray-400"><span>COMPANION</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
-                                <div class="flex justify-between text-gray-400"><span>SECURITY</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
-                                <div class="flex justify-between text-gray-400"><span>CHAOS GENERATOR</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
-                                <div class="flex justify-between text-gray-400"><span>PALITO DETECTOR</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
-                                <div class="flex justify-between text-gray-400"><span>UNDERWEAR ACQUISITION</span><span class="text-emerald-400 font-bold">ACTIVE</span></div>
-                                <div class="flex justify-between text-white font-bold pt-1 border-t border-white/10"><span>MOOD SUPPORT</span><span class="text-racingRed font-bold animate-pulse">CRITICAL</span></div>
+                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-left space-y-2">
+                                <p class="text-[9px] text-racingRed font-bold uppercase tracking-widest">SLEEP QUALITY ANALYSIS</p>
+                                <div class="space-y-1">
+                                    <p class="text-amber-400 font-bold">TROPE</p>
+                                    <p class="text-gray-300 text-[10px]">• ✓ Cama disponible</p>
+                                    <p class="text-gray-300 text-[10px]">• ✓ Espacio suficiente</p>
+                                    <p class="text-gray-300 text-[10px]">• ✓ Humana localizada</p>
+                                    <p class="text-gray-300 text-[10px]">• ✓ Máxima extensión corporal alcanzada</p>
+                                </div>
+                                <div class="space-y-1 pt-1 border-t border-white/10">
+                                    <p class="text-white font-bold">ELVIRA</p>
+                                    <p class="text-racingRed text-[10px]">• ⚠ Espacio limitado</p>
+                                    <p class="text-racingRed text-[10px]">• ⚠ Movilidad comprometida</p>
+                                    <p class="text-racingRed text-[10px]">• ⚠ Riesgo de impacto</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-black/60 p-3 rounded-xl border border-racingRed/40 font-mono text-xs">
+                                <p class="text-racingRed font-bold uppercase tracking-wider">INCIDENTES DETECTADOS:</p>
+                                <p class="text-white font-black text-sm tracking-widest">PATADAS NOCTURNAS</p>
+                            </div>
+
+                            <div class="space-y-3 pt-1">
+                                <p class="text-sm font-bold text-white font-mono">¿Quién pega las patadas?</p>
+                                <div class="space-y-2 max-w-sm mx-auto">
+                                    <button class="kick-btn w-full py-3 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-xs rounded-2xl border border-white/10 transition-all" data-ans="trope">
+                                        Trope
+                                    </button>
+                                    <button class="kick-btn w-full py-3 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-xs rounded-2xl border border-white/10 transition-all" data-ans="elvira">
+                                        Elvira
+                                    </button>
+                                    <button class="kick-btn w-full py-3 px-6 bg-racingRed/20 hover:bg-racingRed text-white font-mono font-bold text-xs rounded-2xl border border-racingRed/40 transition-all" data-ans="ambos">
+                                        Ambos se acusan mutuamente
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    card.querySelectorAll('.kick-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            this.handleKickAnswer();
+                        });
+                    });
+                },
+
+                handleKickAnswer() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    this.setTrustScore(this.state.score + 15);
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center py-4 animate-fadeIn">
+                            <span class="font-mono text-xs text-gray-400">VERSIÓN OFICIAL DE TROPE:</span>
+                            <h3 class="text-xl font-bold text-white font-mono leading-relaxed bg-black/60 p-4 rounded-2xl border border-white/10">
+                                "La humana se puso en medio."
+                            </h3>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnNextBedDiag" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Ver Diagnóstico de Privilegios ➔
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    const btn = document.getElementById('btnNextBedDiag');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderBedDiagnosis());
+                    }
+                },
+
+                // Stage 9: Diagnóstico de Privilegios Adquiridos
+                renderBedDiagnosis() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">DIAGNÓSTICO FINAL DE HÁBITAT</span>
+                                <h3 class="text-2xl font-black text-white">PRIVILEGIOS ADQUIRIDOS: MÁXIMOS</h3>
+                            </div>
+
+                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-left space-y-1.5">
+                                <p class="text-[9px] text-racingRed font-bold uppercase tracking-widest">BED SHARING PROTOCOL</p>
+                                <div class="flex justify-between text-gray-400"><span>ACCESO DE TROPE</span><span class="text-emerald-400 font-bold">PERMANENTE</span></div>
+                                <div class="flex justify-between text-gray-400"><span>ESPACIO DE TROPE</span><span class="text-emerald-400 font-bold">ILIMITADO</span></div>
+                                <div class="flex justify-between text-gray-400"><span>ESPACIO DE ELVIRA</span><span class="text-amber-400 font-bold">VARIABLE</span></div>
+                                <div class="flex justify-between text-gray-400"><span>PATADAS</span><span class="text-racingRed font-bold">DAÑOS COLATERALES</span></div>
+                                <div class="flex justify-between text-white font-bold pt-1 border-t border-white/10"><span>POSIBILIDAD DE EXPULSIÓN</span><span class="text-emerald-400 font-bold">0%</span></div>
+                            </div>
+
+                            <div class="bg-black/60 p-4 rounded-2xl border border-amber-500/40 space-y-1 text-center font-mono">
+                                <p class="text-amber-400 font-bold text-sm">Trope:</p>
+                                <p class="text-white font-bold text-base">"Mi cama."</p>
+                                <p class="text-gray-300 text-xs">"Le dejo dormir conmigo."</p>
                             </div>
 
                             <div class="pt-2 max-w-sm mx-auto">
-                                <button id="btnEmotionalTrans" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
-                                    Ver diagnóstico personal ➔
+                                <button id="btnNextConclusion" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Ver Conclusión TROPECIENTAS ➔
                                 </button>
                             </div>
                         </div>
                     `;
 
-                    const btn = document.getElementById('btnEmotionalTrans');
+                    const btn = document.getElementById('btnNextConclusion');
                     if (btn) {
-                        btn.addEventListener('click', () => this.renderEmotionalTransition());
+                        btn.addEventListener('click', () => this.renderTropecientasConclusion());
                     }
                 },
 
-                // Stage 8: Emotional Transition (The Heart of TROPECIENTAS)
-                renderEmotionalTransition() {
-                    const card = document.getElementById('tropeSecurityCard');
-                    const hud = document.getElementById('tropeHudHeader');
-                    if (!card) return;
-
-                    if (hud) hud.classList.add('opacity-0', '-translate-y-4');
-
-                    if (bgAudio && audioPlaying) {
-                        bgAudio.volume = 0.3;
-                    }
-
-                    card.className = "relative z-10 w-full max-w-lg mx-auto p-6 sm:p-8 space-y-8 text-center transition-all duration-1000";
-
-                    card.innerHTML = `
-                        <div class="space-y-8 animate-fadeIn">
-                            <div class="relative w-44 h-44 sm:w-52 sm:h-52 mx-auto rounded-3xl overflow-hidden border border-white/20 shadow-2xl transition-transform duration-1000 transform hover:scale-105">
-                                <img src="assets/trope_portrait.jpg" alt="Trope" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                                <span class="absolute bottom-3 left-0 right-0 font-mono text-xs text-gray-300 font-medium">Trope</span>
-                            </div>
-
-                            <div class="space-y-4 text-center">
-                                <p class="text-lg sm:text-xl font-light text-gray-300">
-                                    Al principio era fácil entenderlo como: "el perro de Elvira".
-                                </p>
-                                <p class="text-lg sm:text-xl font-light text-white">
-                                    Pero no tardé mucho en darme cuenta de que eso se queda bastante corto.
-                                </p>
-                                <p class="text-2xl sm:text-3xl font-medium text-white leading-tight pt-1">
-                                    Trope es una parte enorme de tu vida. Y también de cómo estás.
-                                </p>
-                                <p class="text-base sm:text-lg text-gray-300">
-                                    De tus días buenos. Y probablemente de más de uno de los malos.
-                                </p>
-                                <div class="space-y-2 pt-3">
-                                    <p class="text-2xl sm:text-3xl font-bold text-white">Así que sí... me importa caerle bien a Trope. Bastante, de hecho.</p>
-                                    <div class="p-3 bg-black/60 rounded-xl border border-white/10 font-mono text-[11px] text-gray-400 space-y-1 max-w-xs mx-auto text-left mt-2">
-                                        <p>• Objetivo secundario: que deje mi ropa interior en paz.</p>
-                                        <p class="text-racingRed font-bold">• Objetivo principal: palitos ilimitados. 🪵</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pt-4 max-w-sm mx-auto">
-                                <button id="btnFinalResult" class="w-full py-4 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
-                                    Ver Resultado TROPE APPROVAL ➔
-                                </button>
-                            </div>
-                        </div>
-                    `;
-
-                    const btn = document.getElementById('btnFinalResult');
-                    if (btn) {
-                        btn.addEventListener('click', () => this.renderFinalResultStage());
-                    }
-                },
-
-                // Stage 9: Final Result TROPE APPROVAL (87%)
-                renderFinalResultStage() {
+                // Stage 10: TROPECIENTAS CONCLUSION ("Elvira vive con Trope")
+                renderTropecientasConclusion() {
                     const card = document.getElementById('tropeSecurityCard');
                     const hud = document.getElementById('tropeHudHeader');
                     if (!card) return;
 
                     if (hud) hud.classList.remove('opacity-0', '-translate-y-4');
-
                     this.setTrustScore(87);
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center animate-fadeIn">
-                            <p class="font-mono text-xs text-racingRed font-bold uppercase tracking-widest animate-pulse">RESULTADO FINAL PROCESADO</p>
-
-                            <div class="bg-black/60 p-4 rounded-2xl border border-white/10 font-mono text-xs space-y-1.5 text-left">
-                                <div class="flex justify-between"><span>PALITOS</span><span class="text-emerald-400 font-bold">ACCEPTABLE 🪵</span></div>
-                                <div class="flex justify-between"><span>RESPETO POR ELVIRA</span><span class="text-emerald-400 font-bold">HIGH</span></div>
-                                <div class="flex justify-between"><span>TOLERANCIA AL CAOS</span><span class="text-emerald-400 font-bold">HIGH</span></div>
-                                <div class="flex justify-between"><span>CONOCIMIENTO DE TROPE</span><span class="text-amber-400 font-bold">IMPROVING</span></div>
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest">RESUMEN DEL SISTEMA</span>
+                                <h2 class="text-3xl font-black text-white">TROPECIENTAS™</h2>
                             </div>
 
-                            <div class="space-y-2 pt-2">
-                                <span class="font-mono text-xs text-gray-400 uppercase tracking-widest block">RESULTADO FINAL</span>
-                                <h3 class="text-3xl font-black text-white font-mono">TROPE APPROVAL</h3>
-                                <div class="inline-block px-5 py-2.5 bg-emerald-950/90 border border-emerald-500 text-emerald-400 rounded-2xl font-mono font-bold text-xl uppercase tracking-widest shadow-2xl">
-                                    87% — PROMETEDOR
+                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-left space-y-1.5">
+                                <p class="text-[9px] text-racingRed font-bold uppercase tracking-widest">TROPECIENTAS SYSTEM ANALYSIS</p>
+                                <div class="flex justify-between text-gray-400"><span>PALITOS</span><span class="text-amber-400 font-bold">CRITICAL 🪵</span></div>
+                                <div class="flex justify-between text-gray-400"><span>ROPA INTERIOR</span><span class="text-racingRed font-bold">AT RISK 🩲</span></div>
+                                <div class="flex justify-between text-gray-400"><span>CAMA</span><span class="text-emerald-400 font-bold">CONQUERED 🛏️</span></div>
+                                <div class="flex justify-between text-gray-400"><span>PATADAS NOCTURNAS</span><span class="text-emerald-400 font-bold">OPERATIONAL 🦶</span></div>
+                                <div class="flex justify-between text-gray-400"><span>CAPACIDAD DE LIARLA</span><span class="text-emerald-400 font-bold">EXCELLENT</span></div>
+                                <div class="flex justify-between text-gray-400"><span>PRIVILEGIOS</span><span class="text-emerald-400 font-bold">ABSOLUTE</span></div>
+                                <div class="flex justify-between text-white font-bold pt-1 border-t border-white/10"><span>IMPORTANCIA PARA ELVIRITIX</span><span class="text-emerald-400 font-bold">ESSENTIAL</span></div>
+                            </div>
+
+                            <div class="space-y-4 py-2 text-center">
+                                <p class="text-lg font-light text-gray-300">Trope no vive con Elvira.</p>
+                                <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
+                                    Elvira vive con Trope.
+                                </h3>
+                                <div class="p-3 bg-black/60 rounded-xl border border-amber-500/30 font-mono text-xs text-amber-400 max-w-xs mx-auto">
+                                    Trope: "Me parece más preciso."
                                 </div>
-                                <p class="text-xs text-gray-300 font-mono leading-relaxed bg-black/40 p-3 rounded-xl border border-white/5 max-w-sm mx-auto">
+                            </div>
+
+                            <div class="space-y-2 pt-1 border-t border-white/10">
+                                <span class="font-mono text-xs text-gray-400 uppercase tracking-widest block">RESULTADO FINAL</span>
+                                <div class="inline-block px-5 py-2.5 bg-emerald-950/90 border border-emerald-500 text-emerald-400 rounded-2xl font-mono font-bold text-lg uppercase tracking-widest shadow-2xl">
+                                    TROPE APPROVAL: 87% — PROMETEDOR
+                                </div>
+                                <p class="text-xs text-gray-400 font-mono">
                                     Queda trabajo por hacer. Principalmente comprar palitos. 🪵
                                 </p>
                             </div>

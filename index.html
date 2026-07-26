@@ -383,13 +383,6 @@
                     </div>
                 </div>
 
-                <!-- Referencia secreta a Trope -->
-                <div class="text-center pt-4">
-                    <button id="tropeEasterEggBtn" class="text-xs font-mono text-gray-500 hover:text-gray-300 transition-colors inline-flex items-center gap-2">
-                        <i data-lucide="paw-print" class="w-3.5 h-3.5 text-racingRed"></i>
-                        <span>Estado de aprobación de Trope</span>
-                    </button>
-                </div>
             </div>
         </section>
 
@@ -2353,17 +2346,15 @@
                     this.state.completed = true;
                     this.saveState();
 
-                    // Bloquear el scroll por completo en la sección de aprobación de Trope
-                    document.body.style.overflow = 'hidden';
-
+                    // Al llegar a la conclusión se abre automáticamente el modal del examen de Trope
                     setTimeout(() => {
                         const secTrope = document.getElementById('sec-trope-security');
                         if (secTrope) {
                             secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
-                    }, 50);
+                        this.openExamModal();
+                    }, 200);
 
-                    // Al hacer clic en la insignia o botones se abre directamente el examen
                     const approvalBadge = document.getElementById('btnTropeApprovalBadge');
                     if (approvalBadge) {
                         approvalBadge.addEventListener('click', () => this.openExamModal());
@@ -2386,6 +2377,7 @@
                     const card = document.getElementById('tropeExamModalCard');
                     if (!modal || !card) return;
 
+                    document.body.style.overflow = 'hidden';
                     modal.classList.remove('opacity-0', 'pointer-events-none');
                     modal.classList.add('opacity-100', 'pointer-events-auto');
                     card.classList.remove('scale-95');

@@ -2353,15 +2353,17 @@
                     this.state.completed = true;
                     this.saveState();
 
-                    // Detener el scroll exactamente en la sección de aprobación de Trope
+                    // Bloquear el scroll por completo en la sección de aprobación de Trope
+                    document.body.style.overflow = 'hidden';
+
                     setTimeout(() => {
                         const secTrope = document.getElementById('sec-trope-security');
                         if (secTrope) {
                             secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
-                    }, 100);
+                    }, 50);
 
-                    // Al hacer clic en el estado de aprobación de Trope se abre el mensaje de examen
+                    // Al hacer clic en la insignia o botones se abre directamente el examen
                     const approvalBadge = document.getElementById('btnTropeApprovalBadge');
                     if (approvalBadge) {
                         approvalBadge.addEventListener('click', () => this.openExamModal());
@@ -2404,6 +2406,9 @@
                         card.classList.add('scale-95');
                         card.classList.remove('scale-100');
                     }
+
+                    // Desbloquear el scroll para permitir continuar a la siguiente sección
+                    document.body.style.overflow = '';
 
                     setTimeout(() => {
                         const secVideo = document.getElementById('sec-video');

@@ -2390,7 +2390,8 @@
                         card.classList.remove('scale-100');
                     }
 
-                    document.body.style.overflow = '';
+                    // Mantener el scroll bloqueado mientras responde al test
+                    document.body.style.overflow = 'hidden';
                     this.renderStageIntroTropecientas();
                 },
 
@@ -2458,26 +2459,24 @@
                         transObserver.observe(secTrans);
                     }
 
+                    let modalTriggered = false;
+
                     window.addEventListener('scroll', () => {
-                        if (secTrope && !this.state.started) {
+                        // Bloquear el scroll y centrar la pantalla inmediatamente al llegar a la sección 3.5 de Trope
+                        if (secTrope && !this.state.completed) {
                             const rect = secTrope.getBoundingClientRect();
-                            if (rect.top < window.innerHeight * 0.75) {
-                                this.startCheck();
+                            if (rect.top <= window.innerHeight * 0.7) {
+                                document.body.style.overflow = 'hidden';
+                                if (!modalTriggered) {
+                                    modalTriggered = true;
+                                    secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    this.openStartModal();
+                                }
+                                return;
                             }
                         }
 
-                        // Protección estricta: No se puede llegar al vídeo ni pasar de Tropecientas sin completar el test
-                        if (!this.state.completed) {
-                            const secVideo = document.getElementById('sec-video');
-                            if (secVideo) {
-                                const rect = secVideo.getBoundingClientRect();
-                                if (rect.top < window.innerHeight * 0.85) {
-                                    if (secTrope) secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                    this.openStartModal();
-                                }
-                            }
-                            return;
-                        }
+                        if (!this.state.completed) return;
 
                         // Comment 1: MotoGP Reveal
                         const vipCard = document.getElementById('vipTicketCard');

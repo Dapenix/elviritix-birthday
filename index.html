@@ -1721,8 +1721,204 @@
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center py-4 animate-fadeIn">
-                            <span class="font-mono text-xs text-gray-400">VARIABLE 02 PROCESADA</span>
+                            <div class="inline-block px-3 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest">
+                                TROPELÍA DETECTADA 🩲
+                            </div>
+                            <span class="block font-mono text-xs text-gray-400">VARIABLE 02 PROCESADA</span>
                             <h3 class="text-xl font-bold text-white font-mono leading-relaxed bg-black/60 p-4 rounded-2xl border border-white/10">${tropeMsg}</h3>
+
+                            <div class="pt-2 max-w-sm mx-auto">
+                                <button id="btnNextNom" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                    Evaluar Nomenclatura Oficial ➔
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    const btn = document.getElementById('btnNextNom');
+                    if (btn) {
+                        btn.addEventListener('click', () => this.renderVariableNomenclatura());
+                    }
+                },
+
+                // Stage 5.5: Variable — Nomenclatura Oficial
+                renderVariableNomenclatura() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">VARIABLE — NOMENCLATURA OFICIAL</span>
+                                <h3 class="text-2xl font-black text-white">PRUEBA DE CONOCIMIENTO 📖</h3>
+                            </div>
+
+                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-xs space-y-1 text-left">
+                                <p class="text-[10px] text-racingRed font-bold uppercase tracking-widest mb-1">ANALIZANDO IDENTIDAD...</p>
+                                <div class="flex justify-between text-gray-300"><span>NOMBRE BASE</span><span class="text-white font-bold">TROPE</span></div>
+                                <div class="flex justify-between text-gray-300"><span>ALIASES DETECTADOS</span><span class="text-amber-400 font-bold">VARIOS</span></div>
+                            </div>
+
+                            <p class="text-xs font-mono text-gray-300">El nombre utilizado parece depender de las circunstancias.</p>
+
+                            <div class="space-y-3 pt-1">
+                                <p class="text-sm font-bold text-white font-mono">Cuando Elvira se cabrea con Trope, ¿cómo le llama?</p>
+                                <div class="space-y-2 max-w-sm mx-auto">
+                                    <button class="nom-btn w-full py-4 px-6 bg-racingRed/20 hover:bg-racingRed text-white font-mono font-black text-sm uppercase tracking-wider rounded-2xl border border-racingRed/40 transition-all transform hover:scale-[1.02]" data-ans="tropezon">
+                                        [ TROPEZÓN ]
+                                    </button>
+                                    <button class="nom-btn w-full py-4 px-6 bg-white/10 hover:bg-racingRed text-white font-mono font-black text-sm uppercase tracking-wider rounded-2xl border border-white/10 transition-all transform hover:scale-[1.02]" data-ans="tropelias">
+                                        [ TROPELÍAS ]
+                                    </button>
+                                    <button class="nom-btn w-full py-4 px-6 bg-white/10 hover:bg-racingRed text-white font-mono font-black text-sm uppercase tracking-wider rounded-2xl border border-white/10 transition-all transform hover:scale-[1.02]" data-ans="tropecientas">
+                                        [ TROPECIENTAS ]
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    card.querySelectorAll('.nom-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const ans = e.currentTarget.getAttribute('data-ans');
+                            this.handleNomenclaturaChoice(ans);
+                        });
+                    });
+                },
+
+                handleNomenclaturaChoice(ans) {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    if (ans === 'tropelias') {
+                        card.innerHTML = `
+                            <div class="space-y-5 text-center py-2 animate-fadeIn">
+                                <span class="font-mono text-xs text-racingRed font-bold uppercase tracking-wider">INCORRECTO. Pero interesante.</span>
+                                
+                                <div class="bg-black/70 p-4 rounded-2xl border border-amber-500/40 font-mono text-xs text-left space-y-2">
+                                    <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
+                                        <h4 class="text-base font-black text-amber-400">TROPELÍAS</h4>
+                                        <span class="text-[10px] text-gray-400">/tro-pe-lí-as/</span>
+                                    </div>
+                                    <p class="text-gray-300 text-[11px]">Conjunto de acontecimientos que suelen terminar con Elvira diciendo "TROPEZÓN".</p>
+                                    
+                                    <div class="pt-2 border-t border-white/10 space-y-1 text-[10px]">
+                                        <p class="text-racingRed font-semibold">• ROPA INTERIOR ............ POSIBLE TROPELÍA</p>
+                                        <p class="text-racingRed font-semibold">• PATADA EN LA CAMA ........ TROPELÍA</p>
+                                        <p class="text-racingRed font-semibold">• OCUPAR EL 88% DEL COLCHÓN  TROPELÍA</p>
+                                        <p class="text-emerald-400 font-semibold">• EXIGIR OTRO PALITO ....... COMPORTAMIENTO NORMAL</p>
+                                    </div>
+                                </div>
+
+                                <p class="font-mono text-xs text-amber-400">Trope: "No consta que haya pruebas."</p>
+
+                                <div class="pt-2 max-w-sm mx-auto">
+                                    <button id="btnRetryNom" class="w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-xs font-bold uppercase tracking-wider rounded-2xl border border-white/10 transition-colors">
+                                        Volver a responder ➔
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
+                        const btn = document.getElementById('btnRetryNom');
+                        if (btn) btn.addEventListener('click', () => this.renderVariableNomenclatura());
+
+                    } else if (ans === 'tropecientas') {
+                        card.innerHTML = `
+                            <div class="space-y-5 text-center py-2 animate-fadeIn">
+                                <span class="font-mono text-xs text-racingRed font-bold uppercase tracking-wider">INCORRECTO. Eso es otra cosa.</span>
+                                
+                                <div class="bg-black/70 p-4 rounded-2xl border border-amber-500/40 font-mono text-xs text-left space-y-2">
+                                    <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
+                                        <h4 class="text-base font-black text-amber-400">TROPECIENTAS</h4>
+                                        <span class="text-[10px] text-gray-400">/tro-pe-cien-tas/</span>
+                                    </div>
+                                    <p class="text-gray-300 text-[11px]">Unidad aproximada utilizada para medir la cantidad de Trope presente en la vida de Elvira.</p>
+                                    
+                                    <div class="pt-2 border-t border-white/10 text-[10px] text-center font-mono text-white">
+                                        1 DÍA NORMAL DE ELVIRA ≈ TROPECIENTAS COSAS DE TROPE
+                                    </div>
+                                </div>
+
+                                <p class="font-mono text-xs text-amber-400">Trope: "Unidad homologada."</p>
+
+                                <div class="pt-2 max-w-sm mx-auto">
+                                    <button id="btnRetryNom" class="w-full py-3.5 px-6 bg-white/10 hover:bg-racingRed text-white font-mono text-xs font-bold uppercase tracking-wider rounded-2xl border border-white/10 transition-colors">
+                                        Volver a responder ➔
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
+                        const btn = document.getElementById('btnRetryNom');
+                        if (btn) btn.addEventListener('click', () => this.renderVariableNomenclatura());
+
+                    } else if (ans === 'tropezon') {
+                        this.setTrustScore(this.state.score + 10);
+
+                        card.innerHTML = `
+                            <div class="space-y-5 text-center py-2 animate-fadeIn">
+                                <span class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-widest">VERIFICANDO... CORRECTO</span>
+                                
+                                <div class="bg-black/70 p-4 rounded-2xl border border-emerald-500/50 font-mono text-xs text-left space-y-2">
+                                    <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
+                                        <h4 class="text-lg font-black text-white">TROPEZÓN</h4>
+                                        <span class="text-[10px] text-gray-400">/tro-pe-zón/</span>
+                                    </div>
+                                    <p class="text-gray-300 text-[11px]">Nombre empleado cuando Trope ha hecho méritos para dejar de llamarse Trope temporalmente.</p>
+                                </div>
+
+                                <p class="font-mono text-xs text-amber-400">Trope: "Exageraciones de la humana."</p>
+
+                                <div class="inline-block px-3 py-1 bg-emerald-950 border border-emerald-500 text-emerald-400 font-mono text-[10px] rounded-full font-bold">
+                                    CONOCIMIENTO DEL SUJETO +10
+                                </div>
+
+                                <div class="pt-2 max-w-sm mx-auto">
+                                    <button id="btnNextDict" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-mono text-xs font-bold uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
+                                        Ver Diccionario Oficial ➔
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
+                        const btn = document.getElementById('btnNextDict');
+                        if (btn) btn.addEventListener('click', () => this.renderTropecientasDictionary());
+                    }
+                },
+
+                // Stage 5.6: Diccionario Oficial Completo
+                renderTropecientasDictionary() {
+                    const card = document.getElementById('tropeSecurityCard');
+                    if (!card) return;
+
+                    card.innerHTML = `
+                        <div class="space-y-6 text-center animate-fadeIn">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[10px] text-racingRed uppercase tracking-widest">ACTUALIZANDO DICCIONARIO TROPECIENTAS...</span>
+                                <h3 class="text-2xl font-black text-white">DICCIONARIO OFICIAL 📖</h3>
+                            </div>
+
+                            <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-xs text-left space-y-3">
+                                <div>
+                                    <span class="text-white font-black block text-sm">TROPE</span>
+                                    <p class="text-gray-300 text-[11px]">Estado base.</p>
+                                </div>
+                                <div class="border-t border-white/10 pt-2">
+                                    <span class="text-amber-400 font-black block text-sm">TROPEZÓN</span>
+                                    <p class="text-gray-300 text-[11px]">Trope cuando Elvira está hasta el coño de Trope.</p>
+                                </div>
+                                <div class="border-t border-white/10 pt-2">
+                                    <span class="text-racingRed font-black block text-sm">TROPELÍAS</span>
+                                    <p class="text-gray-300 text-[11px]">Motivos por los que Trope acaba convirtiéndose en Tropezón.</p>
+                                </div>
+                                <div class="border-t border-white/10 pt-2">
+                                    <span class="text-emerald-400 font-black block text-sm">TROPECIENTAS</span>
+                                    <p class="text-gray-300 text-[11px]">Cantidad aproximada de veces que, pese a todo lo anterior, Trope sigue apareciendo en el día de Elvira.</p>
+                                </div>
+                            </div>
+
+                            <p class="font-mono text-xs text-amber-400">Trope: "Me parece un sistema terminológico innecesariamente hostil."</p>
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextBed" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
@@ -1733,9 +1929,7 @@
                     `;
 
                     const btn = document.getElementById('btnNextBed');
-                    if (btn) {
-                        btn.addEventListener('click', () => this.renderVariableBed());
-                    }
+                    if (btn) btn.addEventListener('click', () => this.renderVariableBed());
                 },
 
                 // Stage 6: Variable — Privilegios Adquiridos (La Cama)
@@ -1873,6 +2067,9 @@
                             </div>
 
                             <div id="bedRealResult" class="hidden space-y-3 animate-fadeIn">
+                                <div class="inline-block px-3 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest">
+                                    TROPELÍA EN CURSO... 🛏️
+                                </div>
                                 <div class="bg-black/60 p-4 rounded-2xl border border-amber-500/40 font-mono text-xs text-left space-y-1.5">
                                     <p class="text-amber-400 font-bold uppercase tracking-wider text-[10px]">DISTRIBUCIÓN REALISTA</p>
                                     <div class="flex justify-between text-white font-bold"><span>TROPE</span><span>88%</span></div>
@@ -1926,7 +2123,10 @@
                             </div>
 
                             <div class="bg-black/70 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-left space-y-2">
-                                <p class="text-[9px] text-racingRed font-bold uppercase tracking-widest">SLEEP QUALITY ANALYSIS</p>
+                                <div class="flex justify-between items-center border-b border-white/10 pb-1">
+                                    <p class="text-[9px] text-racingRed font-bold uppercase tracking-widest">SLEEP QUALITY ANALYSIS</p>
+                                    <span class="text-[9px] font-mono text-amber-400 font-bold">RIESGO DE TROPEZÓN: ELEVADO</span>
+                                </div>
                                 <div class="space-y-1">
                                     <p class="text-amber-400 font-bold">TROPE</p>
                                     <p class="text-gray-300 text-[10px]">• ✓ Cama disponible</p>
@@ -1937,7 +2137,7 @@
                                 <div class="space-y-1 pt-1 border-t border-white/10">
                                     <p class="text-white font-bold">ELVIRA</p>
                                     <p class="text-racingRed text-[10px]">• ⚠ Espacio limitado</p>
-                                    <p class="text-racingRed text-[10px]">• ⚠ Movilidad comprometida</p>
+                                    <p class="text-racingRed text-[10px]">• ⚠ Movilidad compromised</p>
                                     <p class="text-racingRed text-[10px]">• ⚠ Riesgo de impacto</p>
                                 </div>
                             </div>
@@ -2062,6 +2262,9 @@
                                 <div class="flex justify-between text-gray-400"><span>CAPACIDAD DE LIARLA</span><span class="text-emerald-400 font-bold">EXCELLENT</span></div>
                                 <div class="flex justify-between text-gray-400"><span>PRIVILEGIOS</span><span class="text-emerald-400 font-bold">ABSOLUTE</span></div>
                                 <div class="flex justify-between text-white font-bold pt-1 border-t border-white/10"><span>IMPORTANCIA PARA ELVIRITIX</span><span class="text-emerald-400 font-bold">ESSENTIAL</span></div>
+                                <div class="pt-2 border-t border-white/10 text-center font-mono text-[10px] text-amber-400 font-bold">
+                                    ESTADO DEL SISTEMA: TROPE → TROPEZÓN (Motivo: tropelías)
+                                </div>
                             </div>
 
                             <div class="space-y-4 py-2 text-center">

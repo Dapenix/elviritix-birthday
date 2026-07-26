@@ -141,7 +141,7 @@
     </button>
 
     <!-- ESTADO DE BLOQUEO TEMPORAL (Antes del 31 de Julio de 2026) -->
-    <div id="lockScreen" class="fixed inset-0 z-50 bg-darkBg flex flex-col items-center justify-center p-6 text-center hidden">
+    <div id="lockScreen" class="fixed inset-0 z-50 bg-darkBg flex flex-col items-center justify-center p-6 text-center">
         <div class="max-w-md w-full glass-panel p-8 rounded-3xl relative overflow-hidden">
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-racingRed/10 rounded-full blur-3xl pointer-events-none"></div>
             <p class="font-mono text-xs uppercase tracking-widest text-racingRed mb-3">Acceso Restringido</p>
@@ -836,6 +836,9 @@
                     }
                 });
             }
+
+            // Ejecutar la comprobación del bloqueo temporal o login
+            checkTimeLock();
 
             // Animación de entrada inicial
             function initIntroAnimation() {

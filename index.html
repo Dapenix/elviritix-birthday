@@ -2390,8 +2390,7 @@
                         card.classList.remove('scale-100');
                     }
 
-                    // Mantener el scroll bloqueado mientras responde al test
-                    document.body.style.overflow = 'hidden';
+                    document.body.style.overflow = '';
                     this.renderStageIntroTropecientas();
                 },
 
@@ -2459,18 +2458,18 @@
                         transObserver.observe(secTrans);
                     }
 
-                    let modalTriggered = false;
+                    let scrollLockedOnEntry = false;
 
                     window.addEventListener('scroll', () => {
-                        // Bloquear el scroll y centrar la pantalla inmediatamente al llegar a la sección 3.5 de Trope
-                        if (secTrope && !this.state.completed) {
+                        // Congelar el scroll exactamente al salir la tarjeta del Inspector Trope con el botón
+                        if (secTrope && !this.state.started && !this.state.completed) {
                             const rect = secTrope.getBoundingClientRect();
-                            if (rect.top <= window.innerHeight * 0.7) {
+                            if (rect.top <= window.innerHeight * 0.75) {
                                 document.body.style.overflow = 'hidden';
-                                if (!modalTriggered) {
-                                    modalTriggered = true;
+                                if (!scrollLockedOnEntry) {
+                                    scrollLockedOnEntry = true;
                                     secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                    this.openStartModal();
+                                    this.startCheck();
                                 }
                                 return;
                             }

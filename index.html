@@ -1403,11 +1403,11 @@
                     else if (avatarType === 'smart') imgFile = 'trope_smart.jpg';
 
                     return `
-                        <div class="flex items-center gap-3.5 bg-black/85 p-3.5 sm:p-4 rounded-2xl border border-amber-500/40 text-left my-3 shadow-xl animate-fadeIn">
-                            <img src="assets/${imgFile}" alt="Trope" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover border-2 border-amber-500/70 shrink-0 shadow-md transform hover:scale-105 transition-transform">
-                            <div class="space-y-0.5">
-                                <span class="block font-mono text-[10px] text-amber-400 font-bold uppercase tracking-wider">Trope</span>
-                                <p class="font-mono text-xs sm:text-sm text-white font-medium leading-snug">"${msg}"</p>
+                        <div class="flex items-center gap-4 bg-black/90 p-4 sm:p-5 rounded-2xl border-2 border-amber-500/50 text-left my-3 shadow-2xl animate-fadeIn">
+                            <img src="assets/${imgFile}" alt="Trope" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-amber-400 shrink-0 shadow-xl transform hover:scale-105 transition-transform">
+                            <div class="space-y-1">
+                                <span class="block font-mono text-[11px] text-amber-400 font-bold uppercase tracking-wider">Trope</span>
+                                <p class="font-mono text-xs sm:text-base text-white font-semibold leading-snug">"${msg}"</p>
                             </div>
                         </div>
                     `;
@@ -1423,14 +1423,13 @@
                 },
 
                 startCheck() {
-                    if (this.state.started) return;
+                    // Siempre resetea y empieza desde el principio
                     this.state.started = true;
-
-                    if (this.state.completed) {
-                        this.renderSummaryStage();
-                    } else {
-                        this.renderStageEntry();
-                    }
+                    this.state.completed = false;
+                    this.state.score = 12;
+                    this.state.answers = {};
+                    this.saveState();
+                    this.renderStageEntry();
                 },
 
                 // Summary Stage (Re-visiting)
@@ -1495,6 +1494,14 @@
 
                     if (hud) hud.classList.remove('opacity-0', '-translate-y-4');
                     this.setTrustScore(12);
+
+                    // El scroll se detiene justo en la sección de aprobación de Trope
+                    setTimeout(() => {
+                        const secTrope = document.getElementById('sec-trope-security');
+                        if (secTrope) {
+                            secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 50);
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center py-4 animate-fadeIn">

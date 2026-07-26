@@ -1497,17 +1497,23 @@
                     this.setTrustScore(12);
 
                     card.innerHTML = `
-                        <div class="space-y-6 text-center py-4 animate-fadeIn">
-                            <p class="text-2xl sm:text-3xl font-light text-gray-300">Espera.</p>
-                            <p class="text-2xl sm:text-3xl font-light text-white">Falta alguien.</p>
-                            <div class="space-y-2 pt-2">
-                                <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">TROPE</h2>
-                                <span class="inline-block px-3 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest animate-pulse">
+                        <div class="space-y-5 text-center py-2 animate-fadeIn">
+                            <!-- Foto Detective Trope con Lupa -->
+                            <div class="relative w-32 h-32 sm:w-36 sm:h-36 mx-auto rounded-3xl overflow-hidden border-2 border-amber-400/80 shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-transform duration-500 hover:scale-105">
+                                <img src="assets/trope_sherlock.jpg" alt="Sherlock Trope" class="w-full h-full object-cover">
+                                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent py-1">
+                                    <span class="font-mono text-[9px] text-amber-300 uppercase tracking-widest font-bold">DETECTIVE CANINO</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5 pt-1">
+                                <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight font-mono">INSPECTOR TROPE</h2>
+                                <span class="inline-block px-3.5 py-1 bg-racingRed/20 border border-racingRed/50 rounded-full font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest animate-pulse">
                                     ELEMENTO CRÍTICO DETECTADO
                                 </span>
                             </div>
 
-                            <div class="pt-4 max-w-sm mx-auto">
+                            <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnStageEntry" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">
                                     Descubrir Tropecientas ➔
                                 </button>

@@ -1295,6 +1295,19 @@
             // Iniciar la cuenta atrás de MotoGP de inmediato
             startMotogpCountdown();
 
+            // Comprobador de Medianoche (00:00 del 31 de Julio)
+            function checkBirthdayMidnight() {
+                const now = new Date();
+                // 31 de Julio: Mes 6 (0-indexed en JS: Enero=0, Julio=6) y día >= 31
+                if ((now.getMonth() === 6 && now.getDate() >= 31) || now.getMonth() > 6 || now.getFullYear() > 2026) {
+                    if (!window.birthdayMidnightTriggered) {
+                        window.birthdayMidnightTriggered = true;
+                        triggerConfetti();
+                    }
+                }
+            }
+            setInterval(checkBirthdayMidnight, 1000);
+
             // Sistema de Confeti de Celebración desde Arriba
             let confettiTriggered = false;
 

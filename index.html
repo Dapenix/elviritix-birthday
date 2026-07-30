@@ -852,6 +852,32 @@
             // Fecha de MotoGP Cheste: 27 de Noviembre de 2026 09:00:00
             const motogpDate = new Date('2026-11-27T09:00:00').getTime();
 
+            // Sistema Global de Notificaciones Toast
+            function showToast(message) {
+                let toastContainer = document.getElementById('globalToastContainer');
+                if (!toastContainer) {
+                    toastContainer = document.createElement('div');
+                    toastContainer.id = 'globalToastContainer';
+                    toastContainer.className = 'fixed bottom-6 right-6 z-[200] flex flex-col gap-2 pointer-events-none';
+                    document.body.appendChild(toastContainer);
+                }
+
+                const toast = document.createElement('div');
+                toast.className = 'bg-darkCard/95 border border-racingRed/50 text-white font-mono text-xs py-3 px-5 rounded-2xl shadow-2xl backdrop-blur-md transition-all duration-300 transform translate-y-4 opacity-0 flex items-center gap-2 pointer-events-auto';
+                toast.innerHTML = `<span class="w-2 h-2 rounded-full bg-racingRed animate-ping"></span><span>${message}</span>`;
+
+                toastContainer.appendChild(toast);
+
+                requestAnimationFrame(() => {
+                    toast.classList.remove('translate-y-4', 'opacity-0');
+                });
+
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-2');
+                    setTimeout(() => toast.remove(), 300);
+                }, 4000);
+            }
+
             let isUnlockedOverride = false;
             let audioPlaying = false;
 

@@ -885,6 +885,10 @@
             }
 
             function updateLockCountdown(now) {
+                if (isUnlockedOverride) {
+                    lockScreen.classList.add('hidden');
+                    return;
+                }
                 const distance = birthdayDate - now;
                 if (distance < 0) {
                     lockScreen.classList.add('hidden');
@@ -1341,33 +1345,37 @@
             // Botón 2: Prueba del Minuto Siguiente (+1 min)
             const testNextMinBtn = document.getElementById('testNextMinuteBtn');
             const testNextMinText = document.getElementById('testNextMinuteText');
+            let activeTestTimer = null;
 
             if (testNextMinBtn) {
                 testNextMinBtn.addEventListener('click', () => {
-                    const now = new Date();
-                    const nextMin = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 1, 0, 0);
+                    if (activeTestTimer) clearInterval(activeTestTimer);
 
-                    showToast('⏱️ Prueba programada para las ' + nextMin.toLocaleTimeString());
+                    // Programar para exactamente 60 segundos en el futuro
+                    const targetTime = Date.now() + 60000;
+                    const targetDate = new Date(targetTime);
 
-                    testNextMinBtn.classList.remove('bg-amber-500/20', 'text-amber-300');
-                    testNextMinBtn.classList.add('bg-emerald-500/30', 'text-emerald-300', 'border-emerald-500/60');
+                    showToast('⏱️ Prueba programada para las ' + targetDate.toLocaleTimeString());
 
-                    const testInterval = setInterval(() => {
-                        const current = new Date();
-                        const diffSecs = Math.max(0, Math.ceil((nextMin.getTime() - current.getTime()) / 1000));
+                    testNextMinBtn.className = 'px-3.5 py-2 bg-emerald-500/30 text-emerald-300 border border-emerald-500/60 font-bold rounded-xl shadow-2xl flex items-center gap-1.5 backdrop-blur-md cursor-pointer transition-all';
+
+                    activeTestTimer = setInterval(() => {
+                        const now = Date.now();
+                        const diffSecs = Math.max(0, Math.ceil((targetTime - now) / 1000));
 
                         if (testNextMinText) {
-                            testNextMinText.innerText = `Prueba activa: en ${diffSecs}s (${nextMin.toLocaleTimeString()})`;
+                            testNextMinText.innerText = `Prueba activa: en ${diffSecs}s (${targetDate.toLocaleTimeString()})`;
                         }
 
-                        if (current >= nextMin) {
-                            clearInterval(testInterval);
+                        if (now >= targetTime) {
+                            clearInterval(activeTestTimer);
+                            activeTestTimer = null;
                             if (testNextMinText) {
                                 testNextMinText.innerText = '🎉 ¡Celebración Activada!';
                             }
                             executeMidnightCelebration('🎉 ¡MEDIANOCHE ALCANZADA! Celebración activada con éxito.');
                         }
-                    }, 1000);
+                    }, 300);
                 });
             }
 

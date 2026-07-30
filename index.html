@@ -755,7 +755,7 @@
 
     <!-- MODAL GENERAL (Para Easter Eggs, Términos Legales, QR) -->
     <div id="genericModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="max-w-md w-full glass-panel p-8 rounded-3xl relative space-y-6 text-center transform scale-95 transition-transform duration-300" id="genericModalContent">
+        <div class="max-w-xl w-full glass-panel p-6 sm:p-8 rounded-3xl relative transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col" id="genericModalContent">
             <button id="closeGenericModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -1371,16 +1371,177 @@
             // Easter Egg 4: Términos y Condiciones
             legalModalBtn.addEventListener('click', () => {
                 openGenericModal(`
-                    <div class="space-y-3 text-left">
-                        <span class="font-mono text-xs text-racingRed uppercase tracking-widest">Legal / VIP</span>
-                        <h3 class="text-xl font-bold text-white text-center">Términos y Condiciones</h3>
-                        <div class="text-xs text-gray-300 space-y-2 pt-2">
-                            <p>1. La receptora de este regalo (<span class="text-white font-semibold">Elviritix</span>) se compromete formalmente a pasárselo de puta madre en Cheste.</p>
-                            <p>2. Queda terminantemente prohibido dormir menos de 4 horas durante el fin de semana del Gran Premio (salvo fuerza mayor).</p>
-                            <p>3. Cualquier intento de perderse en el paddock será gestionado por el acompañante oficial (Daniel Dapena Pérez - Dapenix).</p>
+                    <div class="space-y-4 text-left">
+                        <div class="border-b border-white/10 pb-4 text-center">
+                            <span class="font-mono text-[10px] text-racingRed uppercase font-bold tracking-widest block mb-1">DOCUMENTO OFICIAL VIP</span>
+                            <h2 class="text-2xl font-black text-white tracking-tight uppercase">TÉRMINOS Y CONDICIONES</h2>
+                            <p class="font-mono text-xs text-amber-400 font-semibold mt-1">ELVIRITIX GRAND PRIX 2026</p>
+                            <p class="font-mono text-[10px] text-gray-400 mt-0.5">Versión 1.0 · Última actualización: 31.07.2026</p>
+                        </div>
+
+                        <p class="text-xs text-gray-300 italic bg-white/5 p-3 rounded-xl border border-white/10 leading-relaxed">
+                            La aceptación del presente regalo implica la conformidad total, irrevocable y probablemente poco meditada con los siguientes términos y condiciones:
+                        </p>
+
+                        <div class="space-y-4 max-h-[55vh] overflow-y-auto pr-2 text-xs leading-relaxed text-gray-300 custom-scrollbar">
+                            <!-- 1 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">1. Objeto del regalo</h4>
+                                <p>El presente documento regula la entrega a <strong class="text-white">Elviritix</strong> de una entrada para asistir al MotoGP de Valencia 2026, en el Circuit Ricardo Tormo de Cheste.</p>
+                                <p class="text-white font-medium">El objetivo principal del regalo es pasárselo de puta madre.</p>
+                                <p class="text-gray-400 italic">Cualquier otro uso queda expresamente desaconsejado.</p>
+                            </div>
+
+                            <!-- 2 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">2. Titularidad</h4>
+                                <p>La entrada pertenece única y exclusivamente a Elviritix.</p>
+                                <p>Queda prohibida su venta, reventa, cesión, intercambio por bienes o servicios, utilización como moneda de cambio o canje por palitos.</p>
+                                <p class="text-amber-400 font-medium">Trope no podrá reclamar la titularidad, independientemente de la cantidad de palitos ofrecidos.</p>
+                            </div>
+
+                            <!-- 3 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">3. Acompañante</h4>
+                                <p>El regalo incluye la presencia de un individuo identificado como:</p>
+                                <p class="font-bold text-white text-sm pl-2">• Dape <span class="text-gray-400 font-normal">(También conocido como: Da-pena)</span></p>
+                                <p>Su presencia forma parte de las condiciones generales del servicio y no podrá eliminarse mediante configuración, reclamación al soporte técnico ni reinicio del sistema.</p>
+                            </div>
+
+                            <!-- 4 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">4. Marc Márquez</h4>
+                                <p>No se garantiza:</p>
+                                <ul class="list-disc list-inside text-gray-300 space-y-0.5 pl-2">
+                                    <li>conocer a Marc Márquez;</li>
+                                    <li>hablar con Marc Márquez;</li>
+                                    <li>abrazar a Marc Márquez;</li>
+                                    <li>recibir una mirada de Marc Márquez;</li>
+                                    <li>que Marc Márquez conozca la existencia de Elviritix.</li>
+                                </ul>
+                                <p class="text-white font-medium pt-1">No obstante, Elviritix queda autorizada a emocionarse de manera absolutamente desproporcionada ante cualquier aparición del susodicho.</p>
+                            </div>
+
+                            <!-- 5 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">5. Obligación de disfrute</h4>
+                                <p>La beneficiaria se compromete a:</p>
+                                <p class="text-white font-medium">pasárselo bien, gritar cuando corresponda, disfrutar del ambiente, hacer fotos, criticar cosas, reírse de Dape cuando proceda y crear al menos un recuerdo que merezca la pena conservar.</p>
+                                <p class="text-gray-400 italic">No existe obligación contractual de madrugar de buen humor.</p>
+                            </div>
+
+                            <!-- 6 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">6. Condiciones meteorológicas</h4>
+                                <p>El proveedor del regalo no se responsabiliza de:</p>
+                                <p>lluvia, frío, calor, viento, humedad, nubes, sol excesivo ni cualquier otro fenómeno atmosférico que Cheste decida desplegar durante el fin de semana.</p>
+                                <p class="text-gray-300 pt-1">Las quejas serán escuchadas.</p>
+                                <p class="text-gray-400 italic">Solucionadas, probablemente no.</p>
+                            </div>
+
+                            <!-- 7 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">7. Alimentación</h4>
+                                <p>Se reconoce el derecho fundamental de Elviritix a tener hambre en momentos logísticamente inconvenientes.</p>
+                                <p>Dape deberá colaborar razonablemente en la localización de comida.</p>
+                                <p class="text-white italic pl-3 border-l-2 border-racingRed bg-white/5 py-1 rounded-r-md">"Yo no tengo hambre."</p>
+                                <p class="text-amber-300 font-medium">...no impedirá solicitar comida de la del acompañante cinco minutos después.</p>
+                            </div>
+
+                            <!-- 8 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">8. Trope</h4>
+                                <p>Trope queda reconocido oficialmente como <strong class="text-white">parte interesada no asistente</strong>.</p>
+                                <p>Su ausencia durante el evento no supone pérdida de autoridad. Podrá solicitar informes, fotografías y explicaciones a la vuelta.</p>
+                                <p class="text-amber-400 font-medium">Cualquier adquisición destinada a Trope será considerada gasto potencialmente justificable. Especialmente si es un palito. 🪵</p>
+                            </div>
+
+                            <!-- 9 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">9. Navegación</h4>
+                                <p>La beneficiaria reconoce que existe una probabilidad razonablemente alta de que, en algún momento del fin de semana, ambos se desorienten.</p>
+                                <p>En tal caso, queda expresamente prohibido entrar en pánico. Será suficiente con aplicar el protocolo oficial:</p>
+                                <ul class="space-y-0.5 font-mono text-[11px] text-white pl-3 border-l border-white/20 my-1.5">
+                                    <li>1. Mirar el mapa.</li>
+                                    <li>2. Ignorar el mapa.</li>
+                                    <li>3. Preguntar.</li>
+                                    <li>4. Acabar llegando igualmente.</li>
+                                </ul>
+                                <p class="text-gray-400 italic">El proveedor del regalo no garantiza encontrar el coche a la primera al finalizar el evento.</p>
+                            </div>
+
+                            <!-- 10 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">10. Fotografías</h4>
+                                <p>Dape podrá intentar hacer fotografías.</p>
+                                <p>Elviritix conserva el derecho absoluto a:</p>
+                                <p class="text-white font-medium">aprobarlas, repetirlas, exigir otra, decir que sale horrible aunque salga perfectamente bien y prohibir cualquier imagen que no supere el correspondiente control de calidad.</p>
+                            </div>
+
+                            <!-- 11 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">11. Cancelaciones</h4>
+                                <p>El regalo no admite devolución por:</p>
+                                <p class="text-gray-300">pereza, sueño, indecisión, Mercurio retrógrado, aparición de nuevos capítulos de una serie, cambios repentinos de humor ni porque "queda muchísimo todavía".</p>
+                                <p>Las causas de fuerza mayor serán evaluadas por el <strong class="text-white">Comité Internacional Elviritix-Dape</strong>.</p>
+                                <p class="text-gray-400 text-[11px] font-mono italic">Actualmente compuesto por Dape.</p>
+                            </div>
+
+                            <!-- 12 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">12. Modificaciones</h4>
+                                <p>El itinerario, horarios, comidas y demás elementos accesorios podrán modificarse sobre la marcha.</p>
+                                <p>El único elemento considerado esencial es: <strong class="text-white font-bold">estar allí.</strong></p>
+                                <p class="text-gray-400 text-[11px] font-mono">Bueno. Y las motos.</p>
+                            </div>
+
+                            <!-- 13 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">13. Responsabilidad emocional</h4>
+                                <p>El proveedor no se responsabiliza de posibles efectos secundarios, incluyendo:</p>
+                                <p class="text-gray-300">ganas de repetir, afición repentina por MotoGP, pérdida temporal de voz, exceso de fotografías, emoción inesperada o reconocimiento involuntario de que el regalo estaba bastante guay.</p>
+                            </div>
+
+                            <!-- 14 -->
+                            <div class="bg-black/50 p-4 rounded-2xl border border-racingRed/40 space-y-1.5">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">14. Cláusula Da-pena</h4>
+                                <p>No se garantiza que el fin de semana vaya a merecer la pena.</p>
+                                <p>Sin embargo:</p>
+                                <p class="text-lg font-black text-racingRed tracking-widest font-mono text-center my-1.5">MERECERÁ DA-PENA.</p>
+                                <p class="text-gray-400 text-[10px] text-center italic">Esta cláusula no admite recurso.</p>
+                            </div>
+
+                            <!-- 15 -->
+                            <div class="bg-racingRed/15 p-4 rounded-2xl border border-racingRed/40 space-y-2">
+                                <h4 class="font-bold text-white text-sm text-racingRed font-mono">15. Aceptación</h4>
+                                <p>Para aceptar los presentes términos y condiciones no es necesario firmar ningún documento.</p>
+                                <p>Basta con pulsar el botón a continuación:</p>
+                                <p class="text-emerald-400 font-bold">La aceptación será considerada definitiva, vinculante y acompañada de una cantidad jurídicamente indeterminada de ilusión.</p>
+                            </div>
+
+                            <div class="pt-4 text-center border-t border-white/10 space-y-1 font-mono text-[10px] text-gray-500">
+                                <p class="text-gray-400 font-bold">© 2026 ELVIRITIX GRAND PRIX</p>
+                                <p>Todos los derechos reservados. Todos los palitos también. 🪵</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-3">
+                            <button id="acceptTermsBtn" class="w-full py-4 px-6 bg-racingRed hover:bg-red-700 text-white font-bold font-mono text-xs sm:text-sm tracking-wider uppercase rounded-2xl shadow-xl transition-all transform hover:scale-[1.01] flex items-center justify-center gap-2">
+                                <span>ACEPTO. NOS VAMOS A CHESTE.</span>
+                                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            </button>
                         </div>
                     </div>
                 `);
+
+                // Event listener para el botón de aceptación
+                const acceptBtn = document.getElementById('acceptTermsBtn');
+                if (acceptBtn) {
+                    acceptBtn.addEventListener('click', () => {
+                        closeGenericModal();
+                        showToast('¡TÉRMINOS ACEPTADOS! 🏁 NOS VAMOS A CHESTE.');
+                    });
+                }
             });
 
             // QR Code Easter Egg

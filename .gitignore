@@ -1,2 +1,6 @@
 .DS_Store
 scratch/
+assets/*.mov
+assets/video_raw.*
+assets/video_web.mp4
+assets/video_github.mp4

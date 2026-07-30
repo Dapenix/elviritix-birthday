@@ -135,11 +135,17 @@
         </div>
     </div>
 
-    <!-- Botón Temporal de Prueba del Minuto Siguiente -->
-    <button id="testNextMinuteBtn" class="fixed top-4 left-4 z-[100] px-3.5 py-2 bg-amber-500/20 hover:bg-amber-500/50 text-amber-300 font-mono text-xs font-bold rounded-xl border border-amber-500/50 shadow-2xl flex items-center gap-2 backdrop-blur-md cursor-pointer transition-all transform hover:scale-105" title="Probar la celebración en el minuto siguiente">
-        <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
-        <span id="testNextMinuteText">Probador Medianoche (+1 min)</span>
-    </button>
+    <!-- Panel Temporal de Pruebas de Medianoche / Celebración -->
+    <div class="fixed top-4 left-4 z-[100] flex flex-wrap items-center gap-2 font-mono text-xs">
+        <button id="testInstantBtn" class="px-3.5 py-2 bg-racingRed hover:bg-red-700 text-white font-bold rounded-xl border border-racingRed/50 shadow-2xl flex items-center gap-1.5 backdrop-blur-md cursor-pointer transition-all transform hover:scale-105" title="Probar la celebración e inicio inmediatamente">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            <span>Probar AHORA (Instantáneo)</span>
+        </button>
+        <button id="testNextMinuteBtn" class="px-3.5 py-2 bg-amber-500/20 hover:bg-amber-500/50 text-amber-300 font-bold rounded-xl border border-amber-500/50 shadow-2xl flex items-center gap-1.5 backdrop-blur-md cursor-pointer transition-all transform hover:scale-105" title="Probar la celebración en el minuto siguiente">
+            <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
+            <span id="testNextMinuteText">Probar en +1 min</span>
+        </button>
+    </div>
 
     <!-- Easter Egg: Casco Flotante Discreto -->
     <button id="helmetEasterEgg" class="fixed bottom-4 left-4 z-40 opacity-30 hover:opacity-100 transition-opacity p-2 text-racingRed" title="Casco secreto">
@@ -1314,7 +1320,25 @@
             }
             setInterval(checkBirthdayMidnight, 1000);
 
-            // Botón de Prueba del Minuto Siguiente
+            // Función auxiliar para ejecutar la celebración de medianoche y desbloquear la web
+            function executeMidnightCelebration(messageText) {
+                isUnlockedOverride = true;
+                const lockScreen = document.getElementById('lockScreen');
+                if (lockScreen) lockScreen.classList.add('hidden');
+                showSoundtrackStage();
+                triggerConfetti();
+                showToast(messageText || '🎉 ¡MEDIANOCHE ALCANZADA! Celebración activada con éxito.');
+            }
+
+            // Botón 1: Prueba Instantánea (Ahora Mismo)
+            const testInstantBtn = document.getElementById('testInstantBtn');
+            if (testInstantBtn) {
+                testInstantBtn.addEventListener('click', () => {
+                    executeMidnightCelebration('⚡ ¡PRUEBA INSTANTÁNEA ACTIVADA! Desbloqueo y confeti.');
+                });
+            }
+
+            // Botón 2: Prueba del Minuto Siguiente (+1 min)
             const testNextMinBtn = document.getElementById('testNextMinuteBtn');
             const testNextMinText = document.getElementById('testNextMinuteText');
 
@@ -1341,8 +1365,7 @@
                             if (testNextMinText) {
                                 testNextMinText.innerText = '🎉 ¡Celebración Activada!';
                             }
-                            triggerConfetti();
-                            showToast('🎉 ¡MEDIANOCHE ALCANZADA! Celebración activada con éxito.');
+                            executeMidnightCelebration('🎉 ¡MEDIANOCHE ALCANZADA! Celebración activada con éxito.');
                         }
                     }, 1000);
                 });

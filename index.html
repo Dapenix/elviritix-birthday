@@ -702,8 +702,13 @@
                         </div>
                     </div>
 
-                    <div class="pt-2 flex justify-center gap-6 text-xs text-gray-400 font-mono">
+                    <div class="pt-2 flex flex-wrap justify-center items-center gap-6 text-xs text-gray-400 font-mono">
                         <button id="legalModalBtn" class="hover:text-white underline transition-colors">Información legal del regalo</button>
+                        <span>•</span>
+                        <button id="replayExperienceBtn" class="hover:text-racingRed flex items-center gap-1.5 transition-colors text-white font-bold cursor-pointer">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            <span>Volver a empezar la experiencia</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -714,7 +719,11 @@
     <!-- MODAL DE VÍDEO CINEMATOGRÁFICO -->
     <div id="videoModal" class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="relative w-full max-w-4xl aspect-[9/16] sm:aspect-video bg-darkCard rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col">
-            <div class="absolute top-4 right-4 z-20">
+            <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
+                <button id="replayVideoBtn" class="p-3 bg-black/60 hover:bg-black text-white rounded-full transition-colors backdrop-blur-md flex items-center gap-1.5 px-4 text-xs font-mono">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    <span>Repetir vídeo</span>
+                </button>
                 <button id="closeVideoModalBtn" class="p-3 bg-black/60 hover:bg-black text-white rounded-full transition-colors backdrop-blur-md">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -1112,6 +1121,15 @@
             personalVideo.addEventListener('ended', () => {
                 closeVideoModal();
             });
+
+            const replayVideoBtn = document.getElementById('replayVideoBtn');
+            if (replayVideoBtn) {
+                replayVideoBtn.addEventListener('click', () => {
+                    personalVideo.currentTime = 0;
+                    personalVideo.play();
+                    videoPlayOverlay.classList.add('hidden');
+                });
+            }
 
             closeVideoModalBtn.addEventListener('click', () => {
                 closeVideoModal();
@@ -1556,6 +1574,17 @@
                     </div>
                 `);
             });
+
+            // Replay Experience
+            const replayExpBtn = document.getElementById('replayExperienceBtn');
+            if (replayExpBtn) {
+                replayExpBtn.addEventListener('click', () => {
+                    localStorage.removeItem('elviritix_tropernicus_state');
+                    document.body.style.overflow = '';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setTimeout(() => location.reload(), 600);
+                });
+            }
 
             // ==========================================
             // TROPERNICUS™ CONTROLLER & NARRATIVE ENGINE
@@ -2556,15 +2585,40 @@
                                     IDENTIDAD VERIFICADA: 100% — TROPE APPROVAL 🐕‍🦺🎂
                                 </div>
 
-                                <button id="btnContinueStory" class="w-full py-3.5 px-5 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-xl transition-all transform hover:scale-105">
-                                    Puedes continuar ➔
-                                </button>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <button id="btnReplayTropernicus" class="w-full py-3.5 px-4 bg-white/10 hover:bg-white/20 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl border border-white/10 transition-all flex items-center justify-center gap-2">
+                                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                        <span>Repetir Evaluación</span>
+                                    </button>
+                                    <button id="btnContinueStory" class="w-full py-3.5 px-4 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                                        <span>Puedes continuar ➔</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     `;
 
                     this.state.completed = true;
                     this.saveState();
+
+                    const btnReplay = document.getElementById('btnReplayTropernicus');
+                    if (btnReplay) {
+                        btnReplay.addEventListener('click', () => {
+                            this.state = {
+                                score: 12,
+                                stage: 0,
+                                completed: false,
+                                started: false,
+                                answers: {},
+                                commentsShown: {}
+                            };
+                            localStorage.removeItem('elviritix_tropernicus_state');
+                            document.body.style.overflow = 'hidden';
+                            const secTrope = document.getElementById('sec-trope-security');
+                            if (secTrope) secTrope.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            this.openStartModal();
+                        });
+                    }
 
                     const btnContinue = document.getElementById('btnContinueStory');
                     if (btnContinue) {

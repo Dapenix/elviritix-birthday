@@ -847,10 +847,10 @@
             const legalModalBtn = document.getElementById('legalModalBtn');
             const qrCodeBtn = document.getElementById('qrCodeBtn');
 
-            // Fecha objetivo del cumpleaños: 31 de Julio de 2026 00:00:00
-            const birthdayDate = new Date('2026-07-31T00:00:00').getTime();
-            // Fecha de MotoGP Cheste: 27 de Noviembre de 2026 09:00:00
-            const motogpDate = new Date('2026-11-27T09:00:00').getTime();
+            // Fecha objetivo del cumpleaños: 31 de Julio de 2026 00:00:00 (Mes 6 = Julio en JS)
+            const birthdayDate = new Date(2026, 6, 31, 0, 0, 0).getTime();
+            // Fecha de MotoGP Cheste: 27 de Noviembre de 2026 09:00:00 (Mes 10 = Noviembre en JS)
+            const motogpDate = new Date(2026, 10, 27, 9, 0, 0).getTime();
 
             // Sistema Global de Notificaciones Toast
             function showToast(message) {
@@ -923,8 +923,7 @@
                         executeMidnightCelebration('🎉 ¡MEDIANOCHE ALCANZADA! Celebración activada con éxito.');
                         return;
                     }
-                    lockScreen.classList.add('hidden');
-                    showSoundtrackStage();
+                    executeMidnightCelebration('🎉 ¡FELIZ CUMPLEAÑOS ELVIRITIX! ❤️');
                     return;
                 }
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));

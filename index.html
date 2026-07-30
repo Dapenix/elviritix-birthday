@@ -2531,20 +2531,28 @@
                     `;
 
                     card.querySelectorAll('.kick-btn').forEach(btn => {
-                        btn.addEventListener('click', () => {
-                            this.handleKickAnswer();
+                        btn.addEventListener('click', (e) => {
+                            const ans = e.currentTarget.getAttribute('data-ans');
+                            this.handleKickAnswer(ans);
                         });
                     });
                 },
 
-                handleKickAnswer() {
+                handleKickAnswer(ans = 'ambos') {
                     const card = document.getElementById('tropeSecurityCard');
                     this.setTrustScore(this.state.score + 15);
+
+                    let speech = 'La humana se puso en medio. Yo soy claramente una víctima aquí.';
+                    if (ans === 'trope') {
+                        speech = 'Mentira. Yo solo estaba ejerciendo mi derecho a ocupar el 88% de la cama.';
+                    } else if (ans === 'elvira') {
+                        speech = 'Exacto. Invasión de espacio canino sin autorización previa.';
+                    }
 
                     card.innerHTML = `
                         <div class="space-y-6 text-center py-4 animate-fadeIn">
                             <span class="font-mono text-xs text-gray-400">VERSIÓN OFICIAL DE TROPE:</span>
-                            ${this.getTropeSpeechBubble('La humana se puso en medio.', 'bed')}
+                            ${this.getTropeSpeechBubble(speech, 'bed')}
 
                             <div class="pt-2 max-w-sm mx-auto">
                                 <button id="btnNextBedDiag" class="w-full py-3.5 px-6 bg-racingRed hover:bg-red-700 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-2xl shadow-xl transition-all transform hover:scale-105">

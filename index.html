@@ -915,8 +915,14 @@
                     lockScreen.classList.add('hidden');
                     return;
                 }
-                const distance = birthdayDate - now;
-                if (distance < 0) {
+                const target = window.testTargetTime || birthdayDate;
+                const distance = target - now;
+                if (distance <= 0) {
+                    if (window.testTargetTime) {
+                        delete window.testTargetTime;
+                        executeMidnightCelebration('🎉 ¡MEDIANOCHE ALCANZADA! Celebración activada con éxito.');
+                        return;
+                    }
                     lockScreen.classList.add('hidden');
                     showSoundtrackStage();
                     return;
@@ -1379,6 +1385,7 @@
 
                     // Programar para exactamente 60 segundos en el futuro
                     const targetTime = Date.now() + 60000;
+                    window.testTargetTime = targetTime;
                     const targetDate = new Date(targetTime);
 
                     showToast('⏱️ Prueba programada para las ' + targetDate.toLocaleTimeString());

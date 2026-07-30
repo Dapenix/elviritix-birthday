@@ -2574,9 +2574,12 @@
                                 secVideo.classList.remove('hidden');
                             }
                             document.body.style.overflow = '';
-                            if (secVideo) {
-                                secVideo.scrollIntoView({ behavior: 'smooth' });
-                            }
+                            document.documentElement.style.overflow = '';
+                            setTimeout(() => {
+                                if (secVideo) {
+                                    secVideo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                            }, 100);
                         });
                     }
                 },
@@ -2752,20 +2755,6 @@
                     this.state.commentsShown.callback = true;
                     this.state.score = 100;
                     this.saveState();
-
-                    const toast = document.createElement('div');
-                    toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 glass-panel px-5 py-3.5 rounded-2xl border border-emerald-500/50 bg-black/90 shadow-2xl font-mono text-xs text-center space-y-1 animate-bounce max-w-xs';
-                    toast.innerHTML = `
-                        <span class="block text-[10px] text-emerald-400 uppercase font-bold tracking-widest">TROPE APPROVAL UPDATED</span>
-                        <span class="block text-white font-bold text-sm">100%</span>
-                        <span class="block text-[11px] text-gray-300">Ese Dape me cae de diez. ¡Aprobación canina total! 🐕‍🦺💯</span>
-                    `;
-                    document.body.appendChild(toast);
-
-                    setTimeout(() => {
-                        toast.classList.add('opacity-0', 'transition-opacity', 'duration-1000');
-                        setTimeout(() => toast.remove(), 1000);
-                    }, 6500);
                 }
             };
 
